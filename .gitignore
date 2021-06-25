@@ -2,8 +2,13 @@
 .idea
 build
 
-projects/*
-!projects/order/
+
+src/main/resources/projects/*
+!src/main/resources/projects/order/
+
+src/main/kotlin/com/thoughtworks/projects/*
+!src/main/kotlin/com/thoughtworks/projects/order/
+
 dist/*
 !dist/order/
 
