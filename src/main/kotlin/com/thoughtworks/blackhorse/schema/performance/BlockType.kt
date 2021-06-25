@@ -1,0 +1,6 @@
+package com.thoughtworks.blackhorse.schema.performance
+
+enum class BlockType {
+    STUDY, PRE_REFACTOR, FIX_BUG, CONFIRM_INTEGRATION, CONFIRM_BUSINESS,
+    ENVIRONMENT_ISSUE, DEPLOYMENT_ISSUE, INTEGRATION_TESTING, REQUIREMENT_CHANGES
+}
