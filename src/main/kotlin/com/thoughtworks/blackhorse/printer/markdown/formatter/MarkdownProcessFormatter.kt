@@ -9,8 +9,12 @@ open class MarkdownProcessFormatter : ProcessFormatter {
     override fun process(process: FlowProcess): String {
         val title = process.title()
         val testDouble = process.dependency()
-        val input = process.accept ?: process.targetApiScenario?.apiDefinition?.let { "\\> $it" }
-        val output = process.reply ?: process.targetApiScenario?.statusDescription?.let { "< $it" }
+        val input = process.accept
+            ?: process.targetApiScenario?.apiDefinition?.let { "\\> $it" }
+            ?: "Collect request parameters"
+        val output = process.reply
+            ?: process.targetApiScenario?.statusDescription?.let { "< $it" }
+            ?: "Return expected result"
 
         return lineOf(
             "- **$title**",
@@ -40,7 +44,7 @@ open class MarkdownProcessFormatter : ProcessFormatter {
 
     private fun FlowProcess.dependency() =
         definition?.run {
-            "> **${component.name()} -> $testDouble<${dependency.name()}>**".takeIf { testDouble != TestDouble.Real }
+            "**${component.name()} -> $testDouble<${dependency.name()}>**".takeIf { testDouble != TestDouble.Real }
         }
 
     override fun diagram(process: FlowProcess): String = lineOf(
