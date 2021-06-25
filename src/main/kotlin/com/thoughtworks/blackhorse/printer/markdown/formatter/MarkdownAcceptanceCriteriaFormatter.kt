@@ -9,9 +9,11 @@ class MarkdownAcceptanceCriteriaFormatter(
 ) : AcceptanceCriteriaFormatter {
     override fun anchors(items: List<AcceptanceCriteria>) =
         items.mapIndexedToLines { index, item ->
+            val serial = index + 1
+
             lineOf(
-                toAnchorLink(anchor(index + 1)),
-                flowFormatter.anchors(item.flows).prependIndent("  ")
+                toAnchorLink(anchor(serial)),
+                flowFormatter.anchors(item.flows, serial).prependIndent("  ")
             )
         }
 
@@ -35,7 +37,7 @@ class MarkdownAcceptanceCriteriaFormatter(
             example(example),
             mockup(mockup),
             link(link),
-            flowFormatter.flows(flows)
+            flowFormatter.flows(flows, serial)
         )
     }
 
