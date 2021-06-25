@@ -1,0 +1,9 @@
+.gradle
+.idea
+build
+
+projects/*
+!projects/order/
+dist/*
+!dist/order/
+
