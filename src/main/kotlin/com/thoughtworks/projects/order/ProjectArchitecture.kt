@@ -53,6 +53,13 @@ object Bff : Container {
             - Call feign client, verify the expected input parameters and assert the expected output return
             """.trimIndent()
         },
+        FeignClient fake Backend.Controller cost 60 at {
+            """
+                - Setup endpoints in wiremock with fake payload
+                - Setup wiremock's url as base url
+                - Call upstream endpoints and verify the data object that formatted from json is expected
+            """.trimIndent()
+        }
     )
 }
 

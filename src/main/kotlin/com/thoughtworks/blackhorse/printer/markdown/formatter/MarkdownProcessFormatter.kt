@@ -9,18 +9,14 @@ open class MarkdownProcessFormatter : ProcessFormatter {
     override fun process(process: FlowProcess): String {
         val title = process.title()
         val testDouble = process.dependency()
-        val input = process.accept
-            ?: process.targetApiScenario?.apiDefinition?.let { "\\> $it" }
-            ?: "Collect request parameters"
-        val output = process.reply
-            ?: process.targetApiScenario?.statusDescription?.let { "< $it" }
-            ?: "Return expected result"
+        val input = process.accept ?: process.targetApiScenario?.apiDefinition?.let { "\\> $it" }
+        val output = process.reply ?: process.targetApiScenario?.statusDescription?.let { "< $it" }
 
         return lineOf(
             "- **$title**",
             lineOf(
                 input,
-                testDouble,
+                testDouble.takeIf { !input.isNullOrBlank() || !output.isNullOrBlank() },
                 output,
             ).prependIndent("  "),
             "----",
@@ -32,19 +28,25 @@ open class MarkdownProcessFormatter : ProcessFormatter {
         val prefix = "Process $id"
         val relations =
             if (component == dependency) component.name()
-            else "${component.name()} -> $testDouble<${dependency.name()}>"
+            else "${component.name()}, depends on $testDouble<${dependency.name()}>"
         return "$prefix | $relations"
     }
 
-    private fun FlowProcess.title() =
-        definition?.title() ?: "Inner Logic | $startName"
+    private fun FlowProcess.title(): String {
+        if (definition == null) {
+            println("!![WARNING] No process definition between [$startName] and [$targetName].")
+            return "Inner Logic | $startName"
+        }
+
+        return definition.title()
+    }
 
     private fun FlowProcess.label() =
         definition?.run { "Process $id" } ?: "Inner Logic"
 
     private fun FlowProcess.dependency() =
         definition?.run {
-            "**${component.name()} -> $testDouble<${dependency.name()}>**".takeIf { testDouble != TestDouble.Real }
+            "*${component.name()} -> $testDouble<${dependency.name()}>*".takeIf { testDouble != TestDouble.Real }
         }
 
     override fun diagram(process: FlowProcess): String = lineOf(
