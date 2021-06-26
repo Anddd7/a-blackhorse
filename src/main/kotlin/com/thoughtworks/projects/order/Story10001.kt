@@ -19,9 +19,9 @@ import com.thoughtworks.blackhorse.schema.story.withApi
 
 object Story10001 : StoryOf(
     title = "Get the shopping cart info",
+    estimation = 8,
     cardId = "STORY-10001",
     cardType = CardType.STORY,
-    estimation = 8,
     configure = {
         inScope {
             """

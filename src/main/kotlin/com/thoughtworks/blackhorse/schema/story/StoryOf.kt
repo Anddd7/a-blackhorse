@@ -10,9 +10,9 @@ import com.thoughtworks.blackhorse.utils.extractProjectName
 
 open class StoryOf(
     val title: String,
+    val estimation: Int,
     private val cardId: String? = null,
     val cardType: CardType = CardType.STORY,
-    val estimation: Int = 0,
     val configure: StoryBuilder.() -> Unit,
     val tracking: PerformanceBuilder.() -> Unit = {},
 ) {
