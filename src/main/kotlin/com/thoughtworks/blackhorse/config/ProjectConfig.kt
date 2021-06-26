@@ -16,6 +16,9 @@ data class ProjectConfig(
     private fun getPropertyOrThrow(key: String): String =
         getProperty(key) ?: throw IllegalArgumentException("{$key} is missing in properties")
 
+    private fun getPropertyOrDefault(key: String, default: String): String =
+        getProperty(key) ?: default
+
     private val hiddenOptions = properties.getProperty("hidden")
         ?.split(",")
         ?.map { it.trim().uppercase() }
@@ -31,7 +34,7 @@ data class ProjectConfig(
     private fun jiraBaseUrl() = getPropertyOrThrow("jira_baseurl")
     private fun jiraToken() = getPropertyOrThrow("jira_token")
     private fun costAlgorithm() =
-        getPropertyOrThrow("cost_algorithm").uppercase().let(CostAlgorithmOption::valueOf)
+        getPropertyOrDefault("cost_algorithm", "flow").uppercase().let(CostAlgorithmOption::valueOf)
 
     companion object {
         private val current = ThreadLocal<ProjectConfig>()
