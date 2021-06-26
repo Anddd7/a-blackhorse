@@ -1,6 +1,7 @@
 package com.thoughtworks.blackhorse.config
 
 import com.thoughtworks.blackhorse.printer.PrinterOption
+import com.thoughtworks.blackhorse.utils.toEnum
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -10,31 +11,27 @@ data class ProjectConfig(
     private val projectName: String,
     private val properties: Properties,
 ) {
-    private fun getProperty(key: String): String? =
-        properties.getProperty(key)
+    private fun get(key: String): String? = properties.getProperty(key)
+    private fun getOr(key: String, default: String): String = get(key) ?: default
+    private fun getOrThrow(key: String): String =
+        get(key) ?: throw IllegalArgumentException("{$key} is missing in properties")
 
-    private fun getPropertyOrThrow(key: String): String =
-        getProperty(key) ?: throw IllegalArgumentException("{$key} is missing in properties")
-
-    private fun getPropertyOrDefault(key: String, default: String): String =
-        getProperty(key) ?: default
-
-    private val hiddenOptions = properties.getProperty("hidden")
-        ?.split(",")
-        ?.map { it.trim().uppercase() }
-        ?.map(HiddenOption::valueOf)
-        ?: emptyList()
-
-    private fun isVisible(hiddenOption: HiddenOption): Boolean = hiddenOptions.contains(hiddenOption)
-    private fun printerOption() =
-        getPropertyOrThrow("printer").uppercase().let(PrinterOption::valueOf)
-
+    // required
+    private fun printerOption() = getOrThrow("printer").toEnum(PrinterOption::valueOf)
     private fun printer() = printerOption().printer
-    private fun distDir(): Path = Paths.get(getPropertyOrThrow("dist_dir")).resolve(projectName)
-    private fun jiraBaseUrl() = getPropertyOrThrow("jira_baseurl")
-    private fun jiraToken() = getPropertyOrThrow("jira_token")
-    private fun costAlgorithm() =
-        getPropertyOrDefault("cost_algorithm", "flow").uppercase().let(CostAlgorithmOption::valueOf)
+    private fun jiraBaseUrl() = getOrThrow("jira_baseurl")
+    private fun jiraToken() = getOrThrow("jira_token")
+
+    // optional
+    private val hiddenOptions =
+        get("hidden")
+            ?.split(",")
+            ?.map { it.toEnum(HiddenOption::valueOf) }
+            ?: emptyList()
+
+    private fun isVisible(hiddenOption: HiddenOption) = hiddenOptions.contains(hiddenOption)
+    private fun distDir(): Path = Paths.get(getOr("dist_dir", "dist")).resolve(projectName)
+    private fun costAlgorithm() = getOr("cost_algorithm", "flow").toEnum(CostAlgorithmOption::valueOf)
 
     companion object {
         private val current = ThreadLocal<ProjectConfig>()

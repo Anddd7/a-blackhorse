@@ -69,13 +69,10 @@ projects=order,<your project name>
 # JIRA_ATTACHMENT               生成markdown+pdf+plantuml时序图, 并上传jira
 printer=MARKDOWN_TYPORA
 # ------
-# [REQUIRED] 输出文件夹(不建议修改)
-dist_dir=dist
-# ------
-# 隐藏部分信息
+# [OPTIONAL, default = empty] 隐藏部分信息
 hidden=complexity
 # ------
-# 效能计算, 以flow/process为粒度进行计算
+# [OPTIONAL, default = flow] 效能计算, 以flow/process为粒度进行计算
 cost_algorithm=flow
 # ------
 # 如果要上传jira, 需要配置server地址和access token
