@@ -10,7 +10,7 @@ import com.thoughtworks.blackhorse.utils.extractProjectName
 
 open class StoryOf(
     val title: String,
-    val estimation: Int,
+    val estimation: Estimation,
     private val cardId: String? = null,
     val cardType: CardType = CardType.STORY,
     val configure: StoryBuilder.() -> Unit,
@@ -20,7 +20,7 @@ open class StoryOf(
     fun getCardId(): String = cardId ?: getName()
     fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
-    fun buildStory() = StoryBuilder(getName(), title, getCardId(), cardType, estimation).apply(configure).build()
+    fun buildStory() = StoryBuilder(getName(), title, getCardId(), cardType, estimation.value).apply(configure).build()
     fun buildPerformance() = PerformanceBuilder(buildStory()).apply(tracking).build()
 
     override fun toString(): String = getCardId()

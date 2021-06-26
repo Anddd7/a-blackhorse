@@ -8,6 +8,7 @@ import com.thoughtworks.blackhorse.schema.performance.cause
 import com.thoughtworks.blackhorse.schema.performance.cost
 import com.thoughtworks.blackhorse.schema.story.API
 import com.thoughtworks.blackhorse.schema.story.Complexity
+import com.thoughtworks.blackhorse.schema.story.Estimation
 import com.thoughtworks.blackhorse.schema.story.HttpMethod
 import com.thoughtworks.blackhorse.schema.story.HttpStatus
 import com.thoughtworks.blackhorse.schema.story.StoryOf
@@ -19,7 +20,7 @@ import com.thoughtworks.blackhorse.schema.story.withApi
 
 object Story10001 : StoryOf(
     title = "Get the shopping cart info",
-    estimation = 8,
+    estimation = Estimation.EIGHT_8,
     cardId = "STORY-10001",
     cardType = CardType.STORY,
     configure = {
