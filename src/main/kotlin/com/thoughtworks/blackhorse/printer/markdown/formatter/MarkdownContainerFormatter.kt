@@ -21,7 +21,7 @@ class MarkdownContainerFormatter : ContainerFormatter {
         )
 
     private fun processLine(containerName: String, definition: ProcessDefinition): String {
-        val id = definition.id
+        val id = definition.name
         val component = definition.component.name().substringAfter("$containerName.")
         val dependency = definition.dependency.name().substringAfter("$containerName.")
         val testDouble = definition.testDouble

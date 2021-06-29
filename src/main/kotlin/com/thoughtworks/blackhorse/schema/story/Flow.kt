@@ -8,7 +8,9 @@ data class Flow(
     val purpose: String,
     val complexity: Complexity,
     val processes: List<FlowProcess>,
-)
+) {
+    val allProcesses = processes.flatMap(FlowProcess::processIterator)
+}
 
 class FlowBuilder(
     private val purpose: String,
@@ -29,6 +31,6 @@ class FlowBuilder(
     fun build(id: String): Flow {
         val increment = AtomicInteger(1)
 
-        return Flow(id, purpose, complexity, processes.mapIndexed { _, item -> item.build(id,increment) })
+        return Flow(id, purpose, complexity, processes.mapIndexed { _, item -> item.build(id, increment) })
     }
 }

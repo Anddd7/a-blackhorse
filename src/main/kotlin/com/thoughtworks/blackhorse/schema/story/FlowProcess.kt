@@ -23,6 +23,8 @@ data class FlowProcess(
             add(target)
             nested.map { addAll(it.components()) }
         }
+
+    fun processIterator(): List<FlowProcess> = listOf(this) + nested.flatMap { it.processIterator() }
 }
 
 data class FlowProcessBuilder(

@@ -1,10 +1,10 @@
 package com.thoughtworks.blackhorse.reporter.interfaces
 
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
-import com.thoughtworks.blackhorse.schema.performance.FlowPerformance
+import com.thoughtworks.blackhorse.schema.performance.ProcessPerformance
 
 object PerformanceColumns {
-    val columns: List<FieldExtractor> = listOf(
+    val columns = listOf(
         StoryExtractor("cardId", StoryPerformance::cardId),
         StoryExtractor("cardType", StoryPerformance::cardType),
         StoryExtractor("cardTitle", StoryPerformance::cardTitle),
@@ -14,12 +14,12 @@ object PerformanceColumns {
         StoryExtractor("startAt", StoryPerformance::startAt),
         StoryExtractor("endAt", StoryPerformance::endAt),
         StoryExtractor("developer", StoryPerformance::developer),
-        FlowExtractor("task", FlowPerformance::flowId),
-        FlowExtractor("expectCost", FlowPerformance::expectCost),
-        FlowExtractor("actualCost", FlowPerformance::actualCost),
-        FlowExtractor("blockCost", FlowPerformance::blockCost),
-        FlowExtractor("blockType", FlowPerformance::blockType),
-        FlowExtractor("blockInstruction", FlowPerformance::blockInstruction),
-        FlowExtractor("blockConsequence", FlowPerformance::blockConsequence),
+        ProcessExtractor("process", ProcessPerformance::processName),
+        ProcessExtractor("expectCost", ProcessPerformance::expectCost),
+        ProcessExtractor("actualCost", ProcessPerformance::actualCost),
+        ProcessExtractor("blockCost", ProcessPerformance::blockCost),
+        ProcessExtractor("blockType", ProcessPerformance::blockType),
+        ProcessExtractor("blockInstruction", ProcessPerformance::blockInstruction),
+        ProcessExtractor("blockConsequence", ProcessPerformance::blockConsequence),
     )
 }

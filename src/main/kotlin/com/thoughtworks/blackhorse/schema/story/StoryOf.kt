@@ -44,5 +44,7 @@ fun StoryOf.outputTo(printer: StoryPrinter) = StoryConfig.execute(getName()) {
 
 fun StoryOf.evaluate() =
     runCatching(StoryOf::buildPerformance)
-        .onFailure { println("Performance is not ready at ${getCardId()}, please update it as soon as possible!") }
+        .onFailure {
+            println("Performance is not ready at ${getCardId()}, please update it as soon as possible!")
+        }
         .getOrNull()

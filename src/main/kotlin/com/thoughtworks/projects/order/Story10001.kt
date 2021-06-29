@@ -248,19 +248,84 @@ object Story10001 : StoryOf(
         development(LiSi, "2021-05-19")
 
         ac {
-            flow() cost 15
-            flow() cost 20
-            flow() cost 15
-            flow() cost 15
-            flow() cost 15
-            flow() cost 15
+            flow("1-1") {
+                process() cost 5
+                process() cost 5
+                process() cost 5
+            }
+            flow("1-2") {
+                process() cost 20
+            }
+            flow("1-3") {
+                process() cost 15
+            }
+            flow("1-4") {
+                process() cost 15
+            }
+            flow("1-5") {
+                process() cost 15
+            }
+            flow("1-6") {
+                process() cost 15
+            }
+            flow("1-7") {
+                process() cost 15
+            }
+            flow("1-8") {
+                process() cost 15
+            }
+            flow("1-9") {
+                process() cost 15
+            }
+            flow("1-10") {
+                process() cost 15
+            }
         }
 
         ac {
-            flow() cost 15
-            flow() cost 15
-            flow() cost 30 blocked 100 by BlockType.STUDY cause "learn how to retrieve id from jwt in header"
-            flow() cost 20 blocked 200 by BlockType.INTEGRATION_TESTING cause "test feign client with upstream services"
+            flow("2-1") {
+                process() cost 15
+            }
+            flow("2-2") {
+                process() cost 15
+            }
+            flow("2-3") {
+                process() cost 15
+            }
+            flow("2-4") {
+                process() cost 15
+            }
+            flow("2-5") {
+                process() cost 15
+            }
+            flow("2-6") {
+                process() cost 15 blocked 100 by BlockType.STUDY cause "learn how to retrieve id from jwt in header"
+            }
+            flow("2-7") {
+                process() cost 15
+            }
+            flow("2-8") {
+                process() cost 15
+            }
+            flow("2-9") {
+                process() cost 30
+                process() cost 20 blocked 200 by BlockType.INTEGRATION_TESTING cause "test feign client with upstream services"
+            }
+            flow("2-10") {
+                process() cost 15
+            }
+            flow("2-11") {
+                process() cost 15
+            }
+        }
+
+        ac {
+            flow {
+                process() cost 15
+                process() cost 15
+                process() cost 15
+                process() cost 15
+            }
         }
 
         finish("2021-05-27")

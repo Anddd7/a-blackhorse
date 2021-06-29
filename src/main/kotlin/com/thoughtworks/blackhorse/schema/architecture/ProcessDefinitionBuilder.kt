@@ -3,7 +3,7 @@ package com.thoughtworks.blackhorse.schema.architecture
 import com.thoughtworks.blackhorse.schema.story.Complexity
 
 data class ProcessDefinition(
-    val id: String,
+    val name: String,
     val component: Component,
     val dependency: Component,
     val testDouble: TestDouble,

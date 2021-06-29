@@ -25,7 +25,7 @@ open class MarkdownProcessFormatter : ProcessFormatter {
     }
 
     private fun ProcessDefinition.title(): String {
-        val prefix = "Process $id"
+        val prefix = "Process $name"
         val relations =
             if (component == dependency) component.name()
             else "${component.name()}, depends on $testDouble<${dependency.name()}>"
@@ -42,7 +42,7 @@ open class MarkdownProcessFormatter : ProcessFormatter {
     }
 
     private fun FlowProcess.label() =
-        definition?.run { "Process $id" } ?: "Inner Logic"
+        definition?.run { "Process $name" } ?: "Inner Logic"
 
     private fun FlowProcess.dependency() =
         definition?.run {

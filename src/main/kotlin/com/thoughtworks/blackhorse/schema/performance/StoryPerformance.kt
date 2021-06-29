@@ -1,5 +1,7 @@
 package com.thoughtworks.blackhorse.schema.performance
 
+import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
+import com.thoughtworks.blackhorse.schema.story.Flow
 import com.thoughtworks.blackhorse.schema.story.Story
 import java.time.LocalDate
 
@@ -13,14 +15,8 @@ data class StoryPerformance(
     val developer: String,
     val startAt: LocalDate,
     val endAt: LocalDate,
-    val flows: List<FlowPerformance>
-) {
-    fun withTaskIds() = flows.indices.map { this to it }
-}
-
-interface Member {
-    fun name(): String
-}
+    val processes: List<ProcessPerformance>
+)
 
 class StoryPerformanceBuilder(
     val story: Story
@@ -31,7 +27,7 @@ class StoryPerformanceBuilder(
     private var startAt: LocalDate? = null
     private var endAt: LocalDate? = null
 
-    fun decomposition(reporter: String, decompositionCost: Int) {
+    private fun decomposition(reporter: String, decompositionCost: Int) {
         this.reporter = reporter
         this.decompositionCost = decompositionCost
     }
@@ -40,7 +36,7 @@ class StoryPerformanceBuilder(
         decomposition(member.name(), decompositionCost)
     }
 
-    fun development(developer: String, startAt: String) {
+    private fun development(developer: String, startAt: String) {
         this.developer = developer
         this.startAt = LocalDate.parse(startAt)
     }
@@ -63,20 +59,24 @@ class StoryPerformanceBuilder(
         developer ?: throw IllegalArgumentException("missing required data"),
         startAt ?: throw IllegalArgumentException("missing required data"),
         endAt ?: throw IllegalArgumentException("missing required data"),
-        acs.flatMap(AcPerformanceBuilder::tasks)
-            .map(FlowPerformanceBuilder::build)
-            .sortedBy(FlowPerformance::order),
+        acs.flatMap(AcPerformanceBuilder::build),
     )
 
     private val acs = mutableListOf<AcPerformanceBuilder>()
 
-    fun ac(fn: AcPerformanceBuilder.() -> Unit) {
-        val acIndex = acs.size
-        val ac = story.acceptanceCriteria[acIndex]
-        acs.add(AcPerformanceBuilder(acIndex + 1, ac).apply(fn))
+    fun ac(id: String? = null, fn: AcPerformanceBuilder.() -> Unit) {
+        val ac = id?.let(::findAcById) ?: findNextAc()
+        acs.add(AcPerformanceBuilder(ac).apply(fn))
     }
-}
 
-data class TaskId(val ac: Int, val flow: Int) {
-    fun order() = ac * 100 + flow
+    private fun findAcById(id: String): AcceptanceCriteria {
+        return story.acceptanceCriteria.find { it.id == id }
+            ?: throw IllegalArgumentException("No such ac with id: $id")
+    }
+
+    private fun findNextAc(): AcceptanceCriteria {
+        if (acs.size == story.acceptanceCriteria.size)
+            throw IllegalArgumentException("You have complete all ac, don't add invalid ac")
+        return story.acceptanceCriteria[acs.size]
+    }
 }
