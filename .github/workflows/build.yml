@@ -31,7 +31,21 @@ jobs:
         with:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
-      - name: Run Linters and Test
+      - name: Run Linters
+        run: ./gradlew ktlintformat
+      - id: changes
+        uses: jitterbit/get-changed-files@v1
+      - name: Run rebuild
+        run: ./gradlew rebuild --args '${{ steps.changes.outputs.all }}'
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "[BOT] lint on pipeline" -a
+      - name: Push files
+        run: git push --no-verify "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
+      - name: Run check
         run: ./gradlew check
   build:
     name: Build
