@@ -41,8 +41,8 @@ class AcceptanceCriteriaBuilder {
         note = fn().trimIndent()
     }
 
-    fun flow(purpose: String, complexity: Complexity = Complexity.SMALL, configure: FlowBuilder.() -> Unit = {}) =
-        flows.add(FlowBuilder(purpose, complexity).apply(configure))
+    fun flow(purpose: String, configure: FlowBuilder.() -> Unit = {}) =
+        flows.add(FlowBuilder(purpose).apply(configure))
 
     fun build(id: String) =
         AcceptanceCriteria(

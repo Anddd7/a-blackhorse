@@ -20,7 +20,7 @@ class ProcessPerformanceBuilder(
         ProcessPerformance(
             process.id,
             process.definition?.name ?: "",
-            process.definition?.cost ?: 0,
+            process.definition?.complexity ?: 0,
             actualCost,
             blockCost,
             blockType,

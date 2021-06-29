@@ -7,7 +7,6 @@ import com.thoughtworks.blackhorse.schema.performance.by
 import com.thoughtworks.blackhorse.schema.performance.cause
 import com.thoughtworks.blackhorse.schema.performance.cost
 import com.thoughtworks.blackhorse.schema.story.API
-import com.thoughtworks.blackhorse.schema.story.Complexity
 import com.thoughtworks.blackhorse.schema.story.Estimation
 import com.thoughtworks.blackhorse.schema.story.HttpMethod
 import com.thoughtworks.blackhorse.schema.story.HttpStatus
@@ -55,7 +54,7 @@ object Story10001 : StoryOf(
 
             mockup("https://preview.redd.it/h73wnfhvk3l61.png?width=575&format=png&auto=webp&s=a43c711e25606d31d80ccc5bbdf4b42111abce2c")
 
-            flow("render empty shopping cart", Complexity.MEDIUM) {
+            flow("render empty shopping cart") {
                 Web.UiComponent call Web.UiComponent accept {
                     """
                         add 'ShoppingCart' page
@@ -93,7 +92,7 @@ object Story10001 : StoryOf(
                 Bff.FeignClient call Backend.Controller withApi getShoppingCartApi.onFailed(HttpStatus.NOT_FOUND)
             }
 
-            flow("call usecase", Complexity.MEDIUM) {
+            flow("call usecase") {
                 Backend.Controller call Backend.Usecase accept {
                     "call usecase to find the shopping cart by user id"
                 } reply {

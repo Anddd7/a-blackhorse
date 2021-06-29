@@ -7,7 +7,7 @@ data class ProcessDefinition(
     val component: Component,
     val dependency: Component,
     val testDouble: TestDouble,
-    val cost: Int,
+    val complexity: Int,
     val description: String,
 )
 

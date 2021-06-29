@@ -1,5 +1,7 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
+import com.thoughtworks.blackhorse.config.HiddenOption
+import com.thoughtworks.blackhorse.config.ProjectConfig
 import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
 import com.thoughtworks.blackhorse.schema.architecture.TestDouble
@@ -29,7 +31,9 @@ open class MarkdownProcessFormatter : ProcessFormatter {
         val relations =
             if (component == dependency) component.name()
             else "${component.name()}, depends on $testDouble<${dependency.name()}>"
-        return "$prefix | $relations"
+        val complexity = complexity.takeIf { ProjectConfig.isVisible(HiddenOption.COMPLEXITY) }
+
+        return listOfNotNull(prefix, relations, complexity).joinToString("|")
     }
 
     private fun FlowProcess.title(): String {
