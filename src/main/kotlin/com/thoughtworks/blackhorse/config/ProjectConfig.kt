@@ -31,7 +31,6 @@ data class ProjectConfig(
 
     private fun isVisible(hiddenOption: HiddenOption) = hiddenOptions.contains(hiddenOption)
     private fun distDir(): Path = Paths.get(getOr("dist_dir", "dist")).resolve(projectName)
-    private fun costAlgorithm() = getOr("cost_algorithm", "flow").toEnum(CostAlgorithmOption::valueOf)
 
     companion object {
         private val current = ThreadLocal<ProjectConfig>()
@@ -52,7 +51,6 @@ data class ProjectConfig(
         fun jiraBaseUrl() = instance().jiraBaseUrl()
         fun jiraToken() = instance().jiraToken()
         fun isVisible(hiddenOption: HiddenOption) = instance().isVisible(hiddenOption)
-        fun costAlgorithm() = instance().costAlgorithm()
         fun getProjectFile(filename: String) = getOrCreateFile(filename, distDir())
 
         fun execute(projectName: String, fn: () -> Unit) {
