@@ -8,41 +8,39 @@ class MarkdownAcceptanceCriteriaFormatter(
     private val flowFormatter: FlowFormatter,
 ) : AcceptanceCriteriaFormatter {
     override fun anchors(items: List<AcceptanceCriteria>) =
-        items.mapIndexedToLines { index, item ->
-            val serial = index + 1
-
+        items.mapToLines {
             lineOf(
-                toAnchorLink(anchor(serial)),
-                flowFormatter.anchors(item.flows, serial).prependIndent("  ")
+                toAnchorLink(anchor(it.id)),
+                flowFormatter.anchors(it.flows).prependIndent("  ")
             )
         }
 
-    override fun acceptanceCriteria(items: List<AcceptanceCriteria>) =
-        items.mapIndexedToLines { index, item -> acceptanceCriteria(index + 1, item) }
+    override fun acceptanceCriteria(items: List<AcceptanceCriteria>): String =
+        items.mapToLines(this::acceptanceCriteria)
 
     override fun summary(items: List<AcceptanceCriteria>) =
-        items.mapIndexedToLines { index, item ->
+        items.mapToLines { item ->
             lineOf(
-                title(index + 1),
+                title(item.id),
                 item.description,
                 example(item.example),
                 note(item.note),
             )
         }
 
-    private fun acceptanceCriteria(serial: Int, item: AcceptanceCriteria) = item.run {
+    private fun acceptanceCriteria(item: AcceptanceCriteria) = item.run {
         lineOf(
-            title(serial),
+            title(id),
             description,
             example(example),
             mockup(mockup),
             link(link),
-            flowFormatter.flows(flows, serial)
+            flowFormatter.flows(flows)
         )
     }
 
-    private fun title(serial: Int) = "### ${anchor(serial)}"
-    private fun anchor(serial: Int) = "AC $serial"
+    private fun title(id: String) = "### ${anchor(id)}"
+    private fun anchor(id: String) = "AC $id"
     private fun example(str: String?) = str?.let {
         lineOf(
             "#### Example",

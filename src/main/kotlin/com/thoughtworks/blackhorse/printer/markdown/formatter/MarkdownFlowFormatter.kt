@@ -11,20 +11,15 @@ import com.thoughtworks.blackhorse.schema.story.FlowProcess
 open class MarkdownFlowFormatter(
     private val processFormatter: ProcessFormatter,
 ) : FlowFormatter {
-    override fun anchors(items: List<Flow>, parentSerial: Int): String =
-        items.mapIndexedToLines { index, item ->
-            val serial = index + 1
-            toAnchorLink(anchor(serial, parentSerial, item.purpose))
-        }
+    override fun anchors(items: List<Flow>): String =
+        items.mapToLines { item -> toAnchorLink(anchor(item.id, item.purpose)) }
 
-    override fun flows(items: List<Flow>, parentSerial: Int) =
-        items.mapIndexedToLines { index, item -> flow(index, parentSerial, item) }
+    override fun flows(items: List<Flow>) =
+        items.mapToLines { item -> flow(item) }
 
-    private fun flow(index: Int, parentSerial: Int, item: Flow) = item.run {
-        val serial = index + 1
-
+    private fun flow(item: Flow) = item.run {
         lineOf(
-            purpose(serial, parentSerial, purpose),
+            purpose(id, purpose),
             complexity(complexity),
             content(processes)
         )
@@ -41,8 +36,8 @@ open class MarkdownFlowFormatter(
         )
     }
 
-    private fun purpose(serial: Int, parentSerial: Int, str: String) = "#### ${anchor(serial, parentSerial, str)}"
-    private fun anchor(serial: Int, parentSerial: Int, str: String) = "Flow $parentSerial-$serial $str"
+    private fun purpose(id: String, str: String) = "#### ${anchor(id, str)}"
+    private fun anchor(id: String, str: String) = "Flow $id $str"
     private fun complexity(complexity: Complexity): String? {
         if (ProjectConfig.isVisible(HiddenOption.COMPLEXITY)) return null
 

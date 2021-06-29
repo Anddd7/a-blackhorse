@@ -16,17 +16,13 @@ data class Story(
     val estimation: Int,
 )
 
-interface Builder<T> {
-    fun build(): T
-}
-
 class StoryBuilder(
     private val name: String,
     private val title: String,
     private val cardId: String,
     private val cardType: CardType,
     private val estimation: Int,
-) : Builder<Story> {
+) {
     private var inScope: String? = null
     private var outOfScope: String? = null
     private val acceptanceCriteria = mutableListOf<AcceptanceCriteriaBuilder>()
@@ -42,8 +38,8 @@ class StoryBuilder(
     fun ac(configure: AcceptanceCriteriaBuilder.() -> Unit) =
         acceptanceCriteria.add(AcceptanceCriteriaBuilder().apply(configure))
 
-    override fun build(): Story {
-        val craftedAcs = acceptanceCriteria.map(AcceptanceCriteriaBuilder::build)
+    fun build(): Story {
+        val craftedAcs = acceptanceCriteria.mapIndexed { index, item -> item.build((index + 1).toString()) }
         val craftedApis = craftedAcs.flatMap(AcceptanceCriteria::apiScenarios)
             .groupBy(ApiScenario::api)
             .map { (key, values) ->

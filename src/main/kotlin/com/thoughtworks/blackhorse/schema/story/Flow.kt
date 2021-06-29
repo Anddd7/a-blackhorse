@@ -1,8 +1,10 @@
 package com.thoughtworks.blackhorse.schema.story
 
 import com.thoughtworks.blackhorse.schema.architecture.Component
+import java.util.concurrent.atomic.AtomicInteger
 
 data class Flow(
+    val id: String,
     val purpose: String,
     val complexity: Complexity,
     val processes: List<FlowProcess>,
@@ -11,7 +13,7 @@ data class Flow(
 class FlowBuilder(
     private val purpose: String,
     private val complexity: Complexity,
-) : Builder<Flow> {
+) {
     private val processes = mutableListOf<FlowProcessBuilder>()
 
     // communicate with others
@@ -24,5 +26,9 @@ class FlowBuilder(
     infix fun Component.reply(fn: () -> String) = call(this) reply fn
     infix fun Component.withApi(api: ApiScenario) = call(this) withApi api
 
-    override fun build() = Flow(purpose, complexity, processes.map(FlowProcessBuilder::build))
+    fun build(id: String): Flow {
+        val increment = AtomicInteger(1)
+
+        return Flow(id, purpose, complexity, processes.mapIndexed { _, item -> item.build(id,increment) })
+    }
 }

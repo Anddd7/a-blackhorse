@@ -1,6 +1,7 @@
 package com.thoughtworks.blackhorse.schema.story
 
 data class AcceptanceCriteria(
+    val id: String,
     val description: String,
     var example: String?,
     var mockup: List<String>,
@@ -12,7 +13,7 @@ data class AcceptanceCriteria(
     internal fun containers() = flows.flatMap(Flow::processes).map(FlowProcess::container)
 }
 
-class AcceptanceCriteriaBuilder : Builder<AcceptanceCriteria> {
+class AcceptanceCriteriaBuilder {
     private var description: String? = null
     private var example: String? = null
     private var mockup = mutableListOf<String>()
@@ -43,14 +44,15 @@ class AcceptanceCriteriaBuilder : Builder<AcceptanceCriteria> {
     fun flow(purpose: String, complexity: Complexity = Complexity.SMALL, configure: FlowBuilder.() -> Unit = {}) =
         flows.add(FlowBuilder(purpose, complexity).apply(configure))
 
-    override fun build() =
+    fun build(id: String) =
         AcceptanceCriteria(
+            id,
             description
                 ?: throw IllegalArgumentException("{description} is required in AcceptanceCriteria!"),
             example,
             mockup,
             link,
             note,
-            flows.map(FlowBuilder::build)
+            flows.mapIndexed { index, item -> item.build("$id-${index+1}") }
         )
 }

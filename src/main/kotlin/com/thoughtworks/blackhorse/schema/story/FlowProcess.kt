@@ -1,8 +1,10 @@
 package com.thoughtworks.blackhorse.schema.story
 
 import com.thoughtworks.blackhorse.schema.architecture.Component
+import java.util.concurrent.atomic.AtomicInteger
 
 data class FlowProcess(
+    val id: String,
     val start: Component,
     val target: Component,
     val accept: String? = null,
@@ -26,7 +28,7 @@ data class FlowProcess(
 data class FlowProcessBuilder(
     val start: Component,
     val target: Component,
-) : Builder<FlowProcess> {
+) {
     var accept: String? = null
     var reply: String? = null
     var targetApiScenario: ApiScenario? = null
@@ -40,8 +42,14 @@ data class FlowProcessBuilder(
     infix fun Component.withApi(api: ApiScenario) = toNext(this) withApi api
     private fun toNext(next: Component) = FlowProcessBuilder(target, next).also(nested::add)
 
-    override fun build(): FlowProcess =
-        FlowProcess(start, target, accept, reply, targetApiScenario, nested.map(FlowProcessBuilder::build))
+    fun build(flowId: String, idGenerator: AtomicInteger): FlowProcess {
+        val processId = flowId + "-" + idGenerator.getAndIncrement()
+
+        return FlowProcess(
+            processId,
+            start, target, accept, reply, targetApiScenario, nested.map { it.build(flowId, idGenerator) }
+        )
+    }
 }
 
 // define process
