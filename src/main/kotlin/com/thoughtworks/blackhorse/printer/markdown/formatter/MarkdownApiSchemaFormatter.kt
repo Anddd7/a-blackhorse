@@ -5,16 +5,14 @@ import com.thoughtworks.blackhorse.schema.story.APISchema
 import com.thoughtworks.blackhorse.schema.story.ApiScenario
 
 class MarkdownApiSchemaFormatter : ApiSchemaFormatter {
-    override fun anchors(items: List<APISchema>): String {
-        if (items.isEmpty()) return ""
-
-        return toAnchorLink("API Schema")
+    override fun anchors(items: List<APISchema>) = when {
+        items.isEmpty() -> ""
+        else -> toAnchorLink("API Schema")
     }
 
-    override fun schemas(items: List<APISchema>): String {
-        if (items.isEmpty()) return ""
-
-        return lineOf(
+    override fun schemas(items: List<APISchema>) = when {
+        items.isEmpty() -> ""
+        else -> lineOf(
             "### API Schema",
             items.map(::schema).toLines()
         )
@@ -28,28 +26,19 @@ class MarkdownApiSchemaFormatter : ApiSchemaFormatter {
         )
     }
 
-    private fun scenario(scenario: ApiScenario): String {
-        val formattedRequest = scenario.request?.let {
-            lineOf(
-                "- Request",
-                "```json",
-                it,
-                "```"
-            )
-        }
-        val formattedResponse = scenario.response?.let {
-            lineOf(
-                "- Response",
-                "```json",
-                it,
-                "```"
-            )
-        }
+    private fun String.formatAsJson(label: String) =
+        lineOf(
+            "- $label",
+            "```json",
+            this,
+            "```"
+        ).prependIndent("  ")
 
+    private fun scenario(scenario: ApiScenario): String {
         return lineOf(
             "- ${scenario.statusDescription}",
-            formattedRequest?.prependIndent("  "),
-            formattedResponse?.prependIndent("  "),
+            scenario.request?.formatAsJson("Request"),
+            scenario.request?.formatAsJson("Response"),
         )
     }
 }

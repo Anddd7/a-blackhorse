@@ -9,14 +9,27 @@ class MarkdownAcceptanceCriteriaFormatter(
 ) : AcceptanceCriteriaFormatter {
     override fun anchors(items: List<AcceptanceCriteria>) =
         items.mapToLines {
-            lineOf(
-                toAnchorLink(anchor(it.id)),
-                flowFormatter.anchors(it.flows).prependIndent("  ")
-            )
+            it.run {
+                lineOf(
+                    toAnchorLink(label(id)),
+                    flowFormatter.anchors(flows).prependIndent("  ")
+                )
+            }
         }
 
-    override fun acceptanceCriteria(items: List<AcceptanceCriteria>): String =
-        items.mapToLines(this::acceptanceCriteria)
+    override fun acceptanceCriteria(items: List<AcceptanceCriteria>) =
+        items.mapToLines {
+            it.run {
+                lineOf(
+                    title(id),
+                    description,
+                    example(example),
+                    mockup(mockup),
+                    link(link),
+                    flowFormatter.flows(flows)
+                )
+            }
+        }
 
     override fun summary(items: List<AcceptanceCriteria>) =
         items.mapToLines { item ->
@@ -28,19 +41,8 @@ class MarkdownAcceptanceCriteriaFormatter(
             )
         }
 
-    private fun acceptanceCriteria(item: AcceptanceCriteria) = item.run {
-        lineOf(
-            title(id),
-            description,
-            example(example),
-            mockup(mockup),
-            link(link),
-            flowFormatter.flows(flows)
-        )
-    }
-
-    private fun title(id: String) = "### ${anchor(id)}"
-    private fun anchor(id: String) = "AC $id"
+    private fun title(id: String) = "### ${label(id)}"
+    private fun label(id: String) = "AC $id"
     private fun example(str: String?) = str?.let {
         lineOf(
             "#### Example",
@@ -48,20 +50,18 @@ class MarkdownAcceptanceCriteriaFormatter(
         )
     }
 
-    private fun mockup(items: List<String>): String? {
-        if (items.isEmpty()) return null
-
-        return lineOf(
+    private fun mockup(items: List<String>) = when {
+        items.isEmpty() -> null
+        else -> lineOf(
             "#### Mockup",
             "----",
             items.mapToLines { "![ac1]($it)" }
         )
     }
 
-    private fun link(items: Map<String, String>): String? {
-        if (items.isEmpty()) return null
-
-        return lineOf(
+    private fun link(items: Map<String, String>) = when {
+        items.isEmpty() -> null
+        else -> lineOf(
             "#### Links",
             items.entries.mapToLines { "- [${it.key}](${it.value})" }
         )

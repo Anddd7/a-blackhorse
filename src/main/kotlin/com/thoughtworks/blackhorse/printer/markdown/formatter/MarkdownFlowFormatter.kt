@@ -15,20 +15,19 @@ open class MarkdownFlowFormatter(
         items.mapToLines { item -> toAnchorLink(anchor(item.id, item.purpose)) }
 
     override fun flows(items: List<Flow>) =
-        items.mapToLines { item -> flow(item) }
+        items.mapToLines { item ->
+            item.run {
+                lineOf(
+                    purpose(id, purpose),
+                    complexity(complexity),
+                    content(processes)
+                )
+            }
+        }
 
-    private fun flow(item: Flow) = item.run {
-        lineOf(
-            purpose(id, purpose),
-            complexity(complexity),
-            content(processes)
-        )
-    }
-
-    private fun content(processes: List<FlowProcess>): String? {
-        if (processes.isEmpty()) return null
-
-        return lineOf(
+    private fun content(processes: List<FlowProcess>) = when {
+        processes.isEmpty() -> null
+        else -> lineOf(
             "##### Processes",
             processDescription(processes),
             "##### Sequence Diagram",
@@ -38,10 +37,9 @@ open class MarkdownFlowFormatter(
 
     private fun purpose(id: String, str: String) = "#### ${anchor(id, str)}"
     private fun anchor(id: String, str: String) = "Flow $id $str"
-    private fun complexity(complexity: Complexity): String? {
-        if (ProjectConfig.isVisible(HiddenOption.COMPLEXITY)) return null
-
-        return when (complexity) {
+    private fun complexity(complexity: Complexity) = when {
+        ProjectConfig.isVisible(HiddenOption.COMPLEXITY) -> null
+        else -> when (complexity) {
             Complexity.OUT_OF_SCOPE -> "Out of Scope"
             else -> complexity.run { "- **Complexity**: $name - about **$minutes** minutes" }
         }

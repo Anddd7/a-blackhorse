@@ -40,7 +40,7 @@ class TaskPerformanceBuilder(
         )
 
     private fun getExpectCost() = when (ProjectConfig.costAlgorithm()) {
-        CostAlgorithmOption.COMPLEXITY -> flow.complexity.minutes
+        CostAlgorithmOption.FLOW -> flow.complexity.minutes
         CostAlgorithmOption.PROCESS -> flow.processes.sumOf { it.definition?.cost ?: 0 }
     }
 }
