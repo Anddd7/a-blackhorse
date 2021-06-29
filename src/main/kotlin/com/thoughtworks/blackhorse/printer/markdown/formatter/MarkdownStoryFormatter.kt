@@ -4,7 +4,6 @@ import com.thoughtworks.blackhorse.printer.interfaces.AcceptanceCriteriaFormatte
 import com.thoughtworks.blackhorse.printer.interfaces.ApiSchemaFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
-import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
 import com.thoughtworks.blackhorse.schema.story.Story
 
 class MarkdownStoryFormatter(

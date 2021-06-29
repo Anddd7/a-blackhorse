@@ -3,7 +3,6 @@ package com.thoughtworks.blackhorse.reporter.formater
 import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.markdown.formatter.mapIndexedToLines
 import com.thoughtworks.blackhorse.printer.markdown.formatter.mapToLines
-import com.thoughtworks.blackhorse.reporter.interfaces.FieldExtractor
 import com.thoughtworks.blackhorse.reporter.interfaces.PerformanceColumns
 import com.thoughtworks.blackhorse.reporter.interfaces.PerformanceFormatter
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformance

@@ -1,7 +1,6 @@
 package com.thoughtworks.blackhorse.schema.performance
 
 import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
-import com.thoughtworks.blackhorse.schema.story.Flow
 import com.thoughtworks.blackhorse.schema.story.Story
 import java.time.LocalDate
 

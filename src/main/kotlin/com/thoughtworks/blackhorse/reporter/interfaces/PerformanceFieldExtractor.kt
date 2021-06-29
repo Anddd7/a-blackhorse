@@ -1,7 +1,7 @@
 package com.thoughtworks.blackhorse.reporter.interfaces
 
-import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 import com.thoughtworks.blackhorse.schema.performance.ProcessPerformance
+import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 
 interface FieldExtractor {
     val name: String

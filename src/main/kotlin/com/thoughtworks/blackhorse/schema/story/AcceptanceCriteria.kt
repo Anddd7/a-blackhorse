@@ -53,6 +53,6 @@ class AcceptanceCriteriaBuilder {
             mockup,
             link,
             note,
-            flows.mapIndexed { index, item -> item.build("$id-${index+1}") }
+            flows.mapIndexed { index, item -> item.build("$id-${index + 1}") }
         )
 }
