@@ -24,6 +24,5 @@ class AcPerformanceBuilder(
         return ac.flows[flows.size]
     }
 
-    fun isAcComplete() = (flows.size == ac.flows.size) to (flows.all { it.isFlowComplete() })
     fun build() = flows.flatMap(FlowPerformanceBuilder::build)
 }
