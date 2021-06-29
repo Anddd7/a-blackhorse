@@ -2,6 +2,7 @@ package com.thoughtworks.blackhorse.schema.performance
 
 import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
 import com.thoughtworks.blackhorse.schema.story.Story
+import com.thoughtworks.blackhorse.utils.findByKeyOrNext
 import java.time.LocalDate
 
 data class StoryPerformance(
@@ -48,6 +49,13 @@ class StoryPerformanceBuilder(
         this.endAt = LocalDate.parse(endAt)
     }
 
+    private val acs = mutableListOf<AcPerformanceBuilder>()
+
+    fun ac(id: String? = null, fn: AcPerformanceBuilder.() -> Unit) {
+        val ac = story.acceptanceCriteria.findByKeyOrNext(AcceptanceCriteria::id, id, acs.size)
+        acs.add(AcPerformanceBuilder(ac).apply(fn))
+    }
+
     fun build() = StoryPerformance(
         story.cardId,
         story.title,
@@ -60,22 +68,4 @@ class StoryPerformanceBuilder(
         endAt ?: throw IllegalArgumentException("missing required data"),
         acs.flatMap(AcPerformanceBuilder::build),
     )
-
-    private val acs = mutableListOf<AcPerformanceBuilder>()
-
-    fun ac(id: String? = null, fn: AcPerformanceBuilder.() -> Unit) {
-        val ac = id?.let(::findAcById) ?: findNextAc()
-        acs.add(AcPerformanceBuilder(ac).apply(fn))
-    }
-
-    private fun findAcById(id: String): AcceptanceCriteria {
-        return story.acceptanceCriteria.find { it.id == id }
-            ?: throw IllegalArgumentException("No such ac with id: $id")
-    }
-
-    private fun findNextAc(): AcceptanceCriteria {
-        if (acs.size == story.acceptanceCriteria.size)
-            throw IllegalArgumentException("You have complete all ac, don't add invalid ac")
-        return story.acceptanceCriteria[acs.size]
-    }
 }
