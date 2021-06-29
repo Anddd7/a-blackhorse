@@ -31,9 +31,9 @@ open class MarkdownProcessFormatter : ProcessFormatter {
         val relations =
             if (component == dependency) component.name()
             else "${component.name()}, depends on $testDouble<${dependency.name()}>"
-        val complexity = complexity.takeIf { ProjectConfig.isVisible(HiddenOption.COMPLEXITY) }
+        val complexity = complexity.label().takeIf { ProjectConfig.isVisible(HiddenOption.COMPLEXITY) }
 
-        return listOfNotNull(prefix, relations, complexity).joinToString("|")
+        return listOfNotNull(prefix, relations, complexity).joinToString(" | ")
     }
 
     private fun FlowProcess.title(): String {

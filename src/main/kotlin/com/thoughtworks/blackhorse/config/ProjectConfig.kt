@@ -29,7 +29,7 @@ data class ProjectConfig(
             ?.map { it.toEnum(HiddenOption::valueOf) }
             ?: emptyList()
 
-    private fun isVisible(hiddenOption: HiddenOption) = hiddenOptions.contains(hiddenOption)
+    private fun isVisible(hiddenOption: HiddenOption) = !hiddenOptions.contains(hiddenOption)
     private fun distDir(): Path = Paths.get(getOr("dist_dir", "dist")).resolve(projectName)
 
     companion object {
