@@ -5,7 +5,7 @@ import com.thoughtworks.blackhorse.config.StoryConfig
 import com.thoughtworks.blackhorse.printer.PrinterOption
 import com.thoughtworks.blackhorse.printer.interfaces.StoryPrinter
 import com.thoughtworks.blackhorse.schema.performance.CardType
-import com.thoughtworks.blackhorse.schema.performance.PerformanceBuilder
+import com.thoughtworks.blackhorse.schema.performance.StoryPerformanceBuilder
 import com.thoughtworks.blackhorse.utils.extractProjectName
 
 open class StoryOf(
@@ -14,14 +14,14 @@ open class StoryOf(
     private val cardId: String? = null,
     val cardType: CardType = CardType.STORY,
     val configure: StoryBuilder.() -> Unit,
-    val tracking: PerformanceBuilder.() -> Unit = {},
+    val tracking: StoryPerformanceBuilder.() -> Unit = {},
 ) {
     fun getName(): String = javaClass.simpleName
     fun getCardId(): String = cardId ?: getName()
     fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
     fun buildStory() = StoryBuilder(getName(), title, getCardId(), cardType, estimation.value).apply(configure).build()
-    fun buildPerformance() = PerformanceBuilder(buildStory()).apply(tracking).build()
+    fun buildPerformance() = StoryPerformanceBuilder(buildStory()).apply(tracking).build()
 
     override fun toString(): String = getCardId()
 }

@@ -4,7 +4,7 @@ import com.thoughtworks.blackhorse.config.GlobalConfig
 import com.thoughtworks.blackhorse.config.ProjectConfig
 import com.thoughtworks.blackhorse.config.ProjectConfig.Companion.getProjectFile
 import com.thoughtworks.blackhorse.reporter.formater.MarkdownPerformanceFormatter
-import com.thoughtworks.blackhorse.schema.performance.Performance
+import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 import com.thoughtworks.blackhorse.schema.story.StoryOf
 import com.thoughtworks.blackhorse.schema.story.evaluate
 import com.thoughtworks.blackhorse.utils.findStories
@@ -25,7 +25,7 @@ object PerformancePrinter {
     }
 
     private fun getPerformances(projectName: String) =
-        findStories(projectName).mapNotNull(StoryOf::evaluate).sortedBy(Performance::startAt)
+        findStories(projectName).mapNotNull(StoryOf::evaluate).sortedBy(StoryPerformance::startAt)
 }
 
 fun main() {

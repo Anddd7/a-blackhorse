@@ -3,7 +3,7 @@ package com.thoughtworks.blackhorse.schema.performance
 import com.thoughtworks.blackhorse.schema.story.Story
 import java.time.LocalDate
 
-data class Performance(
+data class StoryPerformance(
     val cardId: String,
     val cardTitle: String,
     val cardType: CardType,
@@ -13,16 +13,16 @@ data class Performance(
     val developer: String,
     val startAt: LocalDate,
     val endAt: LocalDate,
-    val tasks: List<TaskPerformance>
+    val flows: List<FlowPerformance>
 ) {
-    fun withTaskIds() = tasks.indices.map { this to it }
+    fun withTaskIds() = flows.indices.map { this to it }
 }
 
 interface Member {
     fun name(): String
 }
 
-class PerformanceBuilder(
+class StoryPerformanceBuilder(
     val story: Story
 ) {
     private var reporter: String? = null
@@ -30,7 +30,6 @@ class PerformanceBuilder(
     private var developer: String? = null
     private var startAt: LocalDate? = null
     private var endAt: LocalDate? = null
-    private val tasks: MutableList<TaskPerformanceBuilder> = mutableListOf()
 
     fun decomposition(reporter: String, decompositionCost: Int) {
         this.reporter = reporter
@@ -54,7 +53,7 @@ class PerformanceBuilder(
         this.endAt = LocalDate.parse(endAt)
     }
 
-    fun build() = Performance(
+    fun build() = StoryPerformance(
         story.cardId,
         story.title,
         story.cardType,
@@ -65,8 +64,8 @@ class PerformanceBuilder(
         startAt ?: throw IllegalArgumentException("missing required data"),
         endAt ?: throw IllegalArgumentException("missing required data"),
         acs.flatMap(AcPerformanceBuilder::tasks)
-            .map(TaskPerformanceBuilder::build)
-            .sortedBy(TaskPerformance::order),
+            .map(FlowPerformanceBuilder::build)
+            .sortedBy(FlowPerformance::order),
     )
 
     private val acs = mutableListOf<AcPerformanceBuilder>()

@@ -1,7 +1,7 @@
 package com.thoughtworks.blackhorse.reporter.interfaces
 
-import com.thoughtworks.blackhorse.schema.performance.Performance
+import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 
 interface PerformanceFormatter {
-    fun performances(items: List<Performance>): String
+    fun performances(items: List<StoryPerformance>): String
 }
