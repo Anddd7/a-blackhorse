@@ -19,6 +19,9 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.5.0")
+
     implementation(files("libs/plantuml.1.2021.5.jar"))
 
     implementation("org.apache.httpcomponents:httpmime:4.5.13")
