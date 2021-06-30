@@ -5,6 +5,7 @@ import com.thoughtworks.blackhorse.schema.performance.CardType
 
 data class Story(
     val name: String,
+    val project: String,
     val title: String,
     val cardId: String,
     val inScope: String?,
@@ -18,6 +19,7 @@ data class Story(
 
 class StoryBuilder(
     private val name: String,
+    private val project: String,
     private val title: String,
     private val cardId: String,
     private val cardType: CardType,
@@ -51,6 +53,7 @@ class StoryBuilder(
 
         return Story(
             name,
+            project,
             title,
             cardId,
             inScope,

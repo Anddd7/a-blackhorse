@@ -1,5 +1,6 @@
 package com.thoughtworks.blackhorse.printer.jira.api
 
+import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.jira.model.JiraIssue
 import com.thoughtworks.blackhorse.schema.story.HttpMethod
 import com.thoughtworks.blackhorse.utils.HttpClient
@@ -13,9 +14,12 @@ import java.nio.file.Path
 import kotlin.io.path.name
 
 private fun uploadIssueAttachment(key: String, file: Path) {
+    val context = StoryContextHolder.get().jira()
+
     val response = HttpClient.execute(
         HttpMethod.POST,
-        JiraRestConfig.issueAttachments(key),
+        context.issueAttachments(key),
+        context.headers(),
         MultipartEntityBuilder.create()
             .addPart("file", FileBody(file.toFile()))
             .build()
@@ -24,17 +28,23 @@ private fun uploadIssueAttachment(key: String, file: Path) {
 }
 
 private fun deleteAttachment(id: String) {
+    val context = StoryContextHolder.get().jira()
+
     val response = HttpClient.execute(
         HttpMethod.DELETE,
-        JiraRestConfig.attachment(id),
+        context.attachment(id),
+        context.headers(),
     )
     logApiPayload(response)
 }
 
 private fun getIssue(key: String): JiraIssue {
+    val context = StoryContextHolder.get().jira()
+
     val response = HttpClient.execute<JiraIssue>(
         HttpMethod.GET,
-        JiraRestConfig.issue(key)
+        context.issue(key),
+        context.headers(),
     )
     return response ?: throw IllegalArgumentException("Invalid jira issue key")
 }
@@ -46,9 +56,12 @@ fun updateCardInformation(
     points: Int,
     description: String,
 ) {
+    val context = StoryContextHolder.get().jira()
+
     val response = HttpClient.execute(
         HttpMethod.PUT,
-        JiraRestConfig.issue(key),
+        context.issue(key),
+        context.headers(),
         StringEntity(
             """
                 {
@@ -69,8 +82,8 @@ fun updateAttachments(key: String, files: List<Path>) {
     val filenames = files.map(Path::name).toSet()
     val attachments = getIssue(key).fields.attachment.filter { it.filename in filenames }
 
-    attachments.forEach {
-        println("find existing attachment, delete and re-upload again")
+    attachments.map {
+        logApiPayload("find existing attachment, delete and re-upload again")
         deleteAttachment(it.id)
     }
     files.forEach {

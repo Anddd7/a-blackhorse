@@ -12,7 +12,6 @@ import com.thoughtworks.blackhorse.schema.story.HttpMethod
 import com.thoughtworks.blackhorse.schema.story.HttpStatus
 import com.thoughtworks.blackhorse.schema.story.StoryOf
 import com.thoughtworks.blackhorse.schema.story.accept
-import com.thoughtworks.blackhorse.schema.story.print
 import com.thoughtworks.blackhorse.schema.story.reply
 import com.thoughtworks.blackhorse.schema.story.then
 import com.thoughtworks.blackhorse.schema.story.withApi

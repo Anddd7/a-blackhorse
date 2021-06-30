@@ -1,13 +1,16 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.config.HiddenOption
-import com.thoughtworks.blackhorse.config.ProjectConfig
+import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
 import com.thoughtworks.blackhorse.schema.architecture.TestDouble
 import com.thoughtworks.blackhorse.schema.story.FlowProcess
+import org.slf4j.LoggerFactory
 
 open class MarkdownProcessFormatter : ProcessFormatter {
+    private val log = LoggerFactory.getLogger(this.javaClass)
+
     override fun process(process: FlowProcess): String {
         val title = process.title()
         val testDouble = process.dependency()
@@ -27,18 +30,20 @@ open class MarkdownProcessFormatter : ProcessFormatter {
     }
 
     private fun ProcessDefinition.title(): String {
+        val context = StoryContextHolder.get()
+
         val prefix = "Process $name"
         val relations =
             if (component == dependency) component.name()
             else "${component.name()}, depends on $testDouble<${dependency.name()}>"
-        val complexity = complexity.label().takeIf { ProjectConfig.isVisible(HiddenOption.COMPLEXITY) }
+        val complexity = complexity.label().takeIf { context.isVisible(HiddenOption.COMPLEXITY) }
 
         return listOfNotNull(prefix, relations, complexity).joinToString(" | ")
     }
 
     private fun FlowProcess.title(): String {
         if (definition == null) {
-            println("!![WARNING] No process definition between [$startName] and [$targetName].")
+            log.warn("!![WARNING] No process definition between [$startName] and [$targetName].")
             return "Inner Logic | $startName"
         }
 

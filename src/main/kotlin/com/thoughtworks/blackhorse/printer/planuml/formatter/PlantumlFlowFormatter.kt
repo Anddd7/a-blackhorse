@@ -1,7 +1,6 @@
 package com.thoughtworks.blackhorse.printer.planuml.formatter
 
-import com.thoughtworks.blackhorse.config.ProjectConfig
-import com.thoughtworks.blackhorse.config.StoryConfig.Companion.getTempFile
+import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.PdfEngine
 import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
@@ -31,6 +30,8 @@ class PlantumlFlowFormatter(
 ) : MarkdownFlowFormatter(processFormatter) {
 
     override fun processDiagram(processes: List<FlowProcess>): String {
+        val context = StoryContextHolder.get()
+
         val fileFormat = when (pdfEngine) {
             PdfEngine.DEFAULT -> FileFormat.SVG
             PdfEngine.LATEX -> FileFormat.PNG
@@ -42,7 +43,7 @@ class PlantumlFlowFormatter(
 
         val umlSource = uml(processes)
         val tempFile = generateTempFile(umlSource, fileFormat)
-        val relativePath = ProjectConfig.distDir().relativize(tempFile)
+        val relativePath = context.distPath.relativize(tempFile)
 
         return "$padding![${tempFile.fileName.nameWithoutExtension}]($relativePath)"
     }
@@ -94,6 +95,8 @@ class PlantumlFlowFormatter(
         processes.map(processFormatter::diagram).toLines()
 
     private fun generateTempFile(source: String, fileFormat: FileFormat): Path {
+        val context = StoryContextHolder.get()
+
         val reader = SourceStringReader(source)
         val os = ByteArrayOutputStream().apply {
             use {
@@ -101,7 +104,7 @@ class PlantumlFlowFormatter(
             }
         }
         val fileName = UUID.randomUUID().toString()
-        val temp = getTempFile("$fileName.${fileFormat.ext()}")
+        val temp = context.getTempFile("$fileName.${fileFormat.ext()}")
         Files.write(temp, os.toByteArray())
         return temp
     }

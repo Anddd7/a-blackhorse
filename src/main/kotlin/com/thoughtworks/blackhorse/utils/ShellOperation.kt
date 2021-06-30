@@ -1,14 +1,18 @@
 package com.thoughtworks.blackhorse.utils
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import kotlin.streams.toList
 
 object ShellOperation {
-    fun execute(cli: ShellCli, vararg parameters: Any, success: (List<String>) -> Unit = { it.forEach(::println) }) {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
+    fun execute(cli: ShellCli, vararg parameters: Any, success: (List<String>) -> Unit = { it.forEach(log::info) }) {
         val cmd = cli.with(*parameters)
 
-        println("Shell Execution: $cmd")
+        log.info("Shell Execution: $cmd")
 
         val pr = Runtime.getRuntime().exec(cmd).apply { waitFor() }
         BufferedReader(InputStreamReader(pr.inputStream)).apply {
@@ -16,7 +20,7 @@ object ShellOperation {
         }
         BufferedReader(InputStreamReader(pr.errorStream)).apply {
             var line: String?
-            while (readLine().also { line = it } != null) println(line)
+            while (readLine().also { line = it } != null) log.error(line)
         }
     }
 
