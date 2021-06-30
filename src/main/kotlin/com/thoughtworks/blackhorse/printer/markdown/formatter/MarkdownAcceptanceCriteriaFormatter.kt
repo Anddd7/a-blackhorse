@@ -61,7 +61,7 @@ class MarkdownAcceptanceCriteriaFormatter(
             "----",
             items
                 .map { if (ignorePath) it.substringAfter("/") else it }
-                .mapToLines { "![ac1]($it)" }
+                .mapToLines { "![img]($it)" }
         )
     }
 

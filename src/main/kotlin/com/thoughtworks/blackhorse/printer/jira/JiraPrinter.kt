@@ -19,24 +19,30 @@ class JiraPrinter(
         val cardId = story.cardId
         val pdf = outputDocumentationPdf(StoryConfig.storyName(), story)
         val jira = outputJiraDescription(StoryConfig.storyName(), story)
-        val mockups = story.acceptanceCriteria.flatMap(AcceptanceCriteria::mockup).map { Path.of(it) }
+        val mockups = story.acceptanceCriteria
+            .flatMap(AcceptanceCriteria::mockup)
+            .map { ProjectConfig.distDir().resolve(it) }
 
         logJiraWelcome()
 
         updateAttachment(cardId, pdf)
-        updateDescription(
-            cardId,
-            description = Files.readAllLines(jira)
-                .joinToString("\\r\\n")
-                .replace("\\(", "(")
-                .replace(Regex("bq. !temp/.*\\.png!"), "")
-                // .replace("\n", "\r\n")
-                .replace("\\[", "[")
-                .replace("\\]", "]")
-                .replace("-", "")
-                .replace(">", "")
-        )
+        updateDescription(cardId, description = formatJiraDescription(jira))
         mockups.forEach { updateAttachment(cardId, it) }
+    }
+
+    private fun formatJiraDescription(jira: Path): String {
+        val imgRegex = "!([^|]*)\\|alt=img!".toRegex()
+
+        return Files.readAllLines(jira)
+            .asSequence()
+            .map { it.replace("\\(", "(") }
+            .map { it.replace("\\[", "[") }
+            .map {
+                it.replace(imgRegex) { match ->
+                    "!${match.groupValues[1]}|width=600!"
+                }
+            }
+            .joinToString("\\r\\n")
     }
 
     override fun preview(story: Story) {
