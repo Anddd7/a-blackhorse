@@ -1,20 +1,28 @@
 package com.thoughtworks.blackhorse.automation
 
+import com.thoughtworks.blackhorse.schema.story.infoTime
 import com.thoughtworks.blackhorse.utils.ShellCli
 import com.thoughtworks.blackhorse.utils.ShellOperation
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object AutoBuild {
-    fun build(filesFromCI: List<String>) {
-        val files = filesFromCI.ifEmpty { findChangedFiles() }
-            .filter(this::isProjectFiles)
-            .map(this::toClassPath)
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
-        val hasArchitectureChanges = AutoBuildArchitectures.build(files)
-        val hasStoriesChanges = hasArchitectureChanges || AutoBuildStories.build(files)
-        if (hasStoriesChanges) AutoBuildReports.build(files)
+    fun build(filesFromCI: List<String>) {
+        log.infoTime("AutoBuild") {
+            val files = filesFromCI.ifEmpty { findChangedFiles() }
+                .filter(this::isProjectFiles)
+                .map(this::toClassPath)
+
+            val hasArchitectureChanges = AutoBuildArchitectures.build(files)
+            val hasStoriesChanges = AutoBuildStories.build(files)
+            if (hasArchitectureChanges || hasStoriesChanges) AutoBuildReports.build(files)
+        }
     }
 
     private fun findChangedFiles(): List<String> {
+        log.info("locally rebuild, find changed files from git history")
         var files: List<String> = emptyList()
         ShellOperation.execute(ShellCli.DIFFILE) {
             files = it
