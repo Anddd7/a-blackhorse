@@ -1,8 +1,15 @@
 package com.thoughtworks.blackhorse.printer.interfaces
 
 import com.thoughtworks.blackhorse.schema.story.Story
+import org.slf4j.LoggerFactory
+
+private val log = LoggerFactory.getLogger(StoryPrinter::class.java)
 
 interface StoryPrinter {
-    fun story(story: Story)
-    fun preview(story: Story) = story(story)
+    fun start(story: Story)
+    fun print(story: Story) {
+        log.info("Printing story [${story.name}] in [${story.project}] with ${this.javaClass.simpleName}")
+        start(story)
+        log.info("Done story [${story.name}]")
+    }
 }
