@@ -1,31 +1,46 @@
 package com.thoughtworks.blackhorse.reporter
 
-import com.thoughtworks.blackhorse.config.GlobalConfig
-import com.thoughtworks.blackhorse.config.ProjectConfig
-import com.thoughtworks.blackhorse.config.ProjectConfig.Companion.getProjectFile
+import com.thoughtworks.blackhorse.config.ProjectContext
+import com.thoughtworks.blackhorse.config.PropertyLoader
 import com.thoughtworks.blackhorse.reporter.formater.MarkdownPerformanceFormatter
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 import com.thoughtworks.blackhorse.schema.story.StoryOf
-import com.thoughtworks.blackhorse.schema.story.evaluate
 import com.thoughtworks.blackhorse.utils.findStories
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import org.slf4j.LoggerFactory
 import java.nio.file.Files
 
 object PerformancePrinter {
-    fun printReports() {
-        GlobalConfig.projects.keys.forEach { rebuildProjectReport(it) }
-    }
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
-    fun rebuildProjectReport(projectName: String) {
-        ProjectConfig.execute(projectName) {
-            val rawData = getPerformances(projectName)
-            val content = MarkdownPerformanceFormatter.performances(rawData)
-            val file = getProjectFile("performance-report.md")
-            Files.writeString(file, content)
+    fun printReports(projectKeys: Set<String> = PropertyLoader.projects.keys) {
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                projectKeys.map {
+                    async { rebuildProjectReport(it) }
+                }.awaitAll()
+            }
         }
     }
 
+    private fun rebuildProjectReport(projectName: String) {
+        log.info("Start > rebuilding performance report for [$projectName]...")
+
+        val context = ProjectContext.load(projectName)
+        val rawData = getPerformances(context.projectName)
+        val content = MarkdownPerformanceFormatter.performances(rawData)
+        val file = context.getProjectFile("performance-report.md")
+        Files.writeString(file, content)
+
+        log.info("End < rebuilding performance report for [$projectName]...")
+    }
+
     private fun getPerformances(projectName: String) =
-        findStories(projectName).mapNotNull(StoryOf::evaluate).sortedBy(StoryPerformance::startAt)
+        findStories(projectName).mapNotNull(StoryOf::buildPerformance).sortedBy(StoryPerformance::startAt)
 }
 
 fun main() {

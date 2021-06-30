@@ -2,31 +2,29 @@ package com.thoughtworks.blackhorse.automation
 
 import com.thoughtworks.blackhorse.reporter.PerformancePrinter
 import com.thoughtworks.blackhorse.utils.extractProjectName
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 object AutoBuildReports {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
     fun build(files: List<String>) {
         val projectNames = filterProjects(files)
         logBeforeRebuild()
-        projectNames.forEach(PerformancePrinter::rebuildProjectReport)
+        PerformancePrinter.printReports(projectNames)
         logAfterRebuild()
     }
 
     private fun logAfterRebuild() {
-        println(
-            """
-            | --> Done Automation Build Reports
-            -------------------------------------------------------
-            """.trimIndent()
-        )
+        log.info("-------------------------------------------------------")
+        log.info("| --> Done Automation Build Reports")
+        log.info("-------------------------------------------------------")
     }
 
     private fun logBeforeRebuild() {
-        println(
-            """
-            -------------------------------------------------------
-            | --> Start Automation Build Reports
-            """.trimIndent()
-        )
+        log.info("-------------------------------------------------------")
+        log.info("| --> Start Automation Build Reports")
+        log.info("-------------------------------------------------------")
     }
 
     private fun filterProjects(files: List<String>) =
