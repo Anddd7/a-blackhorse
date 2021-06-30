@@ -39,7 +39,7 @@ class MarkdownAcceptanceCriteriaFormatter(
                     description,
                     example(example),
                     note(note),
-                    mockup(mockup),
+                    mockup(mockup, ignorePath = true),
                     link(link),
                 )
             }
@@ -54,12 +54,14 @@ class MarkdownAcceptanceCriteriaFormatter(
         )
     }
 
-    private fun mockup(items: List<String>) = when {
+    private fun mockup(items: List<String>, ignorePath: Boolean = false) = when {
         items.isEmpty() -> null
         else -> lineOf(
             "#### Mockup",
             "----",
-            items.mapToLines { "![ac1]($it)" }
+            items
+                .map { if (ignorePath) it.substringAfter("/") else it }
+                .mapToLines { "![ac1]($it)" }
         )
     }
 
