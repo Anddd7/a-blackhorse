@@ -56,11 +56,15 @@ fun updateDescription(key: String, description: String) {
     logApiPayload(response)
 }
 
-fun updateAttachment(key: String, file: Path) {
-    val attachment = getIssue(key).fields.attachment.filter { it.filename == file.name }
-    attachment.forEach {
+fun updateAttachments(key: String, files: List<Path>) {
+    val filenames = files.map(Path::name).toSet()
+    val attachments = getIssue(key).fields.attachment.filter { it.filename in filenames }
+
+    attachments.forEach {
         println("find existing attachment, delete and re-upload again")
         deleteAttachment(it.id)
     }
-    uploadIssueAttachment(key, file)
+    files.forEach {
+        uploadIssueAttachment(key, it)
+    }
 }

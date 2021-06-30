@@ -3,7 +3,7 @@ package com.thoughtworks.blackhorse.printer.jira
 import com.thoughtworks.blackhorse.config.ProjectConfig
 import com.thoughtworks.blackhorse.config.StoryConfig
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
-import com.thoughtworks.blackhorse.printer.jira.api.updateAttachment
+import com.thoughtworks.blackhorse.printer.jira.api.updateAttachments
 import com.thoughtworks.blackhorse.printer.jira.api.updateDescription
 import com.thoughtworks.blackhorse.printer.pdf.PandocPdfPrinter
 import com.thoughtworks.blackhorse.printer.pdf.executePandoc
@@ -25,9 +25,8 @@ class JiraPrinter(
 
         logJiraWelcome()
 
-        updateAttachment(cardId, pdf)
+        updateAttachments(cardId, mockups + pdf)
         updateDescription(cardId, description = formatJiraDescription(jira))
-        mockups.forEach { updateAttachment(cardId, it) }
     }
 
     private fun formatJiraDescription(jira: Path): String {
