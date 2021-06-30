@@ -33,6 +33,8 @@ class AcceptanceCriteriaBuilder {
         mockup.add(url)
     }
 
+    fun mockupLocalPng(filename: String) = mockup("img/$filename.png")
+
     fun link(title: String, url: String) {
         link[title] = url
     }

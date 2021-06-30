@@ -8,6 +8,7 @@ import org.apache.http.entity.ContentType
 import org.apache.http.entity.StringEntity
 import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.entity.mime.content.FileBody
+import java.math.BigDecimal
 import java.nio.file.Path
 import kotlin.io.path.name
 
@@ -38,7 +39,13 @@ private fun getIssue(key: String): JiraIssue {
     return response ?: throw IllegalArgumentException("Invalid jira issue key")
 }
 
-fun updateDescription(key: String, description: String) {
+// TODO estimation is not a named field in jira, so it cannot reused cross projects
+fun updateCardInformation(
+    key: String,
+    title: String,
+    points: Int,
+    description: String,
+) {
     val response = HttpClient.execute(
         HttpMethod.PUT,
         JiraRestConfig.issue(key),
@@ -46,6 +53,8 @@ fun updateDescription(key: String, description: String) {
             """
                 {
                     "fields":{
+                        "summary": "$title",
+                        "customfield_10008": ${BigDecimal(points).setScale(1)},
                         "description": "$description"
                     }
                 }

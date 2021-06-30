@@ -4,7 +4,7 @@ import com.thoughtworks.blackhorse.config.ProjectConfig
 import com.thoughtworks.blackhorse.config.StoryConfig
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
 import com.thoughtworks.blackhorse.printer.jira.api.updateAttachments
-import com.thoughtworks.blackhorse.printer.jira.api.updateDescription
+import com.thoughtworks.blackhorse.printer.jira.api.updateCardInformation
 import com.thoughtworks.blackhorse.printer.pdf.PandocPdfPrinter
 import com.thoughtworks.blackhorse.printer.pdf.executePandoc
 import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
@@ -26,7 +26,7 @@ class JiraPrinter(
         logJiraWelcome()
 
         updateAttachments(cardId, mockups + listOf(pdf))
-        updateDescription(cardId, description = formatJiraDescription(jira))
+        updateCardInformation(cardId, story.title, story.estimation, formatJiraDescription(jira))
     }
 
     private fun formatJiraDescription(jira: Path): String {
@@ -36,6 +36,7 @@ class JiraPrinter(
             .asSequence()
             .map { it.replace("\\(", "(") }
             .map { it.replace("\\[", "[") }
+            .map { it.replace("\"", "\\\"") }
             .map {
                 it.replace(imgRegex) { match ->
                     "!${match.groupValues[1]}|width=600!"
