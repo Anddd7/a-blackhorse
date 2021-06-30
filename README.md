@@ -33,12 +33,15 @@
 
 ### Backlogs
 
+- [ ] 协程改造
 - [ ] 效能报告优化 - excel
 - [ ] 集中显示api schema 合并AC中的时序图（按不同层级进行合并）(低优先级)
 - [ ] 生成对应的测试报告
 - [ ] 插件化 - idea代码模板
 - [ ] 插件化 - idea生成快捷键
 - [ ] 插件化 - idea codegen
+- [ ] okhttp 替换 httpclient
+
 - [ ] ~~CI/CD commit 自动化生成~~ 暂无好的方案
 
 ### Issues
