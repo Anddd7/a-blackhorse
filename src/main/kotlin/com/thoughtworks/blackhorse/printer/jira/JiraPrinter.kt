@@ -25,7 +25,7 @@ class JiraPrinter(
 
         logJiraWelcome()
 
-        updateAttachments(cardId, mockups + pdf)
+        updateAttachments(cardId, mockups + listOf(pdf))
         updateDescription(cardId, description = formatJiraDescription(jira))
     }
 
