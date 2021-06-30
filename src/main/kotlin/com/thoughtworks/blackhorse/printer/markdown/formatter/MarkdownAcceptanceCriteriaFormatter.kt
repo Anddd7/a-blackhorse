@@ -32,13 +32,17 @@ class MarkdownAcceptanceCriteriaFormatter(
         }
 
     override fun summary(items: List<AcceptanceCriteria>) =
-        items.mapToLines { item ->
-            lineOf(
-                title(item.id),
-                item.description,
-                example(item.example),
-                note(item.note),
-            )
+        items.mapToLines {
+            it.run {
+                lineOf(
+                    title(id),
+                    description,
+                    example(example),
+                    note(note),
+                    mockup(mockup),
+                    link(link),
+                )
+            }
         }
 
     private fun title(id: String) = "### ${label(id)}"

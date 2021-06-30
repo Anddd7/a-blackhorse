@@ -7,6 +7,7 @@ import com.thoughtworks.blackhorse.printer.jira.api.updateAttachment
 import com.thoughtworks.blackhorse.printer.jira.api.updateDescription
 import com.thoughtworks.blackhorse.printer.pdf.PandocPdfPrinter
 import com.thoughtworks.blackhorse.printer.pdf.executePandoc
+import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
 import com.thoughtworks.blackhorse.schema.story.Story
 import java.nio.file.Files
 import java.nio.file.Path
@@ -15,26 +16,27 @@ class JiraPrinter(
     private val formatter: StoryFormatter,
 ) : PandocPdfPrinter(formatter) {
     override fun story(story: Story) {
+        val cardId = story.cardId
         val pdf = outputDocumentationPdf(StoryConfig.storyName(), story)
         val jira = outputJiraDescription(StoryConfig.storyName(), story)
+        val mockups = story.acceptanceCriteria.flatMap(AcceptanceCriteria::mockup).map { Path.of(it) }
 
-        story.cardId.let {
-            logJiraWelcome()
+        logJiraWelcome()
 
-            updateAttachment(it, pdf)
-            updateDescription(
-                it,
-                description = Files.readAllLines(jira)
-                    .joinToString("\\r\\n")
-                    .replace("\\(", "(")
-                    .replace(Regex("bq. !temp/.*\\.png!"), "")
-                    // .replace("\n", "\r\n")
-                    .replace("\\[", "[")
-                    .replace("\\]", "]")
-                    .replace("-", "")
-                    .replace(">", "")
-            )
-        }
+        updateAttachment(cardId, pdf)
+        updateDescription(
+            cardId,
+            description = Files.readAllLines(jira)
+                .joinToString("\\r\\n")
+                .replace("\\(", "(")
+                .replace(Regex("bq. !temp/.*\\.png!"), "")
+                // .replace("\n", "\r\n")
+                .replace("\\[", "[")
+                .replace("\\]", "]")
+                .replace("-", "")
+                .replace(">", "")
+        )
+        mockups.forEach { updateAttachment(cardId, it) }
     }
 
     override fun preview(story: Story) {
