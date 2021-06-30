@@ -1,6 +1,5 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
-import com.thoughtworks.blackhorse.schema.story.CommonComplexity
 import com.thoughtworks.blackhorse.schema.story.Complexity
 
 data class ProcessDefinition(
@@ -26,7 +25,7 @@ data class ProcessDefinitionBuilder(
             component,
             dependency,
             testDouble,
-            complexity ?: CommonComplexity.DONE_ALREADY,
+            complexity ?: Complexity.NONE,
             description ?: ""
         )
 }

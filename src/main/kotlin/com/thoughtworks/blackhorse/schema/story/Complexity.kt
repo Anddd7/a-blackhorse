@@ -6,15 +6,14 @@ interface Complexity {
 
     companion object {
         fun of(cost: Int): Complexity = DynamicComplexity(cost)
+        val NONE = of(0)
+        val SMALL = of(30)
+        val MEDIUM = of(60)
+        val LARGE = of(120)
+
+        @Deprecated("better to split this process")
+        val HUGE = of(240)
     }
 
     private data class DynamicComplexity(override val cost: Int) : Complexity
-}
-
-enum class CommonComplexity(override val cost: Int) : Complexity {
-    DONE_ALREADY(0),
-    SMALL(30),
-    MEDIUM(60),
-    LARGE(120),
-    HUGE(240),
 }
