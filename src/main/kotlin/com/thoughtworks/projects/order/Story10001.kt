@@ -6,12 +6,12 @@ import com.thoughtworks.blackhorse.schema.performance.blocked
 import com.thoughtworks.blackhorse.schema.performance.by
 import com.thoughtworks.blackhorse.schema.performance.cause
 import com.thoughtworks.blackhorse.schema.performance.cost
+import com.thoughtworks.blackhorse.schema.story.StoryOf
+import com.thoughtworks.blackhorse.schema.story.accept
 import com.thoughtworks.blackhorse.schema.story.attributes.API
 import com.thoughtworks.blackhorse.schema.story.attributes.Estimation
 import com.thoughtworks.blackhorse.schema.story.attributes.HttpMethod
 import com.thoughtworks.blackhorse.schema.story.attributes.HttpStatus
-import com.thoughtworks.blackhorse.schema.story.StoryOf
-import com.thoughtworks.blackhorse.schema.story.accept
 import com.thoughtworks.blackhorse.schema.story.reply
 import com.thoughtworks.blackhorse.schema.story.then
 import com.thoughtworks.blackhorse.schema.story.withApi
