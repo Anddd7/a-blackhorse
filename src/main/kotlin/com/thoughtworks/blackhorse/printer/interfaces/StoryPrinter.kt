@@ -8,8 +8,8 @@ private val log = LoggerFactory.getLogger(StoryPrinter::class.java)
 interface StoryPrinter {
     fun start(story: Story)
     fun print(story: Story) {
-        log.info("Printing story [${story.name}] in [${story.project}] with ${this.javaClass.simpleName}")
+        log.info("🪁 Printing story [${story.name}] in [${story.project}] with ${this.javaClass.simpleName}")
         start(story)
-        log.info("Done story [${story.name}]")
+        log.info("🪁 **** 🆗 Done story [${story.name}]")
     }
 }

@@ -5,6 +5,10 @@ import com.thoughtworks.blackhorse.printer.jira.model.JiraIssue
 import com.thoughtworks.blackhorse.schema.story.HttpMethod
 import com.thoughtworks.blackhorse.utils.HttpClient
 import com.thoughtworks.blackhorse.utils.logApiPayload
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.runBlocking
 import org.apache.http.entity.ContentType
 import org.apache.http.entity.StringEntity
 import org.apache.http.entity.mime.MultipartEntityBuilder
@@ -82,11 +86,14 @@ fun updateAttachments(key: String, files: List<Path>) {
     val filenames = files.map(Path::name).toSet()
     val attachments = getIssue(key).fields.attachment.filter { it.filename in filenames }
 
-    attachments.map {
-        logApiPayload("find existing attachment, delete and re-upload again")
-        deleteAttachment(it.id)
-    }
-    files.forEach {
-        uploadIssueAttachment(key, it)
+    runBlocking(Dispatchers.IO + StoryContextHolder.asContextElement()) {
+        attachments.map {
+            logApiPayload("find existing attachment, delete and re-upload again")
+            async { deleteAttachment(it.id) }
+        }.awaitAll()
+
+        files.map {
+            async { uploadIssueAttachment(key, it) }
+        }.awaitAll()
     }
 }

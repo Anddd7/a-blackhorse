@@ -60,9 +60,9 @@ open class StoryOf(
 fun Logger.infoTime(mode: String, fn: () -> Unit) {
     val startTime = System.currentTimeMillis()
     info("*******************************************************")
-    info("Start Printing ...")
-    info("Execution Mode: #$mode")
+    info("🍖 Start Printing ...")
+    info("✈️ Execution Mode: ☑️ $mode")
     fn()
-    info("Finished, cost [${System.currentTimeMillis() - startTime}] ms")
+    info("🍻 Finished, cost [${System.currentTimeMillis() - startTime}] ms")
     info("*******************************************************")
 }

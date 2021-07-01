@@ -20,10 +20,11 @@ import java.io.InputStreamReader
 import kotlin.streams.toList
 
 private val gson = Gson()
-private val log: Logger = LoggerFactory.getLogger(HttpClient.javaClass)
-fun logApiPayload(text: String?) = text?.let { log.info(">\t{}", it) }
+fun logApiPayload(text: String?) = text?.let { HttpClient.log.info(">\t{}", it) }
 
 object HttpClient {
+    val log: Logger = LoggerFactory.getLogger(HttpClient.javaClass)
+
     fun execute(method: HttpMethod, url: String, headers: Array<BasicHeader>, entity: HttpEntity? = null) =
         execute<String>(method, url, headers, entity)
 
