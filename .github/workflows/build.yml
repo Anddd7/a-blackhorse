@@ -1,5 +1,5 @@
 name: Build
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   gradleValidation:
     name: Gradle Wrapper
@@ -33,10 +33,6 @@ jobs:
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
       - name: Run Linters
         run: ./gradlew ktlintformat
-      - id: changes
-        uses: jitterbit/get-changed-files@v1
-      - name: Run rebuild
-        run: ./gradlew rebuild --args '${{ steps.changes.outputs.all }}'
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
