@@ -1,5 +1,7 @@
 package com.thoughtworks.blackhorse.schema.performance
 
+import com.thoughtworks.blackhorse.schema.performance.attributes.CardType
+import com.thoughtworks.blackhorse.schema.performance.attributes.Member
 import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
 import com.thoughtworks.blackhorse.schema.story.Story
 import com.thoughtworks.blackhorse.utils.findByKeyOrNext

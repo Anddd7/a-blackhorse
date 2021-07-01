@@ -1,7 +1,9 @@
 package com.thoughtworks.blackhorse.schema.story
 
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.performance.CardType
+import com.thoughtworks.blackhorse.schema.performance.attributes.CardType
+import com.thoughtworks.blackhorse.schema.story.attributes.APISchema
+import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
 
 data class Story(
     val name: String,

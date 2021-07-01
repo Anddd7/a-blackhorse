@@ -14,6 +14,7 @@ object PerformanceColumns {
         StoryExtractor("startAt", StoryPerformance::startAt),
         StoryExtractor("endAt", StoryPerformance::endAt),
         StoryExtractor("developer", StoryPerformance::developer),
+        ProcessExtractor("flowId", ProcessPerformance::flowId),
         ProcessExtractor("process", ProcessPerformance::processName),
         ProcessExtractor("expectCost", ProcessPerformance::expectCost),
         ProcessExtractor("actualCost", ProcessPerformance::actualCost),

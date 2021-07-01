@@ -1,4 +1,4 @@
-package com.thoughtworks.blackhorse.schema.story
+package com.thoughtworks.blackhorse.schema.story.attributes
 
 enum class HttpStatus(val code: Int) {
     CONTINUE(100),

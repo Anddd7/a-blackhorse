@@ -1,4 +1,4 @@
-package com.thoughtworks.blackhorse.schema.story
+package com.thoughtworks.blackhorse.schema.story.attributes
 
 interface Complexity {
     val cost: Int

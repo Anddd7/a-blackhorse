@@ -3,9 +3,10 @@ package com.thoughtworks.blackhorse.schema.story
 import com.thoughtworks.blackhorse.config.StoryContext
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.PrinterOption
-import com.thoughtworks.blackhorse.schema.performance.CardType
+import com.thoughtworks.blackhorse.schema.performance.attributes.CardType
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformanceBuilder
+import com.thoughtworks.blackhorse.schema.story.attributes.Estimation
 import com.thoughtworks.blackhorse.utils.extractProjectName
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

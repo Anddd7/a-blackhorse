@@ -2,7 +2,7 @@ package com.thoughtworks.blackhorse.printer.jira.api
 
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.jira.model.JiraIssue
-import com.thoughtworks.blackhorse.schema.story.HttpMethod
+import com.thoughtworks.blackhorse.schema.story.attributes.HttpMethod
 import com.thoughtworks.blackhorse.utils.HttpClient
 import com.thoughtworks.blackhorse.utils.logApiPayload
 import kotlinx.coroutines.Dispatchers

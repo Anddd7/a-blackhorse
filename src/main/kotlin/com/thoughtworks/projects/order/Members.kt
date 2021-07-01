@@ -1,6 +1,6 @@
 package com.thoughtworks.projects.order
 
-import com.thoughtworks.blackhorse.schema.performance.Member
+import com.thoughtworks.blackhorse.schema.performance.attributes.Member
 
 object ZhangSan : Member {
     override fun name() = "Zhang3"

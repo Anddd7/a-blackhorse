@@ -13,5 +13,5 @@ class FlowPerformanceBuilder(
         return ProcessPerformanceBuilder(process).also(processes::add)
     }
 
-    fun build() = processes.map(ProcessPerformanceBuilder::build)
+    fun build() = processes.map { it.build(flow.id) }
 }

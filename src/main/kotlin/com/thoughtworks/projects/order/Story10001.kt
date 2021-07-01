@@ -1,15 +1,15 @@
 package com.thoughtworks.projects.order
 
-import com.thoughtworks.blackhorse.schema.performance.BlockType
-import com.thoughtworks.blackhorse.schema.performance.CardType
+import com.thoughtworks.blackhorse.schema.performance.attributes.BlockType
+import com.thoughtworks.blackhorse.schema.performance.attributes.CardType
 import com.thoughtworks.blackhorse.schema.performance.blocked
 import com.thoughtworks.blackhorse.schema.performance.by
 import com.thoughtworks.blackhorse.schema.performance.cause
 import com.thoughtworks.blackhorse.schema.performance.cost
-import com.thoughtworks.blackhorse.schema.story.API
-import com.thoughtworks.blackhorse.schema.story.Estimation
-import com.thoughtworks.blackhorse.schema.story.HttpMethod
-import com.thoughtworks.blackhorse.schema.story.HttpStatus
+import com.thoughtworks.blackhorse.schema.story.attributes.API
+import com.thoughtworks.blackhorse.schema.story.attributes.Estimation
+import com.thoughtworks.blackhorse.schema.story.attributes.HttpMethod
+import com.thoughtworks.blackhorse.schema.story.attributes.HttpStatus
 import com.thoughtworks.blackhorse.schema.story.StoryOf
 import com.thoughtworks.blackhorse.schema.story.accept
 import com.thoughtworks.blackhorse.schema.story.reply

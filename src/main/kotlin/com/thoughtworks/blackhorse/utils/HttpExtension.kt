@@ -2,7 +2,7 @@ package com.thoughtworks.blackhorse.utils
 
 import com.google.gson.Gson
 import com.thoughtworks.blackhorse.printer.markdown.formatter.toLines
-import com.thoughtworks.blackhorse.schema.story.HttpMethod
+import com.thoughtworks.blackhorse.schema.story.attributes.HttpMethod
 import org.apache.http.HttpEntity
 import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.client.methods.HttpDelete

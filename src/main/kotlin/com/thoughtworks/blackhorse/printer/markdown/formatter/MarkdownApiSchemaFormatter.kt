@@ -1,8 +1,8 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.printer.interfaces.ApiSchemaFormatter
-import com.thoughtworks.blackhorse.schema.story.APISchema
-import com.thoughtworks.blackhorse.schema.story.ApiScenario
+import com.thoughtworks.blackhorse.schema.story.attributes.APISchema
+import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
 
 class MarkdownApiSchemaFormatter : ApiSchemaFormatter {
     override fun anchors(items: List<APISchema>) = when {

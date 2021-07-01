@@ -5,6 +5,7 @@ import com.thoughtworks.blackhorse.config.PropertyLoader
 import com.thoughtworks.blackhorse.reporter.formater.MarkdownPerformanceFormatter
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 import com.thoughtworks.blackhorse.schema.story.StoryOf
+import com.thoughtworks.blackhorse.schema.story.infoTime
 import com.thoughtworks.blackhorse.utils.findStories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -16,6 +17,10 @@ import java.nio.file.Files
 
 object PerformancePrinter {
     private val log = LoggerFactory.getLogger(this.javaClass)
+
+    fun printReportsLocally() {
+        log.infoTime("Performance Printing") { printReports() }
+    }
 
     fun printReports(projectKeys: Set<String> = PropertyLoader.projects.keys) {
         runBlocking {
@@ -44,5 +49,5 @@ object PerformancePrinter {
 }
 
 fun main() {
-    PerformancePrinter.printReports()
+    PerformancePrinter.printReportsLocally()
 }

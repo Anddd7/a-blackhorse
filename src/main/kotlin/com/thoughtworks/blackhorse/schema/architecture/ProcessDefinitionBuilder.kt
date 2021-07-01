@@ -1,6 +1,6 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
-import com.thoughtworks.blackhorse.schema.story.Complexity
+import com.thoughtworks.blackhorse.schema.story.attributes.Complexity
 
 data class ProcessDefinition(
     val name: String,

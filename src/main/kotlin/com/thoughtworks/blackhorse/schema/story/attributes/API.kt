@@ -1,4 +1,4 @@
-package com.thoughtworks.blackhorse.schema.story
+package com.thoughtworks.blackhorse.schema.story.attributes
 
 data class APISchema(
     val api: API,
