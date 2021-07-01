@@ -30,10 +30,10 @@
 - [x] 使用infix函数改造process的声明方式(A->B)
 - [x] 效能报告输出
 - [x] 根据git diff自动输出修改的story、architecture、performance
+- [x] 协程改造
 
 ### Backlogs
 
-- [ ] 协程改造
 - [ ] 效能报告优化 - excel
 - [ ] 集中显示api schema 合并AC中的时序图（按不同层级进行合并）(低优先级)
 - [ ] 生成对应的测试报告
