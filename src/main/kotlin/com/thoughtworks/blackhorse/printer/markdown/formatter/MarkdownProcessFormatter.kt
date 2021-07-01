@@ -30,13 +30,11 @@ open class MarkdownProcessFormatter : ProcessFormatter {
     }
 
     private fun ProcessDefinition.title(): String {
-        val context = StoryContextHolder.get()
-
         val prefix = "Process $name"
         val relations =
             if (component == dependency) component.name()
             else "${component.name()}, depends on $testDouble<${dependency.name()}>"
-        val complexity = complexity.label().takeIf { context.isVisible(HiddenOption.COMPLEXITY) }
+        val complexity = complexity.label().takeIf { StoryContextHolder.isVisible(HiddenOption.COMPLEXITY) }
 
         return listOfNotNull(prefix, relations, complexity).joinToString(" | ")
     }

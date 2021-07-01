@@ -19,17 +19,15 @@ class JiraPrinter(
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     override fun start(story: Story) {
-        val context = StoryContextHolder.get()
-
         val cardId = story.cardId
-        val pdf = outputDocumentationPdf(context.storyName, story)
-        val jira = outputJiraDescription(context.storyName, story)
+        val pdf = outputDocumentationPdf(story.name, story)
+        val jira = outputJiraDescription(story.name, story)
         val mockups = story.acceptanceCriteria
             .flatMap(AcceptanceCriteria::mockup)
-            .map { context.distPath.resolve(it) }
+            .map { StoryContextHolder.distPath().resolve(it) }
 
         log.info("-------------------------------------------------------")
-        log.info("Start Uploading to Jira: ${context.jiraBasUrl}")
+        log.info("Start Uploading to Jira: ${StoryContextHolder.jiraBasUrl()}")
 
         updateAttachments(cardId, mockups + listOf(pdf))
         updateCardInformation(cardId, story.title, story.estimation, formatJiraDescription(jira))
@@ -54,9 +52,7 @@ class JiraPrinter(
     }
 
     private fun outputDocumentationPdf(storyName: String, story: Story): Path {
-        val context = StoryContextHolder.get()
-
-        val markdown = context.getProjectFile("$storyName.md")
+        val markdown = StoryContextHolder.getProjectFile("$storyName.md")
         val pdf = createPdf(markdown)
         val content = formatter.story(story)
         FileExtension.writeToMarkdown(markdown, content)
@@ -65,9 +61,7 @@ class JiraPrinter(
     }
 
     private fun outputJiraDescription(storyName: String, story: Story): Path {
-        val context = StoryContextHolder.get()
-
-        val markdown = context.getProjectFile("${storyName + "_SUMMARY"}.md")
+        val markdown = StoryContextHolder.getProjectFile("${storyName + "_SUMMARY"}.md")
         val jira = createTxt(markdown)
         val content = formatter.summary(story)
         FileExtension.writeToMarkdown(markdown, content)

@@ -10,9 +10,7 @@ open class MarkdownPrinter(
     private val formatter: StoryFormatter,
 ) : StoryPrinter {
     override fun start(story: Story) {
-        val context = StoryContextHolder.get()
-
-        val file = context.getProjectFile("${story.name}.md")
+        val file = StoryContextHolder.getProjectFile("${story.name}.md")
         val content = formatter.story(story)
         FileExtension.writeToMarkdown(file, content)
     }

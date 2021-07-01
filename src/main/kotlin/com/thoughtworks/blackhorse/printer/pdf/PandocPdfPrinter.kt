@@ -14,9 +14,7 @@ open class PandocPdfPrinter(
     private val formatter: StoryFormatter,
 ) : MarkdownPrinter(formatter) {
     override fun start(story: Story) {
-        val context = StoryContextHolder.get()
-
-        val markdown = context.getProjectFile("${context.storyName}.md")
+        val markdown = StoryContextHolder.getProjectFile("${story.name}.md")
         val pdf = createPdf(markdown)
         val content = formatter.story(story)
         FileExtension.writeToMarkdown(markdown, content)
@@ -33,9 +31,7 @@ open class PandocPdfPrinter(
 }
 
 fun executePandoc(source: Path, target: Path, format: String) {
-    val context = StoryContextHolder.get()
-
-    val projectFolder = context.distPath
+    val projectFolder = StoryContextHolder.distPath()
     val sourceFile = source.fileName
     val targetFile = target.fileName
     ShellOperation.execute(ShellCli.PANDOC, projectFolder, sourceFile, format, targetFile)

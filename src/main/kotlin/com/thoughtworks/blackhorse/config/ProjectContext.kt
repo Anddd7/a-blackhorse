@@ -3,6 +3,7 @@ package com.thoughtworks.blackhorse.config
 import com.thoughtworks.blackhorse.printer.PrinterOption
 import com.thoughtworks.blackhorse.utils.FileExtension
 import com.thoughtworks.blackhorse.utils.toEnum
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.Properties
 import java.util.concurrent.ConcurrentHashMap
@@ -15,7 +16,7 @@ data class ProjectContext(
     private val hiddenOptions: List<HiddenOption>,
 ) {
     val printer = printerOption.printer
-    val distPath = Paths.get("dist").resolve(projectName)
+    val distPath: Path = Paths.get("dist").resolve(projectName)
     val jiraBasUrl: String by lazy { _jiraBasUrl.get() }
     val jiraToken: String by lazy { _jiraToken.get() }
 

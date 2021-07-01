@@ -30,8 +30,6 @@ class PlantumlFlowFormatter(
 ) : MarkdownFlowFormatter(processFormatter) {
 
     override fun processDiagram(processes: List<FlowProcess>): String {
-        val context = StoryContextHolder.get()
-
         val fileFormat = when (pdfEngine) {
             PdfEngine.DEFAULT -> FileFormat.SVG
             PdfEngine.LATEX -> FileFormat.PNG
@@ -43,7 +41,7 @@ class PlantumlFlowFormatter(
 
         val umlSource = uml(processes)
         val tempFile = generateTempFile(umlSource, fileFormat)
-        val relativePath = context.distPath.relativize(tempFile)
+        val relativePath = StoryContextHolder.distPath().relativize(tempFile)
 
         return "$padding![${tempFile.fileName.nameWithoutExtension}]($relativePath)"
     }
@@ -95,8 +93,6 @@ class PlantumlFlowFormatter(
         processes.map(processFormatter::diagram).toLines()
 
     private fun generateTempFile(source: String, fileFormat: FileFormat): Path {
-        val context = StoryContextHolder.get()
-
         val reader = SourceStringReader(source)
         val os = ByteArrayOutputStream().apply {
             use {
@@ -104,7 +100,7 @@ class PlantumlFlowFormatter(
             }
         }
         val fileName = UUID.randomUUID().toString()
-        val temp = context.getTempFile("$fileName.${fileFormat.ext()}")
+        val temp = StoryContextHolder.getTempFile("$fileName.${fileFormat.ext()}")
         Files.write(temp, os.toByteArray())
         return temp
     }

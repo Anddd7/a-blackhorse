@@ -63,7 +63,7 @@ object AutoBuildArchitectures {
                 val context = StoryContext.load(it.project, it.name)
                 StoryContextHolder.set(context)
                 async(coroutineContext + StoryContextHolder.asContextElement()) {
-                    StoryContextHolder.get().printer.print(it)
+                    StoryContextHolder.printer().print(it)
                 }
             }
     }

@@ -1,5 +1,6 @@
 package com.thoughtworks.blackhorse.printer.jira.api
 
+import com.thoughtworks.blackhorse.config.ProjectContext
 import com.thoughtworks.blackhorse.config.StoryContext
 import org.apache.http.message.BasicHeader
 
@@ -18,4 +19,5 @@ class JiraRestConfig(
     )
 }
 
-fun StoryContext.jira() = JiraRestConfig(jiraBasUrl, jiraToken)
+fun StoryContext.jira() = projectContext.jira()
+fun ProjectContext.jira() = JiraRestConfig(jiraBasUrl, jiraToken)
