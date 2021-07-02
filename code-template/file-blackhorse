@@ -1,0 +1,33 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME}
+
+import com.thoughtworks.blackhorse.schema.story.StoryOf
+import com.thoughtworks.blackhorse.schema.story.attributes.Estimation
+
+#end
+object ${NAME}: StoryOf(
+title = "${TITLE}",
+cardId = "${CARD_ID}",
+estimation = ${ESTIMATION},
+configure = {
+    inScope {
+        """
+            ...
+            """.trimIndent()
+    }
+
+    outOfScope {
+        """
+            ...
+            """.trimIndent()
+    }
+
+    // ac
+},
+tracking = {
+    decomposition("${USER}", 80)
+}
+)
+
+fun main() {
+    ${NAME}.print()
+}

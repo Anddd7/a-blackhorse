@@ -1,0 +1,18 @@
+ac {
+    description {
+        """
+        """.trimIndent()
+    }
+
+    mockup("mockup")
+    link("links", "url")
+
+    note {
+        """
+        """.trimIndent()
+    }
+
+    flow("your flow is here") {
+        // Component call Component accept "" replay "" withApi xxx then { nested }
+    }
+}
