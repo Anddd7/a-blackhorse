@@ -1,21 +1,21 @@
 package com.thoughtworks.blackhorse.printer.pdf
 
+import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
 import com.thoughtworks.blackhorse.printer.markdown.MarkdownPrinter
 import com.thoughtworks.blackhorse.schema.story.Story
 import com.thoughtworks.blackhorse.utils.FileExtension
-import java.nio.file.Path
 
-open class PandocPdfPrinter(formatter: StoryFormatter) : MarkdownPrinter(formatter) {
+open class PandocPdfPrinter(
+    private val formatter: StoryFormatter
+) : MarkdownPrinter(formatter) {
     override fun start(story: Story) {
-        outputToDocumentationPdf(story)
-    }
+        val content = formatter.story(story)
 
-    fun outputToDocumentationPdf(story: Story): Path {
-        val markdown = outputToDocumentationMarkdown(story)
+        val markdown = StoryContextHolder.getLocalStoryFile()
+        FileExtension.writeToMarkdown(markdown, content)
+
         val pdf = FileExtension.createMirrorPdf(markdown)
         FileExtension.convertToPdf(markdown, pdf)
-
-        return pdf
     }
 }

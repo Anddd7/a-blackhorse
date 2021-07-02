@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap
 data class ProjectContext(
     val projectName: String,
     val printerOption: PrinterOption,
+    val repoBaseUrl: Path,
     private val _jiraBasUrl: OptionalProperty,
     private val _jiraToken: OptionalProperty,
     private val hiddenOptions: List<HiddenOption>,
@@ -38,6 +39,7 @@ data class ProjectContext(
 private fun Properties.toContext(projectName: String) = ProjectContext(
     projectName,
     getPropertyOrThrow("printer").toEnum(PrinterOption::valueOf),
+    getPropertyOrThrow("repo_baseurl").let { Path.of(it) },
     getOptionalProperty("jira_baseurl"),
     getOptionalProperty("jira_token"),
     getProperty("hidden")

@@ -4,6 +4,7 @@ import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
 import com.thoughtworks.blackhorse.printer.jira.api.updateAttachments
 import com.thoughtworks.blackhorse.printer.jira.api.updateCardInformation
+import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.pdf.PandocPdfPrinter
 import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
 import com.thoughtworks.blackhorse.schema.story.Story
@@ -33,10 +34,26 @@ class JiraPrinter(
         log.info("-------------------------------------------------------")
     }
 
-    private fun outputJiraDescription(story: Story): Path {
-        val content = formatter.summary(story)
+    private fun outputToDocumentationPdf(story: Story): Path {
+        val content = formatter.story(story)
 
-        val markdown = StoryContextHolder.getProjectFile("${story.name}_SUMMARY.md")
+        val markdown = StoryContextHolder.getLocalStoryFile()
+        FileExtension.writeToMarkdown(markdown, content)
+
+        val pdf = FileExtension.createMirrorPdf(markdown)
+        FileExtension.convertToPdf(markdown, pdf)
+
+        return pdf
+    }
+
+    private fun outputJiraDescription(story: Story): Path {
+        val prefix = "Markdown Source File: [Click Here](${StoryContextHolder.getRemoteStoryUrl()})"
+        val content = lineOf(
+            prefix,
+            formatter.summary(story)
+        )
+
+        val markdown = StoryContextHolder.getLocalSummaryFile()
         FileExtension.writeToMarkdown(markdown, content)
 
         val jira = FileExtension.createMirrorTxt(markdown)

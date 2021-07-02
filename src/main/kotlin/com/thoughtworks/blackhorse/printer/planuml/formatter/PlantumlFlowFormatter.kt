@@ -100,7 +100,7 @@ class PlantumlFlowFormatter(
             }
         }
         val fileName = UUID.randomUUID().toString()
-        val temp = StoryContextHolder.getTempFile("$fileName.${fileFormat.ext()}")
+        val temp = StoryContextHolder.getLocalStoryTempFile("$fileName.${fileFormat.ext()}")
         Files.write(temp, os.toByteArray())
         return temp
     }
