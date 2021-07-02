@@ -29,7 +29,7 @@ class StoryPerformanceBuilder(
     private var startAt: LocalDate? = null
     private var endAt: LocalDate? = null
 
-    private fun decomposition(reporter: String, decompositionCost: Int) {
+    fun decomposition(reporter: String, decompositionCost: Int) {
         this.reporter = reporter
         this.decompositionCost = decompositionCost
     }

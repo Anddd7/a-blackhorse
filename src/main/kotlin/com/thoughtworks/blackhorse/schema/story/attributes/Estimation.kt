@@ -6,5 +6,11 @@ enum class Estimation(val value: Int) {
     THREE_3(3),
     FIVE_5(5),
     EIGHT_8(8),
-    THIRTEEN_13(13)
+    THIRTEEN_13(13),
+    ;
+
+    companion object {
+        fun valueOf(value: Int) = values().find { it.value == value }
+            ?: throw IllegalArgumentException("Please enter valid estimation points.")
+    }
 }

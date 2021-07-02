@@ -21,6 +21,15 @@ open class StoryOf(
     val configure: StoryBuilder.() -> Unit,
     val tracking: StoryPerformanceBuilder.() -> Unit = {},
 ) {
+    constructor(
+        title: String,
+        estimation: Int,
+        cardId: String? = null,
+        cardType: CardType = CardType.STORY,
+        configure: StoryBuilder.() -> Unit,
+        tracking: StoryPerformanceBuilder.() -> Unit = {},
+    ) : this(title, Estimation.valueOf(estimation), cardId, cardType, configure, tracking)
+
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     private fun getCardId(): String = cardId ?: getStoryName()
@@ -41,6 +50,7 @@ open class StoryOf(
         .onFailure { log.warn("Performance is not ready at ${getCardId()}, please update it as soon as possible!") }
         .getOrNull()
 
+    fun printToPdf() = print(PrinterOption.PDF_PLANTUML)
     fun printToJira() = print(PrinterOption.JIRA_ATTACHMENT)
     fun print(printer: PrinterOption? = null) {
         log.infoTime("Single") {
