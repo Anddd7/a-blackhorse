@@ -1,5 +1,3 @@
-[TOC]
-
 # 黑马工序小助手
 
 ## Key Benefits
@@ -52,41 +50,50 @@
 
 ## How to start
 
-### 初始化项目配置
+### [Optional][Repo] Code Template
 
-- 在 `resources/projects.properties` 中添加项目名
+导入`code-template`
+
+- `file-blackhorse`: Story文件Template
+- `live-ac`: ac片段Template, 自定义short command
+
+### [Required][Project] 初始化项目配置
+
+在 `resources/projects.properties` 中添加项目名(`,`分隔多个项目)
 
 ```properties
-projects=order,<your project name>
+projects=<your project name>,...,<your project name>
 ```
 
 - 创建项目配置 `resources/projects/<your project name>/configure.properties` 并按如下规则写入配置信息
 
 ```properties
-
 # ------
 # [REQUIRED] 打印选项 = PrintOption
 # MARKDOWN_TYPORA               生成markdown+typora时序图
 # MARKDOWN_TYPORA_PLANTUML      生成markdown+plantuml时序图
 # PDF_PLANTUML                  生成markdown+pdf+plantuml时序图
 # JIRA_ATTACHMENT               生成markdown+pdf+plantuml时序图, 并上传jira
-printer=MARKDOWN_TYPORA
+printer=PDF_PLANTUML
 # ------
 # [OPTIONAL, default = empty] 隐藏部分信息
-hidden=complexity
+#hidden=complexity
 # ------
 # 如果要上传jira, 需要配置server地址和access token
 #jira_baseurl=https://jira.xxx.xxx.com/rest/api/2
 #jira_token=*************************
+# ------
+# 远程仓库的地址, 直接链接访问仓库中的文件
+repo_baseurl=https://github.com/Anddd7/a-blackhorse/blob
 ```
 
 - 创建项目工作路径 `com/thoughtworks/projects/<your project name>`
 
-> 生成时会按`<your project name>`来寻找配置, 需要保证这个别名是一个词
+> 生成时会按`<your project name>`来寻找配置, 需要保证这个别名是一个valid package name
 
-### 定义项目工序
+### [Required][Project] 定义项目工序
 
-- 创建项目架构描述, 定义系统、进程、进程内的组件模块(参考:`com/thoughtworks/projects/order/ProjectArchitecture.kt`)
+创建项目架构描述, 定义系统、进程、进程内的组件模块(参考:`com/thoughtworks/projects/order/ProjectArchitecture.kt`)
 
 ```
 object xxx : Container {                        // 应用进程
@@ -98,15 +105,18 @@ object xxx : Container {                        // 应用进程
 }
 ```  
 
-### 编写故事工序
+### [Required][Story] 编写故事工序
 
-- 创建Story
+- 创建Story, 填写参数(参考`com/thoughtworks/projects/order/Story-1001.kt`)
 
 ```
-object StoryName : StoryOf(
-    val title: String,                          // 标题
-    val jiraIssue: String? = null,              // jira 卡号
-    val configure: StoryBuilder.() -> Unit,     // 配置DSL
+object StoryName: StoryOf(
+    title       = String,                       // 标题
+    estimation  = Estimation | Int,             // 估点
+    cardId      = String,                       // 卡号 (jira id)
+    cardType    = CardType.STORY,               // 类型
+    configure   = lambda{},                     // 工序描述DSL
+    tracking    = lambda{},                     // 效能追踪DSL
 )
 
 fun main() {
@@ -114,9 +124,7 @@ fun main() {
 }
 ```
 
-#### DSL功能
-
-见 `com/thoughtworks/projects/order/Story-1001.kt`
+- 按照DSL书写工序
 
 ```
 inScope { 文字描述 }
@@ -126,7 +134,8 @@ ac {
     example { 文字描述 }
     mockup { 图片地址 }
     links { 链接地址 }
-    flows ( 目的 效能指标) {
+    notes { 备注信息 }
+    flows ( 目的 ) {
         process ( 架构节点 入参 返回 API场景) {
             // 多层依赖调用 e.g. A->B B->C C->B B-A
             process ( ... )
@@ -134,6 +143,22 @@ ac {
     }
 }
 ```
+
+### [Optional][Performance] 更新效能指标
+
+开卡、结卡、完成task... 记录效能(参考 `com/thoughtworks/projects/order/Story-1001.kt`)
+
+```
+// TODO
+```
+
+### [Optional][Repo] CI Automation
+
+编写了一个自动任务, 检测当前commits修改的文件, 并重新编译相关的Stories(见：`src/main/kotlin/com/thoughtworks/blackhorse/automation/AutoBuild.kt`)
+- 本地：使用Git Diff, 计算修改文件
+  > `cli/diffile.sh`
+- CI：使用Pipeline获取修改文件, 并作为参数传递到gradle task`./gradlew rebuild`
+  > Github actions: `.github/workflows/build.yml`
 
 ## Demo
 
