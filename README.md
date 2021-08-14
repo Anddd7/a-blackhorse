@@ -30,10 +30,11 @@
 - [x] 根据git diff自动输出修改的story、architecture、performance
 - [x] 协程改造
 - [x] 插件化 - idea代码模板
+- [x] TOC 跳转标签优化
+- [x] 把Flow作为对AC的场景、技术拆解，包含example（e.g. AC-体现, flow-成功/失败)
 
 ### Backlogs
 
-- [ ] 把Flow作为对AC的场景、技术拆解，包含example（e.g. AC-体现, flow-成功/失败)
 - [ ] 架构代码化（ADR）
   - [ ] 进程间架构
   - [ ] 进程内架构
@@ -44,7 +45,6 @@
 - [ ] 效能报告优化
   - [ ] 效能记录（按工序为单位记录）
   - [ ] 自动化计算
-- [ ] TOC 跳转标签优化（hash tag）
 - [ ] 集中显示api schema 合并AC中的时序图（按不同层级进行合并）(低优先级)
 - [ ] 生成对应的测试报告
 - [ ] 插件化 - idea生成快捷键

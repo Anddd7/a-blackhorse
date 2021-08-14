@@ -8,18 +8,21 @@ import com.thoughtworks.blackhorse.schema.story.FlowProcess
 open class MarkdownFlowFormatter(
     private val processFormatter: ProcessFormatter,
 ) : FlowFormatter {
-    override fun anchors(items: List<Flow>): String =
-        items.mapToLines { item -> toAnchorLink(anchor(item.id, item.example)) }
+    override fun anchors(items: List<Flow>) =
+        items.mapToLinesWith {
+            toAnchorLink(
+                anchor(id),
+                name(id)
+            )
+        }
 
     override fun flows(items: List<Flow>) =
-        items.mapToLines { item ->
-            item.run {
-                lineOf(
-                    purpose(id, example),
-                    example(example),
-                    content(processes)
-                )
-            }
+        items.mapToLinesWith {
+            lineOf(
+                title(id),
+                example,
+                content(processes)
+            )
         }
 
     private fun content(processes: List<FlowProcess>) = when {
@@ -32,12 +35,9 @@ open class MarkdownFlowFormatter(
         )
     }
 
-    private fun purpose(id: String, str: String) = "#### ${anchor(id, str)}"
-    private fun anchor(id: String, str: String) = "Flow $id $str"
-    private fun example(str: String) = lineOf(
-        "#### Example",
-        str,
-    )
+    private fun name(id: String) = "Flow $id"
+    private fun anchor(id: String) = "flow-$id"
+    private fun title(id: String) = "#### <span id='${anchor(id)}'>${name(id)}</span>"
 
     private fun processDescription(processes: List<FlowProcess>) =
         processes.mapToLines(processFormatter::process)

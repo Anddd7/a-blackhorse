@@ -62,12 +62,11 @@ fun List<String>.toLines() = filter(String::isNotEmpty).joinToString("\n")
 
 fun <T> Iterable<T>.mapToLines(transform: (T) -> String) = map(transform).toLines()
 fun <T> Iterable<T>.mapIndexedToLines(transform: (index: Int, T) -> String) = mapIndexed(transform).toLines()
+fun <T> Iterable<T>.mapToLinesWith(transform: T.() -> String) = map { it.transform() }.toLines()
 
-fun toAnchorLink(title: String): String {
-    val link = title
+fun toAnchorLink(id: String, title: String = id): String {
+    val link = id
         .replace(" ", "-")
-        .replace("(", "")
-        .replace(")", "")
         .lowercase()
     return "- [$title](#$link)"
 }

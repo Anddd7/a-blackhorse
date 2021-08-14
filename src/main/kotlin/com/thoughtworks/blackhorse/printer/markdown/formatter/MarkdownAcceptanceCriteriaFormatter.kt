@@ -8,43 +8,38 @@ class MarkdownAcceptanceCriteriaFormatter(
     private val flowFormatter: FlowFormatter,
 ) : AcceptanceCriteriaFormatter {
     override fun anchors(items: List<AcceptanceCriteria>) =
-        items.mapToLines {
-            it.run {
-                lineOf(
-                    toAnchorLink(label(id)),
-                    flowFormatter.anchors(flows).prependIndent("  ")
-                )
-            }
+        items.mapToLinesWith {
+            lineOf(
+                toAnchorLink(anchor(id), name(id)),
+                flowFormatter.anchors(flows).prependIndent("  ")
+            )
         }
 
     override fun acceptanceCriteria(items: List<AcceptanceCriteria>) =
-        items.mapToLines {
-            it.run {
-                lineOf(
-                    title(id),
-                    description,
-                    mockup(mockup),
-                    link(link),
-                    flowFormatter.flows(flows)
-                )
-            }
+        items.mapToLinesWith {
+            lineOf(
+                title(id),
+                description,
+                mockup(mockup),
+                link(link),
+                flowFormatter.flows(flows)
+            )
         }
 
     override fun summary(items: List<AcceptanceCriteria>) =
-        items.mapToLines {
-            it.run {
-                lineOf(
-                    title(id),
-                    description,
-                    note(note),
-                    mockup(mockup, ignorePath = true),
-                    link(link),
-                )
-            }
+        items.mapToLinesWith {
+            lineOf(
+                title(id),
+                description,
+                note(note),
+                mockup(mockup, ignorePath = true),
+                link(link),
+            )
         }
 
-    private fun title(id: String) = "### ${label(id)}"
-    private fun label(id: String) = "AC $id"
+    private fun name(id: String) = "AC $id"
+    private fun anchor(id: String) = "ac-$id"
+    private fun title(id: String) = "### <span id='${anchor(id)}'>${name(id)}</span>"
 
     private fun mockup(items: List<String>, ignorePath: Boolean = false) = when {
         items.isEmpty() -> null
