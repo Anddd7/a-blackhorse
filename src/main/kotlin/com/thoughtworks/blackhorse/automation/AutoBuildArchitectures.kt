@@ -15,6 +15,9 @@ import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * TODO 只重建工序文件
+ */
 object AutoBuildArchitectures {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 

@@ -15,9 +15,9 @@ object AutoBuild {
                 .filter(this::isProjectFiles)
                 .map(this::toClassPath)
 
-            val hasArchitectureChanges = AutoBuildArchitectures.build(files)
+            AutoBuildArchitectures.build(files)
             val hasStoriesChanges = AutoBuildStories.build(files)
-            if (hasArchitectureChanges || hasStoriesChanges) AutoBuildReports.build(files)
+            if (hasStoriesChanges) AutoBuildReports.build(files)
         }
     }
 
