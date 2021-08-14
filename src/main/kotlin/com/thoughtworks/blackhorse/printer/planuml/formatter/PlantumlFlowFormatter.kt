@@ -62,7 +62,7 @@ class PlantumlFlowFormatter(
     private fun participants(processes: List<FlowProcess>) =
         LinkedHashSet<Component>()
             .apply { processes.map { addAll(it.components()) } }
-            .groupBy(Component::containerOf)
+            .groupBy(Component::getContainer)
             .map { (container, nodes) -> container.box(nodes) }
             .toLines()
 

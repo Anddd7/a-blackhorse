@@ -15,8 +15,8 @@ data class FlowProcess(
 ) {
     val startName = start.name()
     val targetName = target.name()
-    val container = start.containerOf()
-    val definition = container.processDefinition(start, target)
+    val container = start.getContainer()
+    val definition = container.findProcessDefs(start, target)
 
     fun components(): Set<Component> =
         LinkedHashSet<Component>().apply {

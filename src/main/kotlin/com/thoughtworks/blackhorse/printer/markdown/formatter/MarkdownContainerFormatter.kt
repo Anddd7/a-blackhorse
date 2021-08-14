@@ -17,7 +17,7 @@ class MarkdownContainerFormatter : ContainerFormatter {
     private fun container(container: Container) =
         lineOf(
             "#### " + container.name(),
-            container.processDefinitions().map { processLine(container.name(), it) }.toLines(),
+            container.getAllProcessDefs().map { processLine(container.name(), it) }.toLines(),
         )
 
     private fun processLine(containerName: String, definition: ProcessDefinition): String {

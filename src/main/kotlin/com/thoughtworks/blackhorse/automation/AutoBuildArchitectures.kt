@@ -3,7 +3,6 @@ package com.thoughtworks.blackhorse.automation
 import com.thoughtworks.blackhorse.config.StoryContext
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.getProjectName
 import com.thoughtworks.blackhorse.schema.story.StoryOf
 import com.thoughtworks.blackhorse.utils.findStories
 import com.thoughtworks.blackhorse.utils.getContainerOrNull

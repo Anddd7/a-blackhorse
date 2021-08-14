@@ -2,6 +2,9 @@ package com.thoughtworks.blackhorse.schema.architecture
 
 import com.thoughtworks.blackhorse.schema.story.attributes.Complexity
 
+/**
+ * definition of a process (工序)
+ */
 data class ProcessDefinition(
     val name: String,
     val component: Component,
