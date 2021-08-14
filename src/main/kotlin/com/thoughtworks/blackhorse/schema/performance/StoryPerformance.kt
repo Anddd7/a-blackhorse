@@ -35,7 +35,7 @@ class StoryPerformanceBuilder(
     }
 
     fun decomposition(member: Member, decompositionCost: Int) {
-        decomposition(member.name(), decompositionCost)
+        decomposition(member.name, decompositionCost)
     }
 
     private fun development(developer: String, startAt: String) {
@@ -44,7 +44,7 @@ class StoryPerformanceBuilder(
     }
 
     fun development(developer: Member, startAt: String) {
-        development(developer.name(), startAt)
+        development(developer.name, startAt)
     }
 
     fun finish(endAt: String) {

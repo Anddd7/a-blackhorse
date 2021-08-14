@@ -15,6 +15,12 @@ import com.thoughtworks.blackhorse.schema.story.attributes.HttpStatus
 import com.thoughtworks.blackhorse.schema.story.reply
 import com.thoughtworks.blackhorse.schema.story.then
 import com.thoughtworks.blackhorse.schema.story.withApi
+import com.thoughtworks.projects.order.onboarding.Backend
+import com.thoughtworks.projects.order.onboarding.Bff
+import com.thoughtworks.projects.order.onboarding.LiSi
+import com.thoughtworks.projects.order.onboarding.ProjectTags
+import com.thoughtworks.projects.order.onboarding.Web
+import com.thoughtworks.projects.order.onboarding.ZhangSan
 
 object Story10001 : StoryOf(
     title = "Get the shopping cart info",

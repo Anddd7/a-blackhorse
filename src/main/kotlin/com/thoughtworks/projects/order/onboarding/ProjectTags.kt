@@ -1,4 +1,4 @@
-package com.thoughtworks.projects.order
+package com.thoughtworks.projects.order.onboarding
 
 import com.thoughtworks.blackhorse.schema.story.attributes.Tag
 
