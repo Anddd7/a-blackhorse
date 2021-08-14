@@ -28,11 +28,10 @@ data class ProcessDefinitionBuilder(
             component,
             dependency,
             testDouble,
-            complexity ?: Complexity.NONE,
+            complexity ?: Complexity(0),
             description ?: ""
         )
 }
 
-infix fun ProcessDefinitionBuilder.cost(input: Complexity) = apply { complexity = input }
-infix fun ProcessDefinitionBuilder.cost(input: Int) = apply { complexity = Complexity.of(input) }
+infix fun ProcessDefinitionBuilder.cost(input: Int) = apply { complexity = Complexity(input) }
 infix fun ProcessDefinitionBuilder.at(fn: () -> String) = apply { description = fn() }

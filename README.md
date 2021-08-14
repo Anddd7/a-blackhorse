@@ -39,6 +39,12 @@
     - [ ] 版本管理
     - [x] 架构变化不触发工序变化（避免架构变更对前序故事的影响）
 
+
+> 分离 架构、工序描述 到单独的md，增加版本号，link到story中
+> 输出 team structure 到单独的md，link到story中
+> 
+
+
 ### Backlogs
 
 - [ ] 效能报告优化
@@ -49,8 +55,6 @@
 - [ ] 插件化 - idea生成快捷键
 - [ ] 插件化 - idea codegen
 - [ ] okhttp 替换 httpclient
-
-- [ ] ~~CI/CD commit 自动化生成~~ 暂无好的方案
 
 ### Issues
 
