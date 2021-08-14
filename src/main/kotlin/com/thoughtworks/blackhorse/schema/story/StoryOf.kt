@@ -7,6 +7,7 @@ import com.thoughtworks.blackhorse.schema.performance.StoryPerformance
 import com.thoughtworks.blackhorse.schema.performance.StoryPerformanceBuilder
 import com.thoughtworks.blackhorse.schema.performance.attributes.CardType
 import com.thoughtworks.blackhorse.schema.story.attributes.Estimation
+import com.thoughtworks.blackhorse.schema.story.attributes.Tag
 import com.thoughtworks.blackhorse.utils.extractProjectName
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,15 +21,8 @@ open class StoryOf(
     val cardType: CardType = CardType.STORY,
     val configure: StoryBuilder.() -> Unit,
     val tracking: StoryPerformanceBuilder.() -> Unit = {},
+    val tags: List<Tag> = emptyList(),
 ) {
-    constructor(
-        title: String,
-        estimation: Int,
-        cardId: String? = null,
-        cardType: CardType = CardType.STORY,
-        configure: StoryBuilder.() -> Unit,
-        tracking: StoryPerformanceBuilder.() -> Unit = {},
-    ) : this(title, Estimation.valueOf(estimation), cardId, cardType, configure, tracking)
 
     private val log = LoggerFactory.getLogger(this.javaClass)
 
@@ -37,9 +31,15 @@ open class StoryOf(
     fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
     fun buildStory(): Story =
-        StoryBuilder(getStoryName(), getProjectName(), title, getCardId(), cardType, estimation.value)
-            .apply(configure)
-            .build()
+        StoryBuilder(
+            getStoryName(),
+            getProjectName(),
+            title,
+            getCardId(),
+            cardType,
+            estimation.value,
+            tags.map(Tag::value)
+        ).apply(configure).build()
 
     fun buildPerformance(): StoryPerformance? = runCatching {
         buildStory()

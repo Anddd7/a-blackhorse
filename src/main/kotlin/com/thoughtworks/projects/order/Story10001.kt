@@ -21,6 +21,7 @@ object Story10001 : StoryOf(
     estimation = Estimation.EIGHT_8,
     cardId = "STORY-10001",
     cardType = CardType.STORY,
+    tags = listOf(ProjectTags.ORDER),
     configure = {
         inScope {
             """

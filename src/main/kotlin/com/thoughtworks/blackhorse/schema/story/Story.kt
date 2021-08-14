@@ -17,6 +17,7 @@ data class Story(
     val containers: Set<Container>,
     val cardType: CardType,
     val estimation: Int,
+    val tags: List<String>,
 )
 
 class StoryBuilder(
@@ -26,6 +27,7 @@ class StoryBuilder(
     private val cardId: String,
     private val cardType: CardType,
     private val estimation: Int,
+    private val tags: List<String>,
 ) {
     private var inScope: String? = null
     private var outOfScope: String? = null
@@ -64,7 +66,8 @@ class StoryBuilder(
             craftedApis,
             craftedContainers,
             cardType,
-            estimation
+            estimation,
+            tags,
         )
     }
 }
