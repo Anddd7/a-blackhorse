@@ -23,7 +23,6 @@ class MarkdownAcceptanceCriteriaFormatter(
                 lineOf(
                     title(id),
                     description,
-                    example(example),
                     mockup(mockup),
                     link(link),
                     flowFormatter.flows(flows)
@@ -37,7 +36,6 @@ class MarkdownAcceptanceCriteriaFormatter(
                 lineOf(
                     title(id),
                     description,
-                    example(example),
                     note(note),
                     mockup(mockup, ignorePath = true),
                     link(link),
@@ -47,12 +45,6 @@ class MarkdownAcceptanceCriteriaFormatter(
 
     private fun title(id: String) = "### ${label(id)}"
     private fun label(id: String) = "AC $id"
-    private fun example(str: String?) = str?.let {
-        lineOf(
-            "#### Example",
-            it,
-        )
-    }
 
     private fun mockup(items: List<String>, ignorePath: Boolean = false) = when {
         items.isEmpty() -> null

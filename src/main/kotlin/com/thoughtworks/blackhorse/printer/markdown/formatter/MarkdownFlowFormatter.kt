@@ -9,13 +9,14 @@ open class MarkdownFlowFormatter(
     private val processFormatter: ProcessFormatter,
 ) : FlowFormatter {
     override fun anchors(items: List<Flow>): String =
-        items.mapToLines { item -> toAnchorLink(anchor(item.id, item.purpose)) }
+        items.mapToLines { item -> toAnchorLink(anchor(item.id, item.example)) }
 
     override fun flows(items: List<Flow>) =
         items.mapToLines { item ->
             item.run {
                 lineOf(
-                    purpose(id, purpose),
+                    purpose(id, example),
+                    example(example),
                     content(processes)
                 )
             }
@@ -33,6 +34,10 @@ open class MarkdownFlowFormatter(
 
     private fun purpose(id: String, str: String) = "#### ${anchor(id, str)}"
     private fun anchor(id: String, str: String) = "Flow $id $str"
+    private fun example(str: String) = lineOf(
+        "#### Example",
+        str,
+    )
 
     private fun processDescription(processes: List<FlowProcess>) =
         processes.mapToLines(processFormatter::process)

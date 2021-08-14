@@ -3,7 +3,6 @@ package com.thoughtworks.blackhorse.schema.story
 data class AcceptanceCriteria(
     val id: String,
     val description: String,
-    var example: String?,
     var mockup: List<String>,
     var link: Map<String, String>,
     var note: String?,
@@ -15,7 +14,6 @@ data class AcceptanceCriteria(
 
 class AcceptanceCriteriaBuilder {
     private var description: String? = null
-    private var example: String? = null
     private var mockup = mutableListOf<String>()
     private var link = mutableMapOf<String, String>()
     private var note: String? = null
@@ -23,10 +21,6 @@ class AcceptanceCriteriaBuilder {
 
     fun description(fn: () -> String) {
         description = fn().trimIndent()
-    }
-
-    fun example(fn: () -> String) {
-        example = fn().trimIndent()
     }
 
     fun mockup(url: String) {
@@ -43,15 +37,14 @@ class AcceptanceCriteriaBuilder {
         note = fn().trimIndent()
     }
 
-    fun flow(purpose: String, configure: FlowBuilder.() -> Unit = {}) =
-        flows.add(FlowBuilder(purpose).apply(configure))
+    fun flow(example: String, configure: FlowBuilder.() -> Unit = {}) =
+        flows.add(FlowBuilder(example).apply(configure))
 
     fun build(id: String) =
         AcceptanceCriteria(
             id,
             description
                 ?: throw IllegalArgumentException("{description} is required in AcceptanceCriteria!"),
-            example,
             mockup,
             link,
             note,

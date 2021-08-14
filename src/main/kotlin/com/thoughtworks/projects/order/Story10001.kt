@@ -45,11 +45,6 @@ object Story10001 : StoryOf(
                 so that i can add more products
                 """
             }
-            example {
-                """
-                William is reviewing his shopping cart without adding any product
-                """
-            }
 
             mockup("https://preview.redd.it/h73wnfhvk3l61.png?width=575&format=png&auto=webp&s=a43c711e25606d31d80ccc5bbdf4b42111abce2c")
 
@@ -126,11 +121,7 @@ object Story10001 : StoryOf(
                 so that i can review the amount and total price of them
                 """
             }
-            example {
-                """
-                William is reviewing his shopping cart after added some products
-                """
-            }
+
             mockup("https://preview.redd.it/h73wnfhvk3l61.png?width=575&format=png&auto=webp&s=a43c711e25606d31d80ccc5bbdf4b42111abce2c")
 
             flow("render shopping cart") {

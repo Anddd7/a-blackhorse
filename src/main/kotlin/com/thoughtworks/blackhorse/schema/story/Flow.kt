@@ -6,14 +6,14 @@ import java.util.concurrent.atomic.AtomicInteger
 
 data class Flow(
     val id: String,
-    val purpose: String,
+    val example: String,
     val processes: List<FlowProcess>,
 ) {
     val allProcesses = processes.flatMap(FlowProcess::processIterator)
 }
 
 class FlowBuilder(
-    private val purpose: String,
+    private val example: String,
 ) {
     private val processes = mutableListOf<FlowProcessBuilder>()
 
@@ -30,6 +30,6 @@ class FlowBuilder(
     fun build(id: String): Flow {
         val increment = AtomicInteger(1)
 
-        return Flow(id, purpose, processes.mapIndexed { _, item -> item.build(id, increment) })
+        return Flow(id, example, processes.mapIndexed { _, item -> item.build(id, increment) })
     }
 }
