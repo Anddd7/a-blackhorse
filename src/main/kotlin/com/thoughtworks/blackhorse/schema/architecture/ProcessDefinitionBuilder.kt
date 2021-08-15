@@ -1,5 +1,6 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
+import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
 import com.thoughtworks.blackhorse.schema.story.attributes.Complexity
 
 /**

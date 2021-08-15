@@ -4,14 +4,11 @@ build
 
 
 src/main/resources/projects/*
-!src/main/resources/projects/order/
 !src/main/resources/projects/rental/
 
 src/main/kotlin/com/thoughtworks/projects/*
-!src/main/kotlin/com/thoughtworks/projects/order/
 !src/main/kotlin/com/thoughtworks/projects/rental/
 
 dist/*
-!dist/order/
 !dist/rental/
 

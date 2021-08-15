@@ -1,4 +1,4 @@
-package com.thoughtworks.blackhorse.schema.architecture
+package com.thoughtworks.blackhorse.schema.architecture.attributes
 
 data class TechStack(
     val name: String,

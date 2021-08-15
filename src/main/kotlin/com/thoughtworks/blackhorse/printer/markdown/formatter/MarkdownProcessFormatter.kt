@@ -4,7 +4,7 @@ import com.thoughtworks.blackhorse.config.HiddenOption
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
-import com.thoughtworks.blackhorse.schema.architecture.TestDouble
+import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
 import com.thoughtworks.blackhorse.schema.story.FlowProcess
 import org.slf4j.LoggerFactory
 
