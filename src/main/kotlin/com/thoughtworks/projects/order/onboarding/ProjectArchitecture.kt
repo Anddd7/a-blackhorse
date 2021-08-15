@@ -1,12 +1,15 @@
 package com.thoughtworks.projects.order.onboarding
 
+import com.thoughtworks.blackhorse.schema.architecture.BusinessSensitivityLayer
 import com.thoughtworks.blackhorse.schema.architecture.Client
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.DB
 import com.thoughtworks.blackhorse.schema.architecture.Endpoint
+import com.thoughtworks.blackhorse.schema.architecture.TechStack
 import com.thoughtworks.blackhorse.schema.architecture.at
 import com.thoughtworks.blackhorse.schema.architecture.cost
+import com.thoughtworks.blackhorse.schema.performance.attributes.Member
 
 object Web : Container {
     object UiComponent : Component
@@ -32,6 +35,11 @@ object Web : Container {
             """.trimIndent()
         },
     )
+    override val layer: BusinessSensitivityLayer = BusinessSensitivityLayer.DIFFERENTIATORS
+    override val techStack: List<TechStack> = listOf(
+        TechStack("React", "Build frontend pages")
+    )
+    override val owner: List<Member> = listOf(ZhangSan)
 }
 
 object Bff : Container {
@@ -61,6 +69,11 @@ object Bff : Container {
             """.trimIndent()
         }
     )
+    override val layer: BusinessSensitivityLayer = BusinessSensitivityLayer.DIFFERENTIATORS
+    override val techStack: List<TechStack> = listOf(
+        TechStack("Spring Boot", "Expose api to web")
+    )
+    override val owner: List<Member> = listOf(ZhangSan)
 }
 
 object Backend : Container {
@@ -123,4 +136,9 @@ object Backend : Container {
             """.trimIndent()
         },
     )
+    override val layer: BusinessSensitivityLayer = BusinessSensitivityLayer.CORE_BIZ_MODEL
+    override val techStack: List<TechStack> = listOf(
+        TechStack("Spring Boot", "Build core domain with business logic")
+    )
+    override val owner: List<Member> = listOf(LiSi)
 }

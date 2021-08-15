@@ -1,5 +1,6 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
+import com.thoughtworks.blackhorse.schema.performance.attributes.Member
 import com.thoughtworks.blackhorse.utils.extractProjectName
 
 /**
@@ -8,6 +9,9 @@ import com.thoughtworks.blackhorse.utils.extractProjectName
 interface Container : Node {
     val id: String
     val definitions: List<ProcessDefinitionBuilder>
+    val layer: BusinessSensitivityLayer
+    val techStack: List<TechStack>
+    val owner: List<Member>
 
     fun findProcessDefs(component: Component, dependency: Component): ProcessDefinition? {
         for ((index, builder) in definitions.withIndex()) {
