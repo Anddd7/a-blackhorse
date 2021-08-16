@@ -15,16 +15,19 @@ open class MarkdownArchitectureFormatter(
             "# Architecture Map of ${architecture.projectName}",
             "##### ChangeLogs",
             architecture.changelogs,
-            getGroupedContainers(architecture).mapToLines { layer(it.first, it.second.sortedBy(Container::id)) }
+            containers(getGroupedContainers(architecture))
         )
 
-    protected fun getGroupedContainers(architecture: Architecture) =
+    open fun containers(groups: List<Pair<ContainerLayer, List<Container>>>) =
+        groups.mapToLines { layer(it.first, it.second.sortedBy(Container::id)) }
+
+    private fun getGroupedContainers(architecture: Architecture) =
         architecture.containers
             .groupBy { it.layer }.entries
             .sortedBy { it.key.order() }
             .map { it.key to it.value.sortedBy(Container::id) }
 
-    protected fun layer(containerLayer: ContainerLayer, containers: List<Container>) =
+    private fun layer(containerLayer: ContainerLayer, containers: List<Container>) =
         lineOf(
             "## ${containerLayer.value()}",
             containers.mapToLines(containerFormatter::container)

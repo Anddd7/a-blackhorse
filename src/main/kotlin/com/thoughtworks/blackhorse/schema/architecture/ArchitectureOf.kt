@@ -1,8 +1,11 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
 import com.thoughtworks.blackhorse.config.ProjectContext
+import com.thoughtworks.blackhorse.config.ProjectContextHolder
 import com.thoughtworks.blackhorse.schema.story.infoTime
 import com.thoughtworks.blackhorse.utils.extractProjectName
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
 data class Architecture(
@@ -22,8 +25,16 @@ open class ArchitectureOf(
     private fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
     fun print() {
+
         log.infoTime("Architecture") {
-            ProjectContext.load(getProjectName()).architecturePrinter.start(build())
+            runBlocking {
+                val context = ProjectContext.load(getProjectName())
+
+                ProjectContextHolder.set(context)
+                launch(ProjectContextHolder.asContextElement()) {
+                    ProjectContextHolder.architecturePrinter().start(build())
+                }
+            }
         }
     }
 

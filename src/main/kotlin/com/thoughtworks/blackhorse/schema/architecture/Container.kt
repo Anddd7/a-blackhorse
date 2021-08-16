@@ -1,5 +1,6 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
+import com.google.common.reflect.ClassPath
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ContainerLayer
 import com.thoughtworks.blackhorse.schema.architecture.attributes.DomainLogic
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
@@ -44,4 +45,14 @@ abstract class Container(
     infix fun Component.stub(other: Component) = createProcess(other, TestDouble.Stub)
     infix fun Component.dummy(other: Component) = createProcess(other, TestDouble.Dummy)
     infix fun Component.spy(other: Component) = createProcess(other, TestDouble.Spy)
+
+    @Suppress("UnstableApiUsage")
+    fun getComponents() =
+        ClassPath.from(this.javaClass.classLoader).allClasses
+            .filter {
+                it.name.startsWith(this.javaClass.name)
+            }
+            .mapNotNull {
+                runCatching { it.load().kotlin.objectInstance as Component? }.getOrNull()
+            }
 }

@@ -7,10 +7,11 @@ import com.thoughtworks.blackhorse.utils.getContainerOrNull
 /**
  * the interface to define a functional component/layer in a process/container
  */
-interface Component : Node {
-    val techStack: List<TechStack>
-    val responsibility: String
-    val layer: ComponentLayer
+abstract class Component(
+    val layer: ComponentLayer,
+    val techStack: List<TechStack> = emptyList(),
+    val responsibility: String = "",
+) : Node {
 
     fun getContainer(): Container {
         val container = getContainerOrNull(javaClass.name.substringBeforeLast("$"))

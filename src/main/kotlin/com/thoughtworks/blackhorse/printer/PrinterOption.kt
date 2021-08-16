@@ -14,6 +14,7 @@ import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownProcessFor
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownStoryFormatter
 import com.thoughtworks.blackhorse.printer.pdf.PandocPdfStoryPrinter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlArchitectureFormatter
+import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlContainerFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlFlowFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlProcessFormatter
 
@@ -58,7 +59,7 @@ enum class PrinterOption(
         ),
         MarkdownArchitecturePrinter(
             PlantumlArchitectureFormatter(
-                MarkdownContainerFormatter()
+                PlantumlContainerFormatter()
             )
         )
     ),
@@ -80,7 +81,9 @@ enum class PrinterOption(
         ),
         MarkdownArchitecturePrinter(
             PlantumlArchitectureFormatter(
-                MarkdownContainerFormatter(),
+                PlantumlContainerFormatter(
+                    pdfEngine = PdfEngine.LATEX,
+                ),
                 pdfEngine = PdfEngine.LATEX,
             )
         )
@@ -103,7 +106,9 @@ enum class PrinterOption(
         ),
         MarkdownArchitecturePrinter(
             PlantumlArchitectureFormatter(
-                MarkdownContainerFormatter(),
+                PlantumlContainerFormatter(
+                    pdfEngine = PdfEngine.LATEX,
+                ),
                 pdfEngine = PdfEngine.LATEX,
             )
         )

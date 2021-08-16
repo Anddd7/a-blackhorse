@@ -1,9 +1,18 @@
 package com.thoughtworks.projects.rental.onboarding.architecture.application
 
+import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinitionBuilder
+import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
+
+private object CommonComponentLayer {
+    val Authentication = ComponentLayer("Authentication", 0)
+    val Controller = ComponentLayer("Controller", 1)
+    val Service = ComponentLayer("Service", 2)
+    val Client = ComponentLayer("Client", 3)
+}
 
 object PopularizationApplication : Container(
     id = "32",
@@ -13,5 +22,16 @@ object PopularizationApplication : Container(
     ),
     responsibility = "推广服务 应用服务",
 ) {
+    object Authentication : Component(CommonComponentLayer.Authentication)
+
+    object ApiController : Component(CommonComponentLayer.Controller)
+    object CacheController : Component(CommonComponentLayer.Controller)
+
+    object Vo : Component(CommonComponentLayer.Service)
+    object Service : Component(CommonComponentLayer.Service)
+
+    object Client : Component(CommonComponentLayer.Client)
+    object Dto : Component(CommonComponentLayer.Client)
+
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }
