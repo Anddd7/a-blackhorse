@@ -1,10 +1,10 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
-import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
+import com.thoughtworks.blackhorse.printer.interfaces.ArchitectureContainerFormatter
 import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
 
-class MarkdownContainerFormatter : ContainerFormatter {
+class MarkdownContainerFormatter : ArchitectureContainerFormatter {
     private val title = "Project Process Definition"
 
     override fun anchors(items: Set<Container>): String = toAnchorLink(title)

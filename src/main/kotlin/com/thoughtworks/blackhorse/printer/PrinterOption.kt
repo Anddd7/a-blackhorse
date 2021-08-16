@@ -5,7 +5,6 @@ import com.thoughtworks.blackhorse.printer.jira.JiraPrinter
 import com.thoughtworks.blackhorse.printer.markdown.MarkdownPrinter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownAcceptanceCriteriaFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownApiSchemaFormatter
-import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownContainerFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownProcessFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownStoryFormatter

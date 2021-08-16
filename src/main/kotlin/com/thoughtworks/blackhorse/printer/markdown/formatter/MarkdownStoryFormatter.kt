@@ -2,7 +2,6 @@ package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.printer.interfaces.AcceptanceCriteriaFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.ApiSchemaFormatter
-import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
 import com.thoughtworks.blackhorse.schema.story.Story
 
