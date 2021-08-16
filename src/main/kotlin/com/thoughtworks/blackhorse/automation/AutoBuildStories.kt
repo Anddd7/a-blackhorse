@@ -56,7 +56,7 @@ object AutoBuildStories {
             val context = StoryContext.load(projectName, it.getStoryName())
             StoryContextHolder.set(context)
             async(coroutineContext + StoryContextHolder.asContextElement()) {
-                StoryContextHolder.printer().print(it.buildStory())
+                StoryContextHolder.storyPrinter().print(it.buildStory())
             }
         }
     }

@@ -59,7 +59,7 @@ open class StoryOf(
 
                 StoryContextHolder.set(context)
                 launch(StoryContextHolder.asContextElement()) {
-                    StoryContextHolder.printer().print(buildStory())
+                    StoryContextHolder.storyPrinter().print(buildStory())
                 }
             }
         }

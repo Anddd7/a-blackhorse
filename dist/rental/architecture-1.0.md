@@ -1,0 +1,24 @@
+# Architecture Map of rental
+##### ChangeLogs
+initial design
+## Frontend
+### GeneralWebPortal
+### IndividualApp4Android
+### IndividualApp4IOS
+### OfficerApp4Android
+### OfficerApp4IOS
+### ManagementPortal
+## BFF
+### WebApiBff
+### MobileApiBff
+## ApplicationService
+### ManagementApplication
+### PopularizationApplication
+### RentalApplication
+## CoreBizService
+### PopularizationService
+### PrepaidService
+## DomainService
+### AuthenticationService
+### RentalInfoMgmtService
+### UserManagementService

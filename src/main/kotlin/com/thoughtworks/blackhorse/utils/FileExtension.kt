@@ -11,9 +11,16 @@ object FileExtension {
     private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     fun getOrCreateFile(filename: String, folder: Path): Path {
-        if (Files.notExists(folder)) Files.createDirectories(folder)
         val file = folder.resolve(filename)
+        if (Files.notExists(folder)) Files.createDirectories(folder)
         if (Files.notExists(file)) Files.createFile(file)
+        return file
+    }
+
+    fun createFileIfAbsent(filename: String, folder: Path): Path {
+        val file = folder.resolve(filename)
+        if (Files.exists(file)) throw FileAlreadyExistsException(file.toFile())
+        else Files.createFile(file)
         return file
     }
 

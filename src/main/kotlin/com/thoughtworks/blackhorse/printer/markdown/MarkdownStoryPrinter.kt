@@ -6,7 +6,7 @@ import com.thoughtworks.blackhorse.printer.interfaces.StoryPrinter
 import com.thoughtworks.blackhorse.schema.story.Story
 import com.thoughtworks.blackhorse.utils.FileExtension
 
-open class MarkdownPrinter(
+open class MarkdownStoryPrinter(
     private val formatter: StoryFormatter,
 ) : StoryPrinter {
     override fun start(story: Story) {

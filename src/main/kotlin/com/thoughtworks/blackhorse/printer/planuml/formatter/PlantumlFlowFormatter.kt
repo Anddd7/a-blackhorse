@@ -6,14 +6,8 @@ import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.markdown.formatter.toLines
-import com.thoughtworks.blackhorse.schema.architecture.Client
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.DB
-import com.thoughtworks.blackhorse.schema.architecture.Endpoint
-import com.thoughtworks.blackhorse.schema.architecture.Proxy
-import com.thoughtworks.blackhorse.schema.architecture.Server
-import com.thoughtworks.blackhorse.schema.architecture.Web
 import com.thoughtworks.blackhorse.schema.story.FlowProcess
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
@@ -72,22 +66,14 @@ class PlantumlFlowFormatter(
         "end box"
     )
 
-    private fun Container.boxColor() = when (this) {
-        is Web -> " "
-        is Proxy -> "#LightBlue"
-        is Server -> " "
-        else -> " "
-    }
+    // TODO style
+    private fun Container.boxColor() = " "
 
     private fun nodes(components: List<Component>) =
         components.map { node -> "${node.participant()} ${node.name()}" }.toLines()
 
-    private fun Component.participant() = when (this) {
-        is Endpoint -> "control"
-        is DB -> "database"
-        is Client -> "control"
-        else -> "entity"
-    }
+    // TODO style
+    private fun Component.participant() = "entity"
 
     private fun processes(processes: List<FlowProcess>) =
         processes.map(processFormatter::diagram).toLines()

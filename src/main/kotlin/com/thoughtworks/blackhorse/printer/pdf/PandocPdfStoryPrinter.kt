@@ -2,13 +2,13 @@ package com.thoughtworks.blackhorse.printer.pdf
 
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
-import com.thoughtworks.blackhorse.printer.markdown.MarkdownPrinter
+import com.thoughtworks.blackhorse.printer.markdown.MarkdownStoryPrinter
 import com.thoughtworks.blackhorse.schema.story.Story
 import com.thoughtworks.blackhorse.utils.FileExtension
 
-open class PandocPdfPrinter(
+open class PandocPdfStoryPrinter(
     private val formatter: StoryFormatter
-) : MarkdownPrinter(formatter) {
+) : MarkdownStoryPrinter(formatter) {
     override fun start(story: Story) {
         val content = formatter.story(story)
 

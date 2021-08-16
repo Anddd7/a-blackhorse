@@ -16,13 +16,15 @@ data class ProjectContext(
     private val _jiraToken: OptionalProperty,
     private val hiddenOptions: List<HiddenOption>,
 ) {
-    val printer = printerOption.printer
+    val storyPrinter = printerOption.storyPrinter
+    val architecturePrinter = printerOption.architecturePrinter
     val distPath: Path = Paths.get("dist").resolve(projectName)
     val jiraBasUrl: String by lazy { _jiraBasUrl.get() }
     val jiraToken: String by lazy { _jiraToken.get() }
 
     fun isVisible(hiddenOption: HiddenOption) = !hiddenOptions.contains(hiddenOption)
     fun getProjectFile(filename: String) = FileExtension.getOrCreateFile(filename, distPath)
+    fun createProjectFileIfAbsent(filename: String) = FileExtension.createFileIfAbsent(filename, distPath)
 
     fun override(printer: PrinterOption?) = copy(
         printerOption = printer ?: printerOption

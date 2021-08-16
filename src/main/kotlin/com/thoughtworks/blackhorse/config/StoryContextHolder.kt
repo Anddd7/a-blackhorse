@@ -15,7 +15,7 @@ object StoryContextHolder {
     private fun storyName() = get().storyName
     private fun tempPath() = get().tempPath
     fun projectName() = get().projectContext.projectName
-    fun printer() = get().projectContext.printer
+    fun storyPrinter() = get().projectContext.storyPrinter
     fun distPath(): Path = get().projectContext.distPath
     fun jiraBasUrl() = get().projectContext.jiraBasUrl
     fun isVisible(hiddenOption: HiddenOption) = get().projectContext.isVisible(hiddenOption)

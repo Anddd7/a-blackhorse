@@ -5,7 +5,7 @@ import com.thoughtworks.blackhorse.printer.interfaces.StoryFormatter
 import com.thoughtworks.blackhorse.printer.jira.api.updateAttachments
 import com.thoughtworks.blackhorse.printer.jira.api.updateCardInformation
 import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
-import com.thoughtworks.blackhorse.printer.pdf.PandocPdfPrinter
+import com.thoughtworks.blackhorse.printer.pdf.PandocPdfStoryPrinter
 import com.thoughtworks.blackhorse.schema.story.AcceptanceCriteria
 import com.thoughtworks.blackhorse.schema.story.Story
 import com.thoughtworks.blackhorse.utils.FileExtension
@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory
 import java.nio.file.Files
 import java.nio.file.Path
 
-class JiraPrinter(
+class JiraStoryPrinter(
     private val formatter: StoryFormatter,
-) : PandocPdfPrinter(formatter) {
+) : PandocPdfStoryPrinter(formatter) {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
     override fun start(story: Story) {

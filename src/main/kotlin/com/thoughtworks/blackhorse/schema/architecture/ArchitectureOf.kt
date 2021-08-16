@@ -5,20 +5,27 @@ import com.thoughtworks.blackhorse.schema.story.infoTime
 import com.thoughtworks.blackhorse.utils.extractProjectName
 import org.slf4j.LoggerFactory
 
-open class ArchitectureOf(
-    vararg containers: Container
-) {
-    private val groups = containers.groupBy(Container::layer)
+data class Architecture(
+    val projectName: String,
+    val containers: Set<Container>,
+    val version: String,
+    val changelogs: String,
+)
 
+open class ArchitectureOf(
+    private val version: String,
+    private val changelogs: String,
+    private vararg val containers: Container
+) {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
-    fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
+    private fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
     fun print() {
         log.infoTime("Architecture") {
-            val context = ProjectContext.load(getProjectName())
-
-
+            ProjectContext.load(getProjectName()).architecturePrinter.start(build())
         }
     }
+
+    private fun build() = Architecture(getProjectName(), containers.toSet(), version, changelogs)
 }

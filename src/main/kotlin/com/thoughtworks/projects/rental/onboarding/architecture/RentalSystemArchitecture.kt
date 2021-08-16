@@ -19,6 +19,8 @@ import com.thoughtworks.projects.rental.onboarding.architecture.frontend.Officer
 import com.thoughtworks.projects.rental.onboarding.architecture.frontend.OfficerApp4IOS
 
 object RentalSystemArchitecture : ArchitectureOf(
+    "1.0",
+    "initial design",
     // frontend
     GeneralWebPortal,
     IndividualApp4Android,
@@ -41,3 +43,7 @@ object RentalSystemArchitecture : ArchitectureOf(
     RentalInfoMgmtService,
     UserManagementService
 )
+
+fun main() {
+    RentalSystemArchitecture.print()
+}
