@@ -16,6 +16,8 @@ open class MarkdownContainerFormatter : ContainerFormatter {
         return lineOf(
             "### " + container.name(),
             container.responsibility,
+            container.techStack.joinToString(" , ", "Tech Stack: [", "]"),
+            container.owner.joinToString(" , ", "Owner: ", "]") { it.name },
             components(groupedComponents),
             processes(container.name(), container.getAllProcessDefs())
         )

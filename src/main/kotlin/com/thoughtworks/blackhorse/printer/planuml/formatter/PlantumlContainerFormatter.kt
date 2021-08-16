@@ -48,8 +48,9 @@ open class PlantumlContainerFormatter(
 
         return """
                 component $name [
-                  $name
-                  ${component.responsibility}
+                    $name
+                    ${component.techStack.joinToString(",", "[", "]")}
+                    ${component.responsibility}
                 ]
             """.trimIndent()
     }
