@@ -8,6 +8,7 @@ import com.thoughtworks.blackhorse.printer.markdown.MarkdownStoryPrinter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownAcceptanceCriteriaFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownApiSchemaFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownArchitectureFormatter
+import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownContainerFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownProcessFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownStoryFormatter
@@ -35,7 +36,9 @@ enum class PrinterOption(
             ),
         ),
         MarkdownArchitecturePrinter(
-            MarkdownArchitectureFormatter()
+            MarkdownArchitectureFormatter(
+                MarkdownContainerFormatter()
+            )
         )
     ),
 
@@ -54,7 +57,9 @@ enum class PrinterOption(
             ),
         ),
         MarkdownArchitecturePrinter(
-            PlantumlArchitectureFormatter()
+            PlantumlArchitectureFormatter(
+                MarkdownContainerFormatter()
+            )
         )
     ),
 
@@ -75,6 +80,7 @@ enum class PrinterOption(
         ),
         MarkdownArchitecturePrinter(
             PlantumlArchitectureFormatter(
+                MarkdownContainerFormatter(),
                 pdfEngine = PdfEngine.LATEX,
             )
         )
@@ -96,7 +102,10 @@ enum class PrinterOption(
             ),
         ),
         MarkdownArchitecturePrinter(
-            MarkdownArchitectureFormatter()
+            PlantumlArchitectureFormatter(
+                MarkdownContainerFormatter(),
+                pdfEngine = PdfEngine.LATEX,
+            )
         )
     ),
     ;

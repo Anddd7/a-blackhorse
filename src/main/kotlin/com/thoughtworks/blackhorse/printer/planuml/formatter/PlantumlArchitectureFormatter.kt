@@ -2,6 +2,7 @@ package com.thoughtworks.blackhorse.printer.planuml.formatter
 
 import com.thoughtworks.blackhorse.config.ProjectContext
 import com.thoughtworks.blackhorse.printer.PdfEngine
+import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownArchitectureFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.markdown.formatter.mapToLines
@@ -10,8 +11,9 @@ import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ContainerLayer
 
 class PlantumlArchitectureFormatter(
+    containerFormatter: ContainerFormatter,
     private val pdfEngine: PdfEngine = PdfEngine.DEFAULT
-) : MarkdownArchitectureFormatter() {
+) : MarkdownArchitectureFormatter(containerFormatter) {
 
     override fun architecture(architecture: Architecture): String {
         val groups = getGroupedContainers(architecture)
@@ -35,12 +37,6 @@ class PlantumlArchitectureFormatter(
 
     private fun uml(groups: List<Pair<ContainerLayer, List<Container>>>) = lineOf(
         "@startuml",
-        """
-        skinparam sequence {
-            BoxBorderColor WHITE
-        }
-        """.trimIndent(),
-        // "hide footbox",
         groups.mapToLines(this::group),
         "@enduml"
     )
@@ -56,5 +52,11 @@ class PlantumlArchitectureFormatter(
         )
     }
 
-    private fun container(container: Container) = "[${container.name()}]"
+    private fun container(container: Container) =
+        """
+            component ${container.name()} [
+              ${container.name()}
+              ${container.responsibility}
+            ]
+        """.trimIndent()
 }

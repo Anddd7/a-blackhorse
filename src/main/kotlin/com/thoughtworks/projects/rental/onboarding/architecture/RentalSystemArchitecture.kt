@@ -19,8 +19,8 @@ import com.thoughtworks.projects.rental.onboarding.architecture.frontend.Officer
 import com.thoughtworks.projects.rental.onboarding.architecture.frontend.OfficerApp4IOS
 
 object RentalSystemArchitecture : ArchitectureOf(
-    "1.1",
-    "add diagram",
+    "1.2",
+    "populate responsibility",
     // frontend
     GeneralWebPortal,
     IndividualApp4Android,
