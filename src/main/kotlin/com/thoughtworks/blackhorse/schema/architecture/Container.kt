@@ -1,6 +1,7 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ContainerLayer
+import com.thoughtworks.blackhorse.schema.architecture.attributes.DomainLogic
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
 import com.thoughtworks.blackhorse.schema.performance.attributes.Member
@@ -9,26 +10,27 @@ import com.thoughtworks.blackhorse.utils.extractProjectName
 /**
  * the interface to define a single container
  */
-interface Container : Node {
-    val id: String
-    val definitions: List<ProcessDefinitionBuilder>
-    val layer: ContainerLayer
-    val techStack: List<TechStack>
-    val owner: List<Member>
-    val responsibility: String
+abstract class Container(
+    val id: String,
+    val layer: ContainerLayer,
+    val techStack: List<TechStack> = emptyList(),
+    val domains: List<DomainLogic> = emptyList(),
+    val owner: List<Member> = emptyList(),
+    val responsibility: String = "",
+) : Node {
+    abstract fun getDefinitions(): List<ProcessDefinitionBuilder>
 
     fun findProcessDefs(component: Component, dependency: Component): ProcessDefinition? {
-        for ((index, builder) in definitions.withIndex()) {
+        for ((index, builder) in getDefinitions().withIndex()) {
             if (builder.component == component && builder.dependency == dependency)
                 return builder.build(id, index + 1)
         }
         return null
     }
 
-    fun getAllProcessDefs() =
-        definitions.mapIndexed { index, builder ->
-            builder.build(id, index + 1)
-        }
+    fun getAllProcessDefs() = getDefinitions().mapIndexed { index, builder ->
+        builder.build(id, index + 1)
+    }
 
     fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
