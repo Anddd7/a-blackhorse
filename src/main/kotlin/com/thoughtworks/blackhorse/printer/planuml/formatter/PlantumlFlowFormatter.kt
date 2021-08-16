@@ -23,22 +23,13 @@ class PlantumlFlowFormatter(
     private val pdfEngine: PdfEngine = PdfEngine.DEFAULT
 ) : MarkdownFlowFormatter(processFormatter) {
 
-    override fun processDiagram(processes: List<FlowProcess>): String {
-        val fileFormat = when (pdfEngine) {
-            PdfEngine.DEFAULT -> FileFormat.SVG
-            PdfEngine.LATEX -> FileFormat.PNG
-        }
-        val padding = when (pdfEngine) {
-            PdfEngine.DEFAULT -> ""
-            PdfEngine.LATEX -> "> "
-        }
-
-        val umlSource = uml(processes)
-        val tempFile = generateTempFile(umlSource, fileFormat)
-        val relativePath = StoryContextHolder.distPath().relativize(tempFile)
-
-        return "$padding![${tempFile.fileName.nameWithoutExtension}]($relativePath)"
-    }
+    override fun processDiagram(processes: List<FlowProcess>) =
+        generateUml(
+            pdfEngine,
+            StoryContextHolder.distPath(),
+            { uml(processes) },
+            StoryContextHolder::getLocalStoryTempFile
+        )
 
     private fun uml(processes: List<FlowProcess>) = lineOf(
         "@startuml",
@@ -77,19 +68,36 @@ class PlantumlFlowFormatter(
 
     private fun processes(processes: List<FlowProcess>) =
         processes.map(processFormatter::diagram).toLines()
+}
 
-    private fun generateTempFile(source: String, fileFormat: FileFormat): Path {
-        val reader = SourceStringReader(source)
-        val os = ByteArrayOutputStream().apply {
-            use {
-                reader.outputImage(it, FileFormatOption(fileFormat))
-            }
-        }
-        val fileName = UUID.randomUUID().toString()
-        val temp = StoryContextHolder.getLocalStoryTempFile("$fileName.${fileFormat.ext()}")
-        Files.write(temp, os.toByteArray())
-        return temp
+private fun FileFormat.ext() = name.lowercase()
+
+fun generateUml(
+    pdfEngine: PdfEngine,
+    distPath: Path,
+    uml: () -> String,
+    createTempFile: (String) -> Path
+): String {
+    val fileFormat = when (pdfEngine) {
+        PdfEngine.DEFAULT -> FileFormat.SVG
+        PdfEngine.LATEX -> FileFormat.PNG
     }
+    val padding = when (pdfEngine) {
+        PdfEngine.DEFAULT -> ""
+        PdfEngine.LATEX -> "> "
+    }
+    val source = uml()
+    val fileName = "${UUID.randomUUID()}.${fileFormat.ext()}"
+    val tempFile = createTempFile(fileName)
+    val reader = SourceStringReader(source)
+    val os = ByteArrayOutputStream().apply {
+        use {
+            reader.outputImage(it, FileFormatOption(fileFormat))
+        }
+    }
+    Files.write(tempFile, os.toByteArray())
 
-    private fun FileFormat.ext() = name.lowercase()
+    val relativePath = distPath.relativize(tempFile)
+
+    return "$padding![${tempFile.fileName.nameWithoutExtension}]($relativePath)"
 }

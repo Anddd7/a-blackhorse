@@ -8,14 +8,6 @@ import com.thoughtworks.blackhorse.printer.markdown.formatter.mapToLines
 import com.thoughtworks.blackhorse.schema.architecture.Architecture
 import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ContainerLayer
-import net.sourceforge.plantuml.FileFormat
-import net.sourceforge.plantuml.FileFormatOption
-import net.sourceforge.plantuml.SourceStringReader
-import java.io.ByteArrayOutputStream
-import java.nio.file.Files
-import java.nio.file.Path
-import java.util.UUID
-import kotlin.io.path.nameWithoutExtension
 
 class PlantumlArchitectureFormatter(
     private val pdfEngine: PdfEngine = PdfEngine.DEFAULT
@@ -33,22 +25,13 @@ class PlantumlArchitectureFormatter(
         )
     }
 
-    private fun diagram(projectContext: ProjectContext, groups: List<Pair<ContainerLayer, List<Container>>>): String {
-        val fileFormat = when (pdfEngine) {
-            PdfEngine.DEFAULT -> FileFormat.SVG
-            PdfEngine.LATEX -> FileFormat.PNG
-        }
-        val padding = when (pdfEngine) {
-            PdfEngine.DEFAULT -> ""
-            PdfEngine.LATEX -> "> "
-        }
-
-        val umlSource = uml(groups)
-        val tempFile = generateTempFile(projectContext, umlSource, fileFormat)
-        val relativePath = projectContext.distPath.relativize(tempFile)
-
-        return "$padding![${tempFile.fileName.nameWithoutExtension}]($relativePath)"
-    }
+    private fun diagram(projectContext: ProjectContext, groups: List<Pair<ContainerLayer, List<Container>>>) =
+        generateUml(
+            pdfEngine,
+            projectContext.distPath,
+            { uml(groups) },
+            projectContext::getProjectTempFile
+        )
 
     private fun uml(groups: List<Pair<ContainerLayer, List<Container>>>) = lineOf(
         "@startuml",
@@ -74,19 +57,4 @@ class PlantumlArchitectureFormatter(
     }
 
     private fun container(container: Container) = "[${container.name()}]"
-
-    private fun generateTempFile(projectContext: ProjectContext, source: String, fileFormat: FileFormat): Path {
-        val reader = SourceStringReader(source)
-        val os = ByteArrayOutputStream().apply {
-            use {
-                reader.outputImage(it, FileFormatOption(fileFormat))
-            }
-        }
-        val fileName = UUID.randomUUID().toString()
-        val temp = projectContext.getProjectTempFile("$fileName.${fileFormat.ext()}")
-        Files.write(temp, os.toByteArray())
-        return temp
-    }
-
-    private fun FileFormat.ext() = name.lowercase()
 }
