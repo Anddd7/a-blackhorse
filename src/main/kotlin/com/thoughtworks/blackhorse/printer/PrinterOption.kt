@@ -29,7 +29,6 @@ enum class PrinterOption(
                     ),
                 ),
                 MarkdownApiSchemaFormatter(),
-                MarkdownContainerFormatter(),
             ),
         )
     }),
@@ -46,7 +45,6 @@ enum class PrinterOption(
                     ),
                 ),
                 MarkdownApiSchemaFormatter(),
-                MarkdownContainerFormatter(),
             ),
         )
     }),
@@ -64,7 +62,6 @@ enum class PrinterOption(
                     ),
                 ),
                 MarkdownApiSchemaFormatter(),
-                MarkdownContainerFormatter(),
             ),
         )
     }),
@@ -82,7 +79,6 @@ enum class PrinterOption(
                     ),
                 ),
                 MarkdownApiSchemaFormatter(),
-                MarkdownContainerFormatter(),
             ),
         )
     }),

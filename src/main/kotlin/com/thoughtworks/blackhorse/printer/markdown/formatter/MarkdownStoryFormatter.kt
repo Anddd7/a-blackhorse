@@ -9,7 +9,6 @@ import com.thoughtworks.blackhorse.schema.story.Story
 class MarkdownStoryFormatter(
     private val acFormatter: AcceptanceCriteriaFormatter,
     private val apiFormatter: ApiSchemaFormatter,
-    private val containerFormatter: ContainerFormatter,
 ) : StoryFormatter {
 
     override fun story(story: Story) = story.run {
@@ -20,7 +19,6 @@ class MarkdownStoryFormatter(
             outOfScope(outOfScope),
             acFormatter.acceptanceCriteria(acceptanceCriteria),
             apiFormatter.schemas(apis),
-            containerFormatter.containers(containers)
         )
     }
 
@@ -53,7 +51,6 @@ class MarkdownStoryFormatter(
         toAnchorLink("Out of Scope"),
         acFormatter.anchors(story.acceptanceCriteria),
         apiFormatter.anchors(story.apis),
-        containerFormatter.anchors(story.containers)
     )
 }
 
