@@ -24,6 +24,7 @@ data class ProjectContext(
 
     fun isVisible(hiddenOption: HiddenOption) = !hiddenOptions.contains(hiddenOption)
     fun getProjectFile(filename: String) = FileExtension.getOrCreateFile(filename, distPath)
+    fun getProjectTempFile(filename: String) = FileExtension.getOrCreateFile(filename, distPath.resolve("temp"))
     fun createProjectFileIfAbsent(filename: String) = FileExtension.createFileIfAbsent(filename, distPath)
 
     fun override(printer: PrinterOption?) = copy(
