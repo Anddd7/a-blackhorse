@@ -7,6 +7,7 @@ import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.markdown.formatter.mapToLines
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
+import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 
 open class PlantumlContainerFormatter(
     private val pdfEngine: PdfEngine = PdfEngine.DEFAULT
@@ -21,7 +22,11 @@ open class PlantumlContainerFormatter(
         return generateUml(
             pdfEngine,
             ProjectContextHolder.distPath(),
-            { uml(groups) },
+            {
+                val uml = uml(groups)
+                println(uml)
+                uml
+            },
             ProjectContextHolder::getLocalStoryTempFile
         )
     }
@@ -45,11 +50,12 @@ open class PlantumlContainerFormatter(
 
     private fun component(component: Component): String {
         val name = component.name().substringAfter(".")
+        val techStack = component.techStack.joinToString(",", "[", "]", transform = TechStack::name)
 
         return """
                 component $name [
                     $name
-                    ${component.techStack.joinToString(",", "[", "]")}
+                    $techStack 
                     ${component.responsibility}
                 ]
             """.trimIndent()

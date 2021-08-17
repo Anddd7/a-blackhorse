@@ -18,17 +18,36 @@ object PopularizationApplication : Container(
     id = "32",
     layer = Responsibility.ApplicationService,
     techStack = listOf(
-        TechStack("Spring Boot", "")
+        TechStack("Spring", "使用Spring生态搭建后端服务"),
+        TechStack("Kotlin", "vs Java，语法简洁、并发支持更好"),
     ),
     responsibility = "推广服务 应用服务",
 ) {
-    object Authentication : Component(CommonComponentLayer.Authentication)
+    object Authentication : Component(
+        CommonComponentLayer.Authentication,
+        listOf(
+            TechStack("Spring Security", "验证用户身份"),
+        ),
+        "验证用户身份：仅限已注册经纪人访问"
+    )
 
-    object ApiController : Component(CommonComponentLayer.Controller)
-    object CacheController : Component(CommonComponentLayer.Controller)
+    object ApiController : Component(
+        CommonComponentLayer.Controller,
+        listOf(
+            TechStack("Spring Mvc"),
+        ),
+        "基于服务功能构建API"
+    )
+
+    object Service : Component(
+        CommonComponentLayer.Service,
+        listOf(
+            TechStack("Kotlin"),
+        ),
+        "基于服务功能构建API"
+    )
 
     object Vo : Component(CommonComponentLayer.Service)
-    object Service : Component(CommonComponentLayer.Service)
 
     object Client : Component(CommonComponentLayer.Client)
     object Dto : Component(CommonComponentLayer.Client)

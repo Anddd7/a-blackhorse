@@ -5,6 +5,8 @@ import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
+import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
+import com.thoughtworks.blackhorse.schema.performance.attributes.Member
 
 open class MarkdownContainerFormatter : ContainerFormatter {
     override fun container(container: Container): String {
@@ -16,34 +18,41 @@ open class MarkdownContainerFormatter : ContainerFormatter {
         return lineOf(
             "### " + container.name(),
             container.responsibility,
-            container.techStack.joinToString(" , ", "Tech Stack: [", "]"),
-            container.owner.joinToString(" , ", "Owner: ", "]") { it.name },
+            container.printTechStack(),
+            container.printOwner(),
             components(groupedComponents),
-            processes(container.name(), container.getAllProcessDefs())
+            processes(container.getAllProcessDefs())
         )
     }
+
+    private fun Container.printTechStack() = techStack.print("Tech Stack", TechStack::name)
+    private fun Component.printTechStack() = techStack.print("Tech Stack", TechStack::name)
+    private fun Container.printOwner() = owner.print("Owner", Member::name)
+
+    private fun <T> List<T>.print(prefix: String, transform: (T) -> String) =
+        joinToString(", ", "$prefix: [", "]", transform = transform)
 
     open fun components(groupedComponents: List<Pair<ComponentLayer, List<Component>>>) =
         groupedComponents.mapToLines { (layer, components) ->
             lineOf(
                 "- " + layer.value,
-                components.mapToLines(Component::name).prependIndent("  - ")
+                components.mapToLines { it.printTechStack() }.prependIndent("  - ")
             )
         }
 
-    private fun processes(containerName: String, processDefs: List<ProcessDefinition>): String? {
+    private fun processes(processDefs: List<ProcessDefinition>): String? {
         if (processDefs.isEmpty()) return null
 
         return lineOf(
             "#### Processes",
-            processDefs.mapToLines { processLine(containerName, it) }
+            processDefs.mapToLines(this::processLine)
         )
     }
 
-    private fun processLine(containerName: String, definition: ProcessDefinition): String {
+    private fun processLine(definition: ProcessDefinition): String {
         val id = definition.name
-        val component = definition.component.name().substringAfter("$containerName.")
-        val dependency = definition.dependency.name().substringAfter("$containerName.")
+        val component = definition.component.simpleName()
+        val dependency = definition.dependency.simpleName()
         val testDouble = definition.testDouble
 
         return lineOf(

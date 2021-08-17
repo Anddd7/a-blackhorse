@@ -24,4 +24,6 @@ abstract class Component(
         }
         return container
     }
+
+    fun simpleName() = javaClass.name.substringAfterLast("$")
 }
