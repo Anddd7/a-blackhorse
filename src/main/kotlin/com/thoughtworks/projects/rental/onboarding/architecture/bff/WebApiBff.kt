@@ -11,7 +11,7 @@ object WebApiBff : Container(
     techStack = listOf(
         TechStack("go", "bff for web app")
     ),
-    responsibility = "思沃租房 Web Bff",
+    responsibility = "思沃租房Web Bff: 基于后端应用服务, 服务于思沃租房通用版Web端",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

@@ -15,7 +15,7 @@ object PopularizationService : Container(
     domains = listOf(
         DomainLogic("推广报价引擎", "计算推广的价格")
     ),
-    responsibility = "信息推广服务",
+    responsibility = "信息推广服务: 提供信息推广服务协议上下文中的业务能力接口",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

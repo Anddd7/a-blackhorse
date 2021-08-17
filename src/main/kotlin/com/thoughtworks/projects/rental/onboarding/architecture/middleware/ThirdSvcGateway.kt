@@ -11,7 +11,7 @@ object ThirdSvcGateway : Container(
     techStack = listOf(
         TechStack("lambda", "")
     ),
-    responsibility = "三方服务网关",
+    responsibility = "三方服务网关: 对接除支付外的三方平台",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

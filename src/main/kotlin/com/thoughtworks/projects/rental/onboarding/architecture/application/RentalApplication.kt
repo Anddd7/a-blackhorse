@@ -11,8 +11,7 @@ object RentalApplication : Container(
     techStack = listOf(
         TechStack("Spring Boot", "")
     ),
-    responsibility = "租赁信息 应用服务",
+    responsibility = "租赁信息应用服务: 向前端服务/应用提供租赁信息的展示、搜索、发布、更新、下架等功能接口",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }
-

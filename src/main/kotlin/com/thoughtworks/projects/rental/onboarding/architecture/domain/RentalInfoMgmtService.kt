@@ -9,9 +9,9 @@ object RentalInfoMgmtService : Container(
     id = "52",
     layer = Responsibility.DomainService,
     techStack = listOf(
-        TechStack("go", "bff for web app")
+        TechStack("Strapi", "cms")
     ),
-    responsibility = "房屋信息管理系统",
+    responsibility = "房屋信息管理系统: 存储、查询和管理房屋租赁信息的 CMS 系统",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

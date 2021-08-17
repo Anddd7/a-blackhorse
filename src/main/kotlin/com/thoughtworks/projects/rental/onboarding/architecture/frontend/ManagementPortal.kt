@@ -11,7 +11,7 @@ object ManagementPortal : Container(
     techStack = listOf(
         TechStack("React", "build the ui components")
     ),
-    responsibility = "后台管理系统 Web端",
+    responsibility = "后台管理系统Web端: 供思沃租房工作人员使用Web访问, 以完成后台管理功能",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

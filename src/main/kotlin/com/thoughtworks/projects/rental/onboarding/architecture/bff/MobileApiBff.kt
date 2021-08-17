@@ -11,7 +11,7 @@ object MobileApiBff : Container(
     techStack = listOf(
         TechStack("nodejs", "bff for mobile app")
     ),
-    responsibility = "思沃租房 Mobile Bff",
+    responsibility = "思沃租房Mobile Bff: 基于后端应用服务, 服务于思沃租房通APP, 包括个人版和经纪人版, Android和IOS端",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

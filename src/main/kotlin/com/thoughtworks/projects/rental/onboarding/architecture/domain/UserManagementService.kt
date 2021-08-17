@@ -11,7 +11,7 @@ object UserManagementService : Container(
     techStack = listOf(
         TechStack("Spring Boot", "")
     ),
-    responsibility = "用户账户管理系统",
+    responsibility = "用戶账戶管理系统: 负责管理用戶账戶,包括常⻅的用戶账戶相关功能",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

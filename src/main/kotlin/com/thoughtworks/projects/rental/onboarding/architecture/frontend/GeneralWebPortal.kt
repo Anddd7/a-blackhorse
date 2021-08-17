@@ -11,7 +11,7 @@ object GeneralWebPortal : Container(
     techStack = listOf(
         TechStack("React", "build the ui components")
     ),
-    responsibility = "思沃租房通用版 Web端",
+    responsibility = "思沃租房通用版Web端: 供浏览用戶、个人用戶和经纪人用戶使用Web访问",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

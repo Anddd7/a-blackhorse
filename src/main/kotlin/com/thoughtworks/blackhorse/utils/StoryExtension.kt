@@ -22,4 +22,3 @@ fun getContainerOrNull(classpath: String) =
     runCatching { Class.forName(classpath).kotlin.objectInstance as? Container }.getOrNull()
 
 fun String.extractProjectName() = substringAfter("com.thoughtworks.projects.").substringBefore(".")
-

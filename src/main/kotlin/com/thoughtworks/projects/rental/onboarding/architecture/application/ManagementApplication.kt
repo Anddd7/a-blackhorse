@@ -11,8 +11,7 @@ object ManagementApplication : Container(
     techStack = listOf(
         TechStack("Spring Boot", "")
     ),
-    responsibility = "后台管理 应用服务",
+    responsibility = "后台管理应用服务: 向前端服务/应用提供后台管理的功能接口",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }
-

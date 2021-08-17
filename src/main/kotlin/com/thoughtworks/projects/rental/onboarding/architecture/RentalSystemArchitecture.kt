@@ -1,6 +1,7 @@
 package com.thoughtworks.projects.rental.onboarding.architecture
 
 import com.thoughtworks.blackhorse.schema.architecture.ArchitectureOf
+import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
 import com.thoughtworks.projects.rental.onboarding.architecture.application.ManagementApplication
 import com.thoughtworks.projects.rental.onboarding.architecture.application.PopularizationApplication
 import com.thoughtworks.projects.rental.onboarding.architecture.application.RentalApplication
@@ -18,10 +19,18 @@ import com.thoughtworks.projects.rental.onboarding.architecture.frontend.Managem
 import com.thoughtworks.projects.rental.onboarding.architecture.frontend.OfficerApp4Android
 import com.thoughtworks.projects.rental.onboarding.architecture.frontend.OfficerApp4IOS
 
+object CommonComponentLayer {
+    val Authentication = ComponentLayer("Authentication", 0)
+    val Controller = ComponentLayer("Controller", 1)
+    val Service = ComponentLayer("Service", 2)
+    val Client = ComponentLayer("Client", 3)
+}
+
 object RentalSystemArchitecture : ArchitectureOf(
-    "2.0",
+    "3.0",
     """
-        add components for Popularization Application
+        refine the description of containers;
+        add required components;
     """.trimIndent(),
     // frontend
     GeneralWebPortal,

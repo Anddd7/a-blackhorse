@@ -12,7 +12,7 @@ object IndividualApp4Android : Container(
         TechStack("Android", "build the app ui"),
         TechStack("Kotlin", "language support")
     ),
-    responsibility = "思沃租房App 个人版 Android端",
+    responsibility = "思沃租房App个人版Android端: 供浏览用戶、个人用戶使用Android端APP访问, 以完成个人用戶相关的功能",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }
@@ -23,7 +23,8 @@ object IndividualApp4IOS : Container(
     techStack = listOf(
         TechStack("Swift", "build the app ui"),
     ),
-    responsibility = "思沃租房App 个人版 IOS端",
+    responsibility = "思沃租房App个人版IOS端: 供浏览用戶、个人用戶使用IOS端APP访问, 以完成个人用戶相关的功能",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }
+

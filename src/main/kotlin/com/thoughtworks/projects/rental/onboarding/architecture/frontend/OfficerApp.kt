@@ -12,7 +12,7 @@ object OfficerApp4Android : Container(
         TechStack("Android", "build the app ui"),
         TechStack("Kotlin", "language support")
     ),
-    responsibility = "思沃租房App 经纪人版 Android端",
+    responsibility = "思沃租房App经纪人版Android端: 供经纪人用戶使用Android端APP访问, 以完成经纪人相关的功能",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }
@@ -23,7 +23,7 @@ object OfficerApp4IOS : Container(
     techStack = listOf(
         TechStack("Swift", "build the app ui"),
     ),
-    responsibility = "思沃租房App 经纪人版 IOS端",
+    responsibility = "思沃租房App经纪人版IOS端: 供经纪人用戶使用IOS端APP访问, 以完成经纪人相关的功能",
 ) {
     override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
 }

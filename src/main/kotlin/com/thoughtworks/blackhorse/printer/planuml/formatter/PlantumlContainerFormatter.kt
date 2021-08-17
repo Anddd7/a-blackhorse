@@ -58,6 +58,6 @@ open class PlantumlContainerFormatter(
                     $techStack 
                     ${component.responsibility}
                 ]
-            """.trimIndent()
+        """.trimIndent()
     }
 }
