@@ -11,6 +11,7 @@ import com.thoughtworks.projects.rental.onboarding.architecture.CommonComponentL
 import com.thoughtworks.projects.rental.onboarding.architecture.corebiz.PrepaidService
 import com.thoughtworks.projects.rental.onboarding.architecture.domain.AuthenticationService
 import com.thoughtworks.projects.rental.onboarding.architecture.middleware.MessageQueue
+import com.thoughtworks.projects.rental.onboarding.team.Li4
 
 object PopularizationApplication : Container(
     id = "32",
@@ -20,6 +21,7 @@ object PopularizationApplication : Container(
         TechStack("Kotlin", "vs Java，语法简洁、并发支持更好"),
     ),
     responsibility = "推广服务应用服务: 向前端服务/应用提供推广服务和与充值服务相关的功能接口",
+    owner = listOf(Li4)
 ) {
     object Interceptor : Component(
         CommonComponentLayer.Authentication,
