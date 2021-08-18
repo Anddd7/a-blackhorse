@@ -9,7 +9,7 @@ class FlowPerformanceBuilder(
     private val processes = mutableListOf<ProcessPerformanceBuilder>()
 
     fun process(name: String? = null): ProcessPerformanceBuilder {
-        val process = flow.allProcesses.findByKeyOrNext({ it.definition?.name }, name, processes.size)
+        val process = flow.allTasks.findByKeyOrNext({ it.process?.name }, name, processes.size)
         return ProcessPerformanceBuilder(process).also(processes::add)
     }
 

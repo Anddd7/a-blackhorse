@@ -19,24 +19,24 @@ abstract class Container(
     val owner: List<Member> = emptyList(),
     val responsibility: String = "",
 ) : Node {
-    abstract fun getDefinitions(): List<ProcessDefinitionBuilder>
+    abstract fun getProcesses(): List<ProcessDefBuilder>
 
-    fun findProcessDefs(component: Component, dependency: Component): ProcessDefinition? {
-        for ((index, builder) in getDefinitions().withIndex()) {
+    fun findProcess(component: Component, dependency: Component): ProcessDef? {
+        for ((index, builder) in getProcesses().withIndex()) {
             if (builder.component == component && builder.dependency == dependency)
                 return builder.build(id, index + 1)
         }
         return null
     }
 
-    fun getAllProcessDefs() = getDefinitions().mapIndexed { index, builder ->
+    fun getAllProcessDefs() = getProcesses().mapIndexed { index, builder ->
         builder.build(id, index + 1)
     }
 
     fun getProjectName(): String = javaClass.canonicalName.extractProjectName()
 
     private fun Component.createProcess(to: Component, testDouble: TestDouble) =
-        ProcessDefinitionBuilder(this, to, testDouble)
+        ProcessDefBuilder(this, to, testDouble)
 
     // define a process(工序)
     infix fun Component.call(other: Component) = createProcess(other, TestDouble.Real)

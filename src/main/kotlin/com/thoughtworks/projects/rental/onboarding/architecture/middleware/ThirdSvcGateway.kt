@@ -1,7 +1,7 @@
 package com.thoughtworks.projects.rental.onboarding.architecture.middleware
 
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinitionBuilder
+import com.thoughtworks.blackhorse.schema.architecture.ProcessDefBuilder
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 
@@ -13,5 +13,5 @@ object ThirdSvcGateway : Container(
     ),
     responsibility = "三方服务网关: 对接除支付外的三方平台",
 ) {
-    override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
+    override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }

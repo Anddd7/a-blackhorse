@@ -8,7 +8,7 @@
 - 自动扫描并组合时序图，按组件的架构层级展示链路调用关系
 - 输出单一PDF方便阅读
 - 支持上传到jira
-- 架构分层(Node) + 工序定义(Process) + 流程描述(Flow) + 工序编排(FlowProcess) + DSL描述调用关系 => 时序图，巨量提升可读性
+- 架构分层(Node) + 工序(Process) + 流程描述(Flow) + 任务(task) + DSL描述调用关系 => 时序图，巨量提升可读性
 
 ## Features
 
@@ -150,9 +150,9 @@ ac {
     links { 链接地址 }
     notes { 备注信息 }
     flows ( 目的 ) {
-        process ( 架构节点 入参 返回 API场景) {
+        task ( 架构节点 入参 返回 API场景) {
             // 多层依赖调用 e.g. A->B B->C C->B B-A
-            process ( ... )
+            task ( ... )
         } 
     }
 }
@@ -202,7 +202,7 @@ ac {
     - Story 故事卡
         - AcceptanceCriteria AC描述
         - Flow 完成AC所需要的一个或多个工作流、调用链
-        - FlowProcess 组成工作流、调用链的单个工序
+        - Task 组成工作流、调用链的任务
 - Printer 打印器
     - MarkdownPrinter 输出Markdown文件
         - Typora...Formatter 按Markdown语法序列化Story

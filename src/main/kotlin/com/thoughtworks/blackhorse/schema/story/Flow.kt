@@ -7,18 +7,18 @@ import java.util.concurrent.atomic.AtomicInteger
 data class Flow(
     val id: String,
     val example: String,
-    val processes: List<FlowProcess>,
+    val tasks: List<Task>,
 ) {
-    val allProcesses = processes.flatMap(FlowProcess::processIterator)
+    val allTasks = tasks.flatMap(Task::getAllTasks)
 }
 
 class FlowBuilder(
     private val example: String,
 ) {
-    private val processes = mutableListOf<FlowProcessBuilder>()
+    private val tasks = mutableListOf<TaskBuilder>()
 
     // communicate with others
-    infix fun Component.call(target: Component) = FlowProcessBuilder(this, target).also(processes::add)
+    infix fun Component.call(target: Component) = TaskBuilder(this, target).also(tasks::add)
 
     // self call
     infix fun Component.accept(string: String) = call(this) accept string
@@ -30,6 +30,6 @@ class FlowBuilder(
     fun build(id: String): Flow {
         val increment = AtomicInteger(1)
 
-        return Flow(id, example, processes.mapIndexed { _, item -> item.build(id, increment) })
+        return Flow(id, example, tasks.mapIndexed { _, item -> item.build(id, increment) })
     }
 }

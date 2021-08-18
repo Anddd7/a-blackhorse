@@ -1,7 +1,7 @@
 package com.thoughtworks.projects.rental.onboarding.architecture.frontend
 
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinitionBuilder
+import com.thoughtworks.blackhorse.schema.architecture.ProcessDefBuilder
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 
@@ -14,7 +14,7 @@ object IndividualApp4Android : Container(
     ),
     responsibility = "思沃租房App个人版Android端: 供浏览用戶、个人用戶使用Android端APP访问, 以完成个人用戶相关的功能",
 ) {
-    override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
+    override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }
 
 object IndividualApp4IOS : Container(
@@ -25,6 +25,6 @@ object IndividualApp4IOS : Container(
     ),
     responsibility = "思沃租房App个人版IOS端: 供浏览用戶、个人用戶使用IOS端APP访问, 以完成个人用戶相关的功能",
 ) {
-    override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
+    override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }
 

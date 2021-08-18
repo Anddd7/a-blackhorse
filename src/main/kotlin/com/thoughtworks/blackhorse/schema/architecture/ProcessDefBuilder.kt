@@ -6,7 +6,7 @@ import com.thoughtworks.blackhorse.schema.story.attributes.Complexity
 /**
  * definition of a process (工序)
  */
-data class ProcessDefinition(
+data class ProcessDef(
     val name: String,
     val component: Component,
     val dependency: Component,
@@ -15,7 +15,7 @@ data class ProcessDefinition(
     val description: String,
 )
 
-data class ProcessDefinitionBuilder(
+data class ProcessDefBuilder(
     val component: Component,
     val dependency: Component,
     val testDouble: TestDouble,
@@ -24,7 +24,7 @@ data class ProcessDefinitionBuilder(
     var complexity: Complexity? = null
 
     fun build(containerId: String, serial: Int) =
-        ProcessDefinition(
+        ProcessDef(
             "$containerId-$serial",
             component,
             dependency,
@@ -34,5 +34,5 @@ data class ProcessDefinitionBuilder(
         )
 }
 
-infix fun ProcessDefinitionBuilder.cost(input: Int) = apply { complexity = Complexity(input) }
-infix fun ProcessDefinitionBuilder.at(fn: () -> String) = apply { description = fn() }
+infix fun ProcessDefBuilder.cost(input: Int) = apply { complexity = Complexity(input) }
+infix fun ProcessDefBuilder.at(fn: () -> String) = apply { description = fn() }

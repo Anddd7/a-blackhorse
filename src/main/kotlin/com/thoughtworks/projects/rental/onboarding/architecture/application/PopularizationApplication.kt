@@ -2,7 +2,7 @@ package com.thoughtworks.projects.rental.onboarding.architecture.application
 
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinitionBuilder
+import com.thoughtworks.blackhorse.schema.architecture.ProcessDefBuilder
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 import com.thoughtworks.projects.rental.onboarding.architecture.CommonComponentLayer
@@ -64,5 +64,5 @@ object PopularizationApplication : Container(
         "下游服务数据模型对象"
     )
 
-    override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
+    override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }

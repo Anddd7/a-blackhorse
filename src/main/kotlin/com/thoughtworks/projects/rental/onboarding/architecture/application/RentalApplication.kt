@@ -1,7 +1,7 @@
 package com.thoughtworks.projects.rental.onboarding.architecture.application
 
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinitionBuilder
+import com.thoughtworks.blackhorse.schema.architecture.ProcessDefBuilder
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 
@@ -13,5 +13,5 @@ object RentalApplication : Container(
     ),
     responsibility = "租赁信息应用服务: 向前端服务/应用提供租赁信息的展示、搜索、发布、更新、下架等功能接口",
 ) {
-    override fun getDefinitions(): List<ProcessDefinitionBuilder> = emptyList()
+    override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }

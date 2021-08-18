@@ -1,12 +1,12 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.printer.interfaces.FlowFormatter
-import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
+import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
 import com.thoughtworks.blackhorse.schema.story.Flow
-import com.thoughtworks.blackhorse.schema.story.FlowProcess
+import com.thoughtworks.blackhorse.schema.story.Task
 
 open class MarkdownFlowFormatter(
-    private val processFormatter: ProcessFormatter,
+    private val taskFormatter: TaskFormatter,
 ) : FlowFormatter {
     override fun anchors(items: List<Flow>) =
         items.mapToLinesWith {
@@ -21,17 +21,17 @@ open class MarkdownFlowFormatter(
             lineOf(
                 title(id, example),
                 // example,
-                content(processes)
+                content(tasks)
             )
         }
 
-    private fun content(processes: List<FlowProcess>) = when {
+    private fun content(processes: List<Task>) = when {
         processes.isEmpty() -> null
         else -> lineOf(
-            "##### Processes",
-            processDescription(processes),
-            "##### Sequence Diagram",
-            processDiagram(processes),
+            "##### Tasks",
+            taskDescription(processes),
+            "##### Diagram",
+            taskDiagram(processes),
         )
     }
 
@@ -40,12 +40,12 @@ open class MarkdownFlowFormatter(
     private fun title(id: String, str: String) =
         "#### <span id='${anchor(id)}'>${name(id, str)}</span>"
 
-    private fun processDescription(processes: List<FlowProcess>) =
-        processes.mapToLines(processFormatter::process)
+    private fun taskDescription(processes: List<Task>) =
+        processes.mapToLines(taskFormatter::task)
 
-    open fun processDiagram(processes: List<FlowProcess>) = lineOf(
+    open fun taskDiagram(tasks: List<Task>) = lineOf(
         "```sequence",
-        processes.mapToLines(processFormatter::diagram),
+        tasks.mapToLines(taskFormatter::diagram),
         "```",
     )
 }

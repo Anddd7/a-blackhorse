@@ -10,13 +10,13 @@ import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownApiSchemaF
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownArchitectureFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownContainerFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
-import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownProcessFormatter
+import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownTaskFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownStoryFormatter
 import com.thoughtworks.blackhorse.printer.pdf.PandocPdfStoryPrinter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlArchitectureFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlContainerFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlFlowFormatter
-import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlProcessFormatter
+import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlTaskFormatter
 
 enum class PrinterOption(
     val storyPrinter: StoryPrinter,
@@ -30,7 +30,7 @@ enum class PrinterOption(
             MarkdownStoryFormatter(
                 MarkdownAcceptanceCriteriaFormatter(
                     MarkdownFlowFormatter(
-                        MarkdownProcessFormatter()
+                        MarkdownTaskFormatter()
                     ),
                 ),
                 MarkdownApiSchemaFormatter(),
@@ -51,7 +51,7 @@ enum class PrinterOption(
             MarkdownStoryFormatter(
                 MarkdownAcceptanceCriteriaFormatter(
                     PlantumlFlowFormatter(
-                        PlantumlProcessFormatter()
+                        PlantumlTaskFormatter()
                     ),
                 ),
                 MarkdownApiSchemaFormatter(),
@@ -72,7 +72,7 @@ enum class PrinterOption(
             MarkdownStoryFormatter(
                 MarkdownAcceptanceCriteriaFormatter(
                     PlantumlFlowFormatter(
-                        PlantumlProcessFormatter(),
+                        PlantumlTaskFormatter(),
                         pdfEngine = PdfEngine.LATEX,
                     ),
                 ),
@@ -97,7 +97,7 @@ enum class PrinterOption(
             MarkdownStoryFormatter(
                 MarkdownAcceptanceCriteriaFormatter(
                     PlantumlFlowFormatter(
-                        PlantumlProcessFormatter(),
+                        PlantumlTaskFormatter(),
                         pdfEngine = PdfEngine.LATEX,
                     ),
                 ),

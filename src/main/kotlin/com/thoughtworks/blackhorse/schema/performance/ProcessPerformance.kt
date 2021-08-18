@@ -1,7 +1,7 @@
 package com.thoughtworks.blackhorse.schema.performance
 
 import com.thoughtworks.blackhorse.schema.performance.attributes.BlockType
-import com.thoughtworks.blackhorse.schema.story.FlowProcess
+import com.thoughtworks.blackhorse.schema.story.Task
 
 data class ProcessPerformance(
     val id: String,
@@ -16,14 +16,14 @@ data class ProcessPerformance(
 )
 
 class ProcessPerformanceBuilder(
-    private val process: FlowProcess,
+    private val process: Task,
 ) {
     fun build(flowId: String) =
         ProcessPerformance(
             process.id,
             flowId,
-            process.definition?.name ?: "",
-            process.definition?.complexity?.cost ?: 0,
+            process.process?.name ?: "",
+            process.process?.complexity?.cost ?: 0,
             actualCost,
             blockCost,
             blockType,

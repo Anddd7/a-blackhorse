@@ -1,17 +1,17 @@
 package com.thoughtworks.blackhorse.printer.planuml.formatter
 
-import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownProcessFormatter
+import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownTaskFormatter
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
-import com.thoughtworks.blackhorse.schema.story.FlowProcess
+import com.thoughtworks.blackhorse.schema.story.Task
 
-class PlantumlProcessFormatter : MarkdownProcessFormatter() {
-    override fun FlowProcess.lineTo() = when (definition?.testDouble) {
+class PlantumlTaskFormatter : MarkdownTaskFormatter() {
+    override fun Task.lineTo() = when (process?.testDouble) {
         null -> "->"
         TestDouble.Dummy -> "-->"
         else -> "->o"
     }
 
-    override fun FlowProcess.lineBack() = when (definition?.testDouble) {
+    override fun Task.lineBack() = when (process?.testDouble) {
         null -> "->"
         TestDouble.Dummy -> "-->"
         else -> {

@@ -2,13 +2,13 @@ package com.thoughtworks.blackhorse.printer.planuml.formatter
 
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.PdfEngine
-import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
+import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.markdown.formatter.toLines
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.story.FlowProcess
+import com.thoughtworks.blackhorse.schema.story.Task
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
 import net.sourceforge.plantuml.SourceStringReader
@@ -19,19 +19,19 @@ import java.util.UUID
 import kotlin.io.path.nameWithoutExtension
 
 class PlantumlFlowFormatter(
-    private val processFormatter: ProcessFormatter,
+    private val taskFormatter: TaskFormatter,
     private val pdfEngine: PdfEngine = PdfEngine.DEFAULT
-) : MarkdownFlowFormatter(processFormatter) {
+) : MarkdownFlowFormatter(taskFormatter) {
 
-    override fun processDiagram(processes: List<FlowProcess>) =
+    override fun taskDiagram(tasks: List<Task>) =
         generateUml(
             pdfEngine,
             StoryContextHolder.distPath(),
-            { uml(processes) },
+            { uml(tasks) },
             StoryContextHolder::getLocalStoryTempFile
         )
 
-    private fun uml(processes: List<FlowProcess>) = lineOf(
+    private fun uml(tasks: List<Task>) = lineOf(
         "@startuml",
         """
         skinparam sequence {
@@ -39,14 +39,14 @@ class PlantumlFlowFormatter(
         }
         """.trimIndent(),
         // "hide footbox",
-        participants(processes),
-        processes(processes),
+        participants(tasks),
+        tasks(tasks),
         "@enduml"
     )
 
-    private fun participants(processes: List<FlowProcess>) =
+    private fun participants(tasks: List<Task>) =
         LinkedHashSet<Component>()
-            .apply { processes.map { addAll(it.components()) } }
+            .apply { tasks.map { addAll(it.components()) } }
             .groupBy(Component::getContainer)
             .map { (container, nodes) -> container.box(nodes) }
             .toLines()
@@ -66,8 +66,8 @@ class PlantumlFlowFormatter(
     // TODO style
     private fun Component.participant() = "entity"
 
-    private fun processes(processes: List<FlowProcess>) =
-        processes.map(processFormatter::diagram).toLines()
+    private fun tasks(tasks: List<Task>) =
+        tasks.map(taskFormatter::diagram).toLines()
 }
 
 private fun FileFormat.ext() = name.lowercase()

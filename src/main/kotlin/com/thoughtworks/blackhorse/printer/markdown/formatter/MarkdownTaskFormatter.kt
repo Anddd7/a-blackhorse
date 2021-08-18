@@ -2,20 +2,20 @@ package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.config.HiddenOption
 import com.thoughtworks.blackhorse.config.StoryContextHolder
-import com.thoughtworks.blackhorse.printer.interfaces.ProcessFormatter
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
+import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
+import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
-import com.thoughtworks.blackhorse.schema.story.FlowProcess
+import com.thoughtworks.blackhorse.schema.story.Task
 import org.slf4j.LoggerFactory
 
-open class MarkdownProcessFormatter : ProcessFormatter {
+open class MarkdownTaskFormatter : TaskFormatter {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
-    override fun process(process: FlowProcess): String {
-        val title = process.title()
-        val testDouble = process.dependency()
-        val input = process.accept ?: process.targetApiScenario?.apiDefinition?.let { "\\> $it" }
-        val output = process.reply ?: process.targetApiScenario?.statusDescription?.let { "< $it" }
+    override fun task(task: Task): String {
+        val title = task.title()
+        val testDouble = task.dependency()
+        val input = task.accept ?: task.targetApiScenario?.apiDefinition?.let { "\\> $it" }
+        val output = task.reply ?: task.targetApiScenario?.statusDescription?.let { "< $it" }
 
         return lineOf(
             "- **$title**",
@@ -25,11 +25,11 @@ open class MarkdownProcessFormatter : ProcessFormatter {
                 output,
             ).prependIndent("  "),
             "----",
-            process.nested.mapToLines(this::process)
+            task.nested.mapToLines(this::task)
         )
     }
 
-    private fun ProcessDefinition.title(): String {
+    private fun ProcessDef.title(): String {
         val prefix = "Process $name"
         val relations =
             if (component == dependency) component.name()
@@ -39,40 +39,40 @@ open class MarkdownProcessFormatter : ProcessFormatter {
         return listOfNotNull(prefix, relations, complexity).joinToString(" | ")
     }
 
-    private fun FlowProcess.title(): String {
-        if (definition == null) {
+    private fun Task.title(): String {
+        if (process == null) {
             log.warn("!![WARNING] No process definition between [$startName] and [$targetName].")
             return "Inner Logic | $startName"
         }
 
-        return definition.title()
+        return process.title()
     }
 
-    private fun FlowProcess.label() =
-        definition?.run { "Process $name" } ?: "Inner Logic"
+    private fun Task.label() =
+        process?.run { "Process $name" } ?: "Inner Logic"
 
-    private fun FlowProcess.dependency() =
-        definition?.run {
+    private fun Task.dependency() =
+        process?.run {
             "*${component.name()} -> $testDouble<${dependency.name()}>*".takeIf { testDouble != TestDouble.Real }
         }
 
-    override fun diagram(process: FlowProcess): String = lineOf(
-        process.go(),
-        process.nested.mapToLines(this::diagram),
-        process.back()
+    override fun diagram(task: Task): String = lineOf(
+        task.go(),
+        task.nested.mapToLines(this::diagram),
+        task.back()
     )
 
-    open fun FlowProcess.lineTo() = when (definition?.testDouble) {
+    open fun Task.lineTo() = when (process?.testDouble) {
         null -> "->"
         else -> "-->"
     }
 
-    open fun FlowProcess.lineBack() = when (definition?.testDouble) {
+    open fun Task.lineBack() = when (process?.testDouble) {
         null -> "->"
         else -> "-->"
     }
 
-    open fun FlowProcess.inputNote(): String {
+    open fun Task.inputNote(): String {
         val note = lineOf(
             label(),
             // accept ?: reply.takeIf { start == target },
@@ -81,7 +81,7 @@ open class MarkdownProcessFormatter : ProcessFormatter {
         return "Note right of $startName:" + note.replace("\n", "\\n")
     }
 
-    open fun FlowProcess.outputNote(): String {
+    open fun Task.outputNote(): String {
         val note = lineOf(
             label(),
             // reply,
@@ -90,14 +90,14 @@ open class MarkdownProcessFormatter : ProcessFormatter {
         return "Note left of $targetName:" + note.replace("\n", "\\n")
     }
 
-    private fun FlowProcess.go(): String {
+    private fun Task.go(): String {
         return lineOf(
             startName + " " + lineTo() + " " + targetName + ":", // + input(),
             inputNote()
         )
     }
 
-    private fun FlowProcess.back(): String? {
+    private fun Task.back(): String? {
         if (start == target) return null
 
         return lineOf(

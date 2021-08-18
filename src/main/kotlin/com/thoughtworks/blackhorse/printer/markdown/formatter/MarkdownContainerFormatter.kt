@@ -3,7 +3,7 @@ package com.thoughtworks.blackhorse.printer.markdown.formatter
 import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDefinition
+import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 import com.thoughtworks.blackhorse.schema.performance.attributes.Member
@@ -40,24 +40,24 @@ open class MarkdownContainerFormatter : ContainerFormatter {
             )
         }
 
-    private fun processes(processDefs: List<ProcessDefinition>): String? {
-        if (processDefs.isEmpty()) return null
+    private fun processes(processes: List<ProcessDef>): String? {
+        if (processes.isEmpty()) return null
 
         return lineOf(
             "#### Processes",
-            processDefs.mapToLines(this::processLine)
+            processes.mapToLines(this::processLine)
         )
     }
 
-    private fun processLine(definition: ProcessDefinition): String {
-        val id = definition.name
-        val component = definition.component.simpleName()
-        val dependency = definition.dependency.simpleName()
-        val testDouble = definition.testDouble
+    private fun processLine(process: ProcessDef): String {
+        val id = process.name
+        val component = process.component.simpleName()
+        val dependency = process.dependency.simpleName()
+        val testDouble = process.testDouble
 
         return lineOf(
             "##### Process $id | $component => $testDouble\\<$dependency>",
-            definition.description
+            process.description
         )
     }
 }
