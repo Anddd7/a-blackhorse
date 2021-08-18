@@ -27,10 +27,9 @@ object CommonComponentLayer {
 }
 
 object RentalSystemArchitecture : ArchitectureOf(
-    "3.0",
+    "3.1",
     """
-        refine the description of containers;
-        add required components;
+        define processes
     """.trimIndent(),
     // frontend
     GeneralWebPortal,

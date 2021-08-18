@@ -13,7 +13,10 @@ data class ProcessDef(
     val testDouble: TestDouble,
     val complexity: Complexity,
     val description: String,
-)
+    var testFramework: String?,
+) {
+    fun isIntra() = component.getContainer() == dependency.getContainer()
+}
 
 data class ProcessDefBuilder(
     val component: Component,
@@ -31,7 +34,8 @@ data class ProcessDefBuilder(
             dependency,
             testDouble,
             complexity ?: Complexity(0),
-            description ?: ""
+            description ?: "",
+            testFramework,
         )
 }
 

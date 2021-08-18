@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="409px" preserveAspectRatio="none" style="width:1741px;height:409px;background:#00000000;" version="1.1" viewBox="0 0 1741 409" width="1741px" zoomAndPan="magnify"><defs><filter height="300%" id="f1dqmhtzblpmd1" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[fca8240bc233c06068545f9c8883ae88]
+cluster Frontend--><rect filter="url(#f1dqmhtzblpmd1)" height="183" style="stroke:#000000;stroke-width:1.5;fill:none;" width="572" x="12" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="64" x="266" y="22.5352">Frontend</text><!--MD5=[70a18483d462b5b8afbe4b2392687415]
+cluster BFF--><rect filter="url(#f1dqmhtzblpmd1)" height="87" style="stroke:#000000;stroke-width:1.5;fill:none;" width="265" x="1085" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="25" x="1205" y="22.5352">BFF</text><!--MD5=[ddf54e150db78e71a1f11b9d8db98453]
+cluster ApplicationService--><rect filter="url(#f1dqmhtzblpmd1)" height="183" style="stroke:#000000;stroke-width:1.5;fill:none;" width="453" x="608" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="132" x="768.5" y="22.5352">ApplicationService</text><!--MD5=[96c99a30aa303e03f95727d14bc604d9]
+cluster CoreBizService--><rect filter="url(#f1dqmhtzblpmd1)" height="87" style="stroke:#000000;stroke-width:1.5;fill:none;" width="355" x="1374" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="105" x="1499" y="22.5352">CoreBizService</text><!--MD5=[81dd091be11d8b44591fcecc3628662e]
+cluster DomainService--><rect filter="url(#f1dqmhtzblpmd1)" height="183" style="stroke:#000000;stroke-width:1.5;fill:none;" width="414" x="7" y="214"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="106" x="161" y="229.5352">DomainService</text><!--MD5=[58671fa3fbaf455c75d53a229c1bf345]
+entity GeneralWebPortal--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="142" x="28" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="122" x="38" y="65.5352">GeneralWebPortal</text><!--MD5=[d6061c3eda92f21a6cac9133292bc7a7]
+entity IndividualApp4Android--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="180" x="205" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="160" x="215" y="65.5352">IndividualApp4Android</text><!--MD5=[fa0cb65f76cf89fce2e6f3da51383a3b]
+entity IndividualApp4IOS--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="147" x="420.5" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="127" x="430.5" y="65.5352">IndividualApp4IOS</text><!--MD5=[ba49af3d4af5d3ef1f0e1c6b87cd5338]
+entity OfficerApp4Android--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="159" x="28.5" y="138"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="139" x="38.5" y="161.5352">OfficerApp4Android</text><!--MD5=[e9002796d4223aaa0bfa182b3b813768]
+entity OfficerApp4IOS--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="126" x="223" y="138"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="106" x="233" y="161.5352">OfficerApp4IOS</text><!--MD5=[9e7ccafa94a2df40cdc0284f3770afa4]
+entity ManagementPortal--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="149" x="384.5" y="138"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="394.5" y="161.5352">ManagementPortal</text><!--MD5=[5a91b58eda4c6d9667cf80efb30fb2e1]
+entity WebApiBff--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="90" x="1244" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70" x="1254" y="65.5352">WebApiBff</text><!--MD5=[806b6cf7e381f03c0ddf55220dd7a77c]
+entity MobileApiBff--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="107" x="1101.5" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="1111.5" y="65.5352">MobileApiBff</text><!--MD5=[8b2a0163ece511edf6fcc28fa8e06f8e]
+entity ManagementApplication--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="187" x="624.5" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="167" x="634.5" y="65.5352">ManagementApplication</text><!--MD5=[c635079030528be04812c46304ac6bcf]
+entity PopularizationApplication--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="198" x="847" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="178" x="857" y="65.5352">PopularizationApplication</text><!--MD5=[c339fe5b3668dc1fac63d7cf195cea12]
+entity RentalApplication--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="141" x="647.5" y="138"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="121" x="657.5" y="161.5352">RentalApplication</text><!--MD5=[25a316f11a775454ef1ed166a4145b65]
+entity PopularizationService--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="168" x="1545" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="148" x="1555" y="65.5352">PopularizationService</text><!--MD5=[6e781d81842fd993c668c75059b40aa6]
+entity PrepaidService--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="120" x="1390" y="42"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="1400" y="65.5352">PrepaidService</text><!--MD5=[aca1dd5cdc865beae83f446f8f893f64]
+entity AuthenticationService--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="169" x="23.5" y="249"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149" x="33.5" y="272.5352">AuthenticationService</text><!--MD5=[4340d86e4e49e3a9ca9a7aa88e9bb6a7]
+entity RentalInfoMgmtService--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="177" x="227.5" y="249"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="157" x="237.5" y="272.5352">RentalInfoMgmtService</text><!--MD5=[f30bc7932f1cb4011b90aa752ddd2dd0]
+entity UserManagementService--><rect fill="#FEFECE" filter="url(#f1dqmhtzblpmd1)" height="36.4883" style="stroke:#000000;stroke-width:1.5;" width="188" x="23" y="345"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="168" x="33" y="368.5352">UserManagementService</text><!--MD5=[10d8b485c85aa8a54cc39880ee6db480]
+link GeneralWebPortal to IndividualApp4Android--><!--MD5=[123d36ba5e9fa6e83822aec2340b21ff]
+link IndividualApp4Android to IndividualApp4IOS--><!--MD5=[db89579551eb25cf76f7b6ca990598c3]
+link GeneralWebPortal to OfficerApp4Android--><!--MD5=[d623e7a8290a2fbd3942fff5264a51e2]
+link OfficerApp4Android to OfficerApp4IOS--><!--MD5=[4fdc91d1d0405f9a19dfc6a641cbc9ef]
+link OfficerApp4IOS to ManagementPortal--><!--MD5=[dde70f3e96991576e0327c2707e5e083]
+link ManagementApplication to PopularizationApplication--><!--MD5=[be518713a321cd421cf2773aff22591f]
+link ManagementApplication to RentalApplication--><!--MD5=[7f0c5438f257b3578bda8a5c4f1faa3e]
+link AuthenticationService to RentalInfoMgmtService--><!--MD5=[6b5d913d3e8ec0d5b19cfe13b84104eb]
+link AuthenticationService to UserManagementService--><!--MD5=[1301c438939347dee7684510c7836c2e]
+link IndividualApp4IOS to ManagementApplication--><!--MD5=[dae860d6fc2c01b4c95928ee06ac763d]
+link OfficerApp4Android to AuthenticationService--><!--MD5=[5bee35f17b2900fc889a5dc8bfaa227f]
+@startuml
+skinparam BackgroundColor transparent
+skinparam componentStyle rectangle
+component "Frontend" {
+  component [GeneralWebPortal]
+  component [IndividualApp4Android]
+  component [IndividualApp4IOS]
+  component [OfficerApp4Android]
+  component [OfficerApp4IOS]
+  component [ManagementPortal]
+}
+component "BFF" {
+  component [WebApiBff]
+  component [MobileApiBff]
+}
+component "ApplicationService" {
+  component [ManagementApplication]
+  component [PopularizationApplication]
+  component [RentalApplication]
+}
+component "CoreBizService" {
+  component [PopularizationService]
+  component [PrepaidService]
+}
+component "DomainService" {
+  component [AuthenticationService]
+  component [RentalInfoMgmtService]
+  component [UserManagementService]
+}
+@enduml
+
+PlantUML version 1.2021.5(Sun Apr 25 19:20:28 CST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: CN
+--></g></svg>

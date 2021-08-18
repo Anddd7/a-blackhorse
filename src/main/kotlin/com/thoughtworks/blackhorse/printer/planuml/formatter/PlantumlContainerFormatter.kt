@@ -22,11 +22,7 @@ open class PlantumlContainerFormatter(
         return generateUml(
             pdfEngine,
             ProjectContextHolder.distPath(),
-            {
-                val uml = uml(groups)
-                println(uml)
-                uml
-            },
+            { uml(groups) },
             ProjectContextHolder::getLocalStoryTempFile
         )
     }

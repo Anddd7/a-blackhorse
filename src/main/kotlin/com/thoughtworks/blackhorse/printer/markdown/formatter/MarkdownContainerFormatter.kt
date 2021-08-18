@@ -20,23 +20,27 @@ open class MarkdownContainerFormatter : ContainerFormatter {
             container.responsibility,
             container.printTechStack(),
             container.printOwner(),
+            " ",
             components(groupedComponents),
-            processes(container.getAllProcessDefs())
+            processes(container.getAllProcessDefs()),
         )
     }
 
-    private fun Container.printTechStack() = techStack.print("Tech Stack", TechStack::name)
-    private fun Component.printTechStack() = techStack.print("Tech Stack", TechStack::name)
-    private fun Container.printOwner() = owner.print("Owner", Member::name)
+    private fun Container.printTechStack() = techStack.highlight("Tech Stack", TechStack::name)
+    private fun Component.printTechStack() = techStack.highlight("Tech Stack", TechStack::name)
+    private fun Container.printOwner() = owner.highlight("Owner", Member::name)
 
-    private fun <T> List<T>.print(prefix: String, transform: (T) -> String) =
-        joinToString(", ", "$prefix: [", "]", transform = transform)
+    private fun <T> List<T>.highlight(label: String, transform: (T) -> String): String? {
+        if (isEmpty()) return null
+
+        return joinToString(", ", "$label: **[", "]**", transform = transform)
+    }
 
     open fun components(groupedComponents: List<Pair<ComponentLayer, List<Component>>>) =
         groupedComponents.mapToLines { (layer, components) ->
             lineOf(
                 "- " + layer.value,
-                components.mapToLines { it.printTechStack() }.prependIndent("  - ")
+                components.mapNotNull { it.printTechStack() }.toLines().prependIndent("  - ")
             )
         }
 
@@ -52,11 +56,12 @@ open class MarkdownContainerFormatter : ContainerFormatter {
     private fun processLine(process: ProcessDef): String {
         val id = process.name
         val component = process.component.simpleName()
-        val dependency = process.dependency.simpleName()
+        val dependency = if (process.isIntra()) process.dependency.simpleName() else process.dependency.name()
         val testDouble = process.testDouble
+        val testFramework = process.testFramework?.let { "[$it]" } ?: ""
 
         return lineOf(
-            "##### Process $id | $component => $testDouble\\<$dependency>",
+            "##### Process $id | $component => $testDouble\\<$dependency>$testFramework",
             process.description
         )
     }

@@ -12,6 +12,7 @@ open class MarkdownArchitectureFormatter(
 
     override fun architecture(architecture: Architecture) =
         lineOf(
+            "[TOC]",
             "# Architecture Map of ${architecture.projectName}",
             "##### ChangeLogs",
             architecture.changelogs,
@@ -19,7 +20,9 @@ open class MarkdownArchitectureFormatter(
         )
 
     open fun containers(groups: List<Pair<ContainerLayer, List<Container>>>) =
-        groups.mapToLines { layer(it.first, it.second.sortedBy(Container::id)) }
+        groups.joinToString("\n\n\n") {
+            layer(it.first, it.second.sortedBy(Container::id))
+        }
 
     private fun getGroupedContainers(architecture: Architecture) =
         architecture.containers
@@ -30,6 +33,6 @@ open class MarkdownArchitectureFormatter(
     private fun layer(containerLayer: ContainerLayer, containers: List<Container>) =
         lineOf(
             "## ${containerLayer.value()}",
-            containers.mapToLines(containerFormatter::container)
+            containers.mapToLines(containerFormatter::container),
         )
 }

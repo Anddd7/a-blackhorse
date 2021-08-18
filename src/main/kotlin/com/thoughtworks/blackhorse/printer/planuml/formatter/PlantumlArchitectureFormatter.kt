@@ -27,19 +27,19 @@ class PlantumlArchitectureFormatter(
         return generateUml(
             pdfEngine,
             ProjectContextHolder.distPath(),
-            {
-                val uml = uml(groups)
-                println(uml)
-                uml
-            },
+            { uml(groups) },
             ProjectContextHolder::getLocalStoryTempFile
         )
     }
 
     private fun uml(groups: List<Pair<ContainerLayer, List<Container>>>) = lineOf(
         "@startuml",
+        """
+            skinparam BackgroundColor transparent
+            skinparam componentStyle rectangle
+        """.trimIndent(),
         groups.mapToLines(this::group),
-        accumulate(groups.map { it.first }),
+        // accumulate(groups.map { it.first }),
         "@enduml"
     )
 
@@ -58,17 +58,11 @@ class PlantumlArchitectureFormatter(
         val containers = group.second
 
         return lineOf(
-            "package \"${layer.value()}\" {",
+            "component \"${layer.value()}\" {",
             containers.mapToLines(this::container).prependIndent("  "),
             "}"
         )
     }
 
-    private fun container(container: Container) =
-        """
-            component ${container.name()} [
-              ${container.name()}
-              ${container.responsibility}
-            ]
-        """.trimIndent()
+    private fun container(container: Container) = "component [${container.name()}]"
 }
