@@ -48,7 +48,7 @@ class PlantumlArchitectureFormatter(
         for (i in 1 until list.size) {
             val prev = list[i - 1]
             val curr = list[i]
-            result.add("\"${prev.value()}\" -d- \"${curr.value()}\"")
+            result.add("\"${prev.value}\" -d- \"${curr.value}\"")
         }
         return result.toLines()
     }
@@ -58,7 +58,7 @@ class PlantumlArchitectureFormatter(
         val containers = group.second
 
         return lineOf(
-            "component \"${layer.value()}\" {",
+            "component \"${layer.value}\" {",
             containers.mapToLines(this::container).prependIndent("  "),
             "}"
         )

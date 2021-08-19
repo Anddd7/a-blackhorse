@@ -27,12 +27,12 @@ open class MarkdownArchitectureFormatter(
     private fun getGroupedContainers(architecture: Architecture) =
         architecture.containers
             .groupBy { it.layer }.entries
-            .sortedBy { it.key.order() }
+            .sortedBy { it.key.order }
             .map { it.key to it.value.sortedBy(Container::id) }
 
     private fun layer(containerLayer: ContainerLayer, containers: List<Container>) =
         lineOf(
-            "## ${containerLayer.value()}",
+            "## ${containerLayer.value}",
             containers.mapToLines(containerFormatter::container),
         )
 }

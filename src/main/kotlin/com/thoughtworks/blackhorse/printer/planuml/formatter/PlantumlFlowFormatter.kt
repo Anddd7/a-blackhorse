@@ -8,6 +8,7 @@ import com.thoughtworks.blackhorse.printer.markdown.formatter.lineOf
 import com.thoughtworks.blackhorse.printer.markdown.formatter.toLines
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
+import com.thoughtworks.blackhorse.schema.architecture.Ext
 import com.thoughtworks.blackhorse.schema.story.Task
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
@@ -27,7 +28,11 @@ class PlantumlFlowFormatter(
         generateUml(
             pdfEngine,
             StoryContextHolder.distPath(),
-            { uml(tasks) },
+            {
+                val uml = uml(tasks)
+                println(uml)
+                uml
+            },
             StoryContextHolder::getLocalStoryTempFile
         )
 
@@ -47,6 +52,7 @@ class PlantumlFlowFormatter(
     private fun participants(tasks: List<Task>) =
         LinkedHashSet<Component>()
             .apply { tasks.map { addAll(it.components()) } }
+            .apply { remove(Ext.Unknown) }
             .groupBy(Component::getContainer)
             .map { (container, nodes) -> container.box(nodes) }
             .toLines()

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="143px" preserveAspectRatio="none" style="width:1517px;height:143px;" version="1.1" viewBox="0 0 1517 143" width="1517px" zoomAndPan="magnify"><defs><filter height="300%" id="f1ch0nboboz849" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[36d966c8da22f754e05bf9082953d502]
+cluster Authentication--><polygon fill="#FFFFFF" filter="url(#f1ch0nboboz849)" points="16,6,128,6,135,28.4883,256,28.4883,256,136,16,136,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="135" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="106" x="20" y="21.5352">Authentication</text><!--MD5=[1f2cfc53d9d308f53762fd0fcbaa4873]
+cluster Controller--><polygon fill="#FFFFFF" filter="url(#f1ch0nboboz849)" points="280,6,359,6,366,28.4883,674,28.4883,674,136,280,136,280,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="280" x2="366" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="73" x="284" y="21.5352">Controller</text><!--MD5=[9dd75fd92da113d30380b27734fd2f01]
+cluster Service--><polygon fill="#FFFFFF" filter="url(#f1ch0nboboz849)" points="698,6,754,6,761,28.4883,1013,28.4883,1013,136,698,136,698,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="698" x2="761" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="50" x="702" y="21.5352">Service</text><!--MD5=[406b65fecc21e832f7a9b6ebadc6dce1]
+cluster Client--><polygon fill="#FFFFFF" filter="url(#f1ch0nboboz849)" points="1037,6,1086,6,1093,28.4883,1500,28.4883,1500,136,1037,136,1037,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1037" x2="1093" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="43" x="1041" y="21.5352">Client</text><!--MD5=[3e3b8ef699f11e0f7bfdcb530968b539]
+entity Interceptor--><rect fill="#FEFECE" filter="url(#f1ch0nboboz849)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="208" x="32" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="220" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="218" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="218" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76" x="47" y="74.5352">Interceptor</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105" x="47" y="91.0234">[Spring Servlet]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="168" x="47" y="107.5117">拦截请求并验证发起方身份</text><!--MD5=[501d42c7dc6b4d142c9795caf055397e]
+entity ApiController--><rect fill="#FEFECE" filter="url(#f1ch0nboboz849)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="362" x="296" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="638" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="636" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="636" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="93" x="311" y="74.5352">ApiController</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="311" y="91.0234">[Spring Mvc]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="322" x="311" y="107.5117">定义API、校验请求数据，调用Service完成业务逻辑</text><!--MD5=[17737e49c286898813382e12d6080e03]
+entity Service--><rect fill="#FEFECE" filter="url(#f1ch0nboboz849)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="124" x="873" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="977" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="975" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="975" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="888" y="74.5352">Service</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="888" y="91.0234">[POJO]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="888" y="107.5117">业务逻辑处理</text><!--MD5=[1f36a17b05b3aa713976330fad1f2444]
+entity VO--><rect fill="#FEFECE" filter="url(#f1ch0nboboz849)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="124" x="714" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="818" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="816" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="816" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="20" x="729" y="74.5352">VO</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="729" y="91.0234">[Kotlin]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="729" y="107.5117">数据模型对象</text><!--MD5=[0ba5ee7700168656dc1b457c6fe9fdac]
+entity Client--><rect fill="#FEFECE" filter="url(#f1ch0nboboz849)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="215" x="1268.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="1463.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1461.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1461.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="1283.5" y="74.5352">Client</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103" x="1283.5" y="91.0234">[RestTemplate]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="175" x="1283.5" y="107.5117">HttpClient消费下游服务API</text><!--MD5=[97de1061a0ab8445a0a4bfc3e13b8318]
+entity DTO--><rect fill="#FEFECE" filter="url(#f1ch0nboboz849)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="180" x="1053" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="1213" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1211" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1211" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30" x="1068" y="74.5352">DTO</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="1068" y="91.0234">[POJO]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="140" x="1068" y="107.5117">下游服务数据模型对象</text><!--MD5=[93abb0d7016c18a37c5dda25dabf0084]
+@startuml
+package "Authentication" {
+  component Interceptor [
+      Interceptor
+      [Spring Servlet] 
+      拦截请求并验证发起方身份
+  ]
+}
+package "Controller" {
+  component ApiController [
+      ApiController
+      [Spring Mvc] 
+      定义API、校验请求数据，调用Service完成业务逻辑
+  ]
+}
+package "Service" {
+  component Service [
+      Service
+      [POJO] 
+      业务逻辑处理
+  ]
+  component VO [
+      VO
+      [Kotlin] 
+      数据模型对象
+  ]
+}
+package "Client" {
+  component Client [
+      Client
+      [RestTemplate] 
+      HttpClient消费下游服务API
+  ]
+  component DTO [
+      DTO
+      [POJO] 
+      下游服务数据模型对象
+  ]
+}
+@enduml
+
+PlantUML version 1.2021.5(Sun Apr 25 19:20:28 CST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: CN
+--></g></svg>

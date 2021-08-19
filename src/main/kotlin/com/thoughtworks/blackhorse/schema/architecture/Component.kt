@@ -1,6 +1,7 @@
 package com.thoughtworks.blackhorse.schema.architecture
 
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
+import com.thoughtworks.blackhorse.schema.architecture.attributes.ContainerLayer
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 import com.thoughtworks.blackhorse.utils.getContainerOrNull
 
@@ -26,4 +27,16 @@ abstract class Component(
     }
 
     fun simpleName() = javaClass.name.substringAfterLast("$")
+}
+
+// a dummy component represent unknown external source
+object Ext : Container(
+    id = "Dummy",
+    layer = ContainerLayer("DUMMAY-EXTERNAL"),
+) {
+    object Unknown : Component(
+        layer = ComponentLayer("DUMMAY-EXTERNAL"),
+    )
+
+    override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }

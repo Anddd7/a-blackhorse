@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="257px" preserveAspectRatio="none" style="width:252px;height:257px;" version="1.1" viewBox="0 0 252 257" width="252px" zoomAndPan="magnify"><defs><filter height="300%" id="fqfb8m7qjvlmx" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#DDDDDD" height="245.9082" style="stroke:#FFFFFF;stroke-width:1.0;" width="244" x="1" y="6"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="175" x="35.5" y="18.5684">PopularizationApplication</text><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="123" x2="123" y1="73.7988" y2="200.4199"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="230" x="5" y="70.8457">PopularizationApplication.Service</text><ellipse cx="123" cy="41.3105" fill="#FEFECE" filter="url(#fqfb8m7qjvlmx)" rx="12" ry="12" style="stroke:#A80036;stroke-width:2.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="111" x2="135" y1="55.3105" y2="55.3105"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="230" x="5" y="212.9551">PopularizationApplication.Service</text><ellipse cx="123" cy="231.9082" fill="#FEFECE" filter="url(#fqfb8m7qjvlmx)" rx="12" ry="12" style="stroke:#A80036;stroke-width:2.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="111" x2="135" y1="245.9082" y2="245.9082"/><polygon fill="#A80036" points="234,85.7988,244,89.7988,234,93.7988,238,89.7988" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="123" x2="240" y1="89.7988" y2="89.7988"/><path d="M128,102.7988 L128,127.7988 L219,127.7988 L219,112.7988 L209,102.7988 L128,102.7988 " fill="#FBFB77" filter="url(#fqfb8m7qjvlmx)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M209,102.7988 L209,112.7988 L219,112.7988 L209,102.7988 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70" x="134" y="120.3672">Inner Logic</text><polygon fill="#A80036" points="134,139.1094,124,143.1094,134,147.1094,130,143.1094" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="128" x2="245" y1="143.1094" y2="143.1094"/><path d="M128,156.1094 L128,181.1094 L219,181.1094 L219,166.1094 L209,156.1094 L128,156.1094 " fill="#FBFB77" filter="url(#fqfb8m7qjvlmx)" style="stroke:#A80036;stroke-width:1.0;"/><path d="M209,156.1094 L209,166.1094 L219,166.1094 L209,156.1094 " fill="#FBFB77" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="70" x="134" y="173.6777">Inner Logic</text><!--MD5=[8901173ff849ed3e484c70f76808ae2f]
+@startuml
+skinparam sequence {
+    BoxBorderColor WHITE
+}
+box PopularizationApplication  
+entity PopularizationApplication.Service
+end box
+PopularizationApplication.Service ->]:
+Note right of PopularizationApplication.Service:Inner Logic
+PopularizationApplication.Service <-]:
+Note right of PopularizationApplication.Service:Inner Logic
+@enduml
+
+PlantUML version 1.2021.5(Sun Apr 25 19:20:28 CST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: CN
+--></g></svg>

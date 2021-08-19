@@ -3,6 +3,7 @@ package com.thoughtworks.blackhorse.printer.markdown.formatter
 import com.thoughtworks.blackhorse.config.HiddenOption
 import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
+import com.thoughtworks.blackhorse.schema.architecture.Ext
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
 import com.thoughtworks.blackhorse.schema.story.Task
@@ -67,31 +68,44 @@ open class MarkdownTaskFormatter : TaskFormatter {
     }
 
     open fun Task.lineBack() = when (process?.testDouble) {
-        null -> "->"
-        else -> "-->"
+        null -> "<-"
+        else -> "<--"
     }
 
     open fun Task.inputNote(): String {
+        val (direction, node) = when (start) {
+            Ext.Unknown -> "left" to targetName
+            else -> "right" to startName
+        }
+
         val note = lineOf(
             label(),
             // accept ?: reply.takeIf { start == target },
             // targetApiScenario?.let { lineOf(it.apiDefinition, it.request) }
         ).ifEmpty { return "" }
-        return "Note right of $startName:" + note.replace("\n", "\\n")
+        return "Note $direction of $node:" + note.replace("\n", "\\n")
     }
 
     open fun Task.outputNote(): String {
+        val (direction, node) = when (target) {
+            Ext.Unknown -> "right" to startName
+            else -> "left" to targetName
+        }
+
         val note = lineOf(
             label(),
             // reply,
             // targetApiScenario?.response
         ).ifEmpty { return "" }
-        return "Note left of $targetName:" + note.replace("\n", "\\n")
+        return "Note $direction of $node:" + note.replace("\n", "\\n")
     }
 
     private fun Task.go(): String {
+        val part1 = if (start == Ext.Unknown) "[" else "$startName "
+        val part2 = if (target == Ext.Unknown) "]" else " $targetName"
+
         return lineOf(
-            startName + " " + lineTo() + " " + targetName + ":", // + input(),
+            part1 + lineTo() + part2 + ":", // + input(),
             inputNote()
         )
     }
@@ -99,8 +113,11 @@ open class MarkdownTaskFormatter : TaskFormatter {
     private fun Task.back(): String? {
         if (start == target) return null
 
+        val part1 = if (start == Ext.Unknown) "[" else "$startName "
+        val part2 = if (target == Ext.Unknown) "]" else " $targetName"
+
         return lineOf(
-            targetName + " " + lineBack() + " " + startName + ":", // + output(),
+            part1 + lineBack() + part2 + ":", // + output(),
             outputNote()
         )
     }

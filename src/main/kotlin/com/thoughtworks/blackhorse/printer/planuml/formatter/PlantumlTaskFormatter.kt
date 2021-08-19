@@ -12,11 +12,11 @@ class PlantumlTaskFormatter : MarkdownTaskFormatter() {
     }
 
     override fun Task.lineBack() = when (process?.testDouble) {
-        null -> "->"
-        TestDouble.Dummy -> "-->"
+        null -> "<-"
+        TestDouble.Dummy -> "<--"
         else -> {
-            if (targetApiScenario != null && !targetApiScenario.statusCode.isSuccess()) "x->"
-            else "o->"
+            if (targetApiScenario != null && !targetApiScenario.statusCode.isSuccess()) "<-x"
+            else "<-o"
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.thoughtworks.blackhorse.schema.story
 
 import com.thoughtworks.blackhorse.schema.architecture.Component
+import com.thoughtworks.blackhorse.schema.architecture.Ext
 import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -21,11 +22,11 @@ class FlowBuilder(
     infix fun Component.call(target: Component) = TaskBuilder(this, target).also(tasks::add)
 
     // self call
-    infix fun Component.accept(string: String) = call(this) given string
-    infix fun Component.accept(fn: () -> String) = call(this) given fn
-    infix fun Component.reply(string: String) = call(this) expect string
-    infix fun Component.reply(fn: () -> String) = call(this) expect fn
-    infix fun Component.withApi(api: ApiScenario) = call(this) withApi api
+    infix fun Component.accept(string: String) = Ext.Unknown.call(this) given string
+    infix fun Component.accept(fn: () -> String) = Ext.Unknown.call(this) given fn
+    infix fun Component.reply(string: String) = Ext.Unknown.call(this) expect string
+    infix fun Component.reply(fn: () -> String) = Ext.Unknown.call(this) expect fn
+    infix fun Component.withApi(api: ApiScenario) = Ext.Unknown.call(this) withApi api
 
     fun build(id: String): Flow {
         val increment = AtomicInteger(1)
