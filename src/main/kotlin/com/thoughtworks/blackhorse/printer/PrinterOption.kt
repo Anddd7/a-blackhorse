@@ -15,9 +15,7 @@ import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlContainerFo
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlFlowFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlTaskFormatter
 
-enum class PrinterOption(
-
-) {
+enum class PrinterOption() {
     /**
      * export as a markdown file, using built-in js-sequence to display the sequence diagram
      */

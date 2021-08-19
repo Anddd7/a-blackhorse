@@ -27,4 +27,3 @@ object IndividualApp4IOS : Container(
 ) {
     override fun getProcesses(): List<ProcessDefBuilder> = emptyList()
 }
-

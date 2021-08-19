@@ -1,8 +1,6 @@
 package com.thoughtworks.blackhorse.schema.story
 
 import com.thoughtworks.blackhorse.schema.architecture.Component
-import com.thoughtworks.blackhorse.schema.architecture.Container
-import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
 import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
 import java.util.concurrent.atomic.AtomicInteger
 

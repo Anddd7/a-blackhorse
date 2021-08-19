@@ -21,6 +21,7 @@ open class MarkdownTaskFormatter : TaskFormatter {
                 task.targetApiScenario?.apiDefinition?.let { "\\> $it" },
                 task.targetApiScenario?.statusDescription?.let { "< $it" },
             ).prependIndent("  "),
+            " ",
             "----",
             task.nested.mapToLines(this::task)
         )
