@@ -27,9 +27,9 @@ object CommonComponentLayer {
 }
 
 object RentalSystemArchitecture : ArchitectureOf(
-    "3.1",
+    "4.0",
     """
-        define processes
+        refine process with draft story
     """.trimIndent(),
     // frontend
     GeneralWebPortal,

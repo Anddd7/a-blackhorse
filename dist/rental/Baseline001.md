@@ -14,10 +14,6 @@
   - [Example 4-1 通过预充值服务进行退款时，预充值服务不可用，转发申请到消息队列](#example-4-1)
 - [AC 5 接收预充值服务回调：退款成功、失败，发送消息通知用户](#ac-5)
   - [Example 5-1 接收预充值服务的回调，更新退款信息并发送消息](#example-5-1)
-- [AC 6 test](#ac-6)
-  - [Example 6-1 test](#example-6-1)
-  - [Example 6-2 test](#example-6-2)
-  - [Example 6-3 test](#example-6-3)
 - [API Schema](#api-schema)
 # Baseline001
 ### In Scope
@@ -50,7 +46,7 @@
   < 401 UNAUTHORIZED
 ----
 ##### Diagram
-![a23f020e-3642-4a97-8b30-4116bb27b489](temp/baseline001/a23f020e-3642-4a97-8b30-4116bb27b489.svg)
+![58e740a6-9467-4c3a-b6f9-a62001c300f3](temp/baseline001/58e740a6-9467-4c3a-b6f9-a62001c300f3.svg)
 #### <span id='example-1-2'>Example 1-2 个人用户访问退款API时，返回401和错误信息</span>
 ##### Tasks
 - **Process 32-1 | 0 mins**
@@ -61,7 +57,7 @@
   < 401 UNAUTHORIZED
 ----
 ##### Diagram
-![975d10e1-241f-49dd-8da8-9a8de25a43e8](temp/baseline001/975d10e1-241f-49dd-8da8-9a8de25a43e8.svg)
+![559bcf15-4cfe-4f02-b48b-12dbaddb300b](temp/baseline001/559bcf15-4cfe-4f02-b48b-12dbaddb300b.svg)
 #### <span id='example-1-3'>Example 1-3 未开通预充值的经纪人用户访问退款API时，返回401和错误信息</span>
 ##### Tasks
 - **Process 32-1 | 0 mins**
@@ -72,7 +68,7 @@
   < 401 UNAUTHORIZED
 ----
 ##### Diagram
-![4234bacd-c348-42a2-b20c-70837e652573](temp/baseline001/4234bacd-c348-42a2-b20c-70837e652573.svg)
+![410c9586-f8a2-4c2f-81c6-578d1e6b2af4](temp/baseline001/410c9586-f8a2-4c2f-81c6-578d1e6b2af4.svg)
 ### <span id='ac-2'>AC 2 </span>
 如果是预充值用户，提交退款申请到预充值服务
 #### <span id='example-2-1'>Example 2-1 预充值用户访问退款API时，返回200</span>
@@ -85,7 +81,7 @@
   < 200 OK
 ----
 ##### Diagram
-![ec69ea23-2649-442a-9e4f-af74d0c2ff77](temp/baseline001/ec69ea23-2649-442a-9e4f-af74d0c2ff77.svg)
+![d5e99ba8-2946-4845-8aa6-a5b81ca73165](temp/baseline001/d5e99ba8-2946-4845-8aa6-a5b81ca73165.svg)
 #### <span id='example-2-2'>Example 2-2 调用退款API，提交申请到预充值服务</span>
 ##### Tasks
 - **Process 32-2 | 0 mins**
@@ -106,7 +102,7 @@
   < 200 OK
 ----
 ##### Diagram
-![5e05ddc9-c20e-4f28-98df-bdde9d9277cf](temp/baseline001/5e05ddc9-c20e-4f28-98df-bdde9d9277cf.svg)
+![4b2cf416-4ab3-4dad-a0e0-9e4cfdd69b42](temp/baseline001/4b2cf416-4ab3-4dad-a0e0-9e4cfdd69b42.svg)
 ### <span id='ac-3'>AC 3 </span>
 如果是预充值用户，提交退款申请到预充值服务，返回余额不足退款失败，告知用户
 #### <span id='example-3-1'>Example 3-1 调用退款API，通过预充值服务进行退款时告知余额不足</span>
@@ -130,7 +126,7 @@
   < 400 BAD_REQUEST
 ----
 ##### Diagram
-![bb832352-7e86-48db-afdb-fcdd0efa7334](temp/baseline001/bb832352-7e86-48db-afdb-fcdd0efa7334.svg)
+![a05cbea7-29ca-475e-9671-0b0a7a4c40f9](temp/baseline001/a05cbea7-29ca-475e-9671-0b0a7a4c40f9.svg)
 ### <span id='ac-4'>AC 4 </span>
 如果是预充值用户，预充值服务不可用时，提交退款申请到消息队列进行缓存
 #### <span id='example-4-1'>Example 4-1 通过预充值服务进行退款时，预充值服务不可用，转发申请到消息队列</span>
@@ -158,7 +154,7 @@
   < 200 OK
 ----
 ##### Diagram
-![59dd0d22-be7b-47eb-9c37-297d9f133a52](temp/baseline001/59dd0d22-be7b-47eb-9c37-297d9f133a52.svg)
+![0d8ab4a7-541b-41eb-8655-a41f7d20f132](temp/baseline001/0d8ab4a7-541b-41eb-8655-a41f7d20f132.svg)
 ### <span id='ac-5'>AC 5 </span>
 接收预充值服务回调：退款成功、失败，发送消息通知用户
 #### <span id='example-5-1'>Example 5-1 接收预充值服务的回调，更新退款信息并发送消息</span>
@@ -184,34 +180,7 @@
   < 200 OK
 ----
 ##### Diagram
-![5cdf2642-694d-48d9-9a6d-b3b6182905ff](temp/baseline001/5cdf2642-694d-48d9-9a6d-b3b6182905ff.svg)
-### <span id='ac-6'>AC 6 </span>
-test
-#### <span id='example-6-1'>Example 6-1 test</span>
-##### Tasks
-Inner Logic | Ext.Unknown
-  \> POST /events
-  < 200 OK
-----
-##### Diagram
-![5f0e69b0-87bb-4fcd-8d78-56c616e5fae6](temp/baseline001/5f0e69b0-87bb-4fcd-8d78-56c616e5fae6.svg)
-#### <span id='example-6-2'>Example 6-2 test</span>
-##### Tasks
-Inner Logic | PopularizationApplication.Service
-  \> POST /events
-  < 200 OK
-----
-##### Diagram
-![49a6dc7c-2948-4d21-92aa-e9262a63c54a](temp/baseline001/49a6dc7c-2948-4d21-92aa-e9262a63c54a.svg)
-#### <span id='example-6-3'>Example 6-3 test</span>
-##### Tasks
-- **Process 32-3 | 0 mins**
-> PopularizationApplication.Service
- 
-  asfafsa
-----
-##### Diagram
-![4933db37-bb33-4937-8033-71ef5d155857](temp/baseline001/4933db37-bb33-4937-8033-71ef5d155857.svg)
+![8813e125-9183-46a7-bd79-e4c0dd48ac74](temp/baseline001/8813e125-9183-46a7-bd79-e4c0dd48ac74.svg)
 ### API Schema
 #### 退款API
 > POST /prepaid/{account_id}/refund
@@ -260,28 +229,13 @@ Inner Logic | PopularizationApplication.Service
       "updatedAt": "<datetime_iso>"
   }
   ```
-#### 提交通知消息
-> POST /events
-- 200 OK
-  - Request
-  ```json
-  {
-      "topic": "NOTIFICATION",
-      "payload": {
-          "to": "<user_id>",
-          "title": "退款通知",
-          "msg": "..."
-      },
-      "createdAt": "<datetime_iso>"
-  }
-  ```
 ### Related Architecture
 ### PopularizationApplication
 推广服务应用服务: 向前端服务/应用提供推广服务和与充值服务相关的功能接口
 Tech Stack: **[Spring, Kotlin]**
 Owner: **[Li Si]**
  
-![054a9156-f5bf-4689-8ead-d3801dbd7766](temp/054a9156-f5bf-4689-8ead-d3801dbd7766.svg)
+![986267fa-2e02-40ca-a900-a89993bddf77](temp/986267fa-2e02-40ca-a900-a89993bddf77.svg)
 #### Processes
 ##### Process 32-1 | Interceptor => Stub\<ApiController>
 Interceptor依赖Spring环境，需要真实的Controller组件；确保对应的Controller受Interceptor的控制
@@ -295,8 +249,3 @@ Interceptor依赖Spring环境，需要真实的Controller组件；确保对应�
 处于进程边界，需要真实的Http调用；发送消息是异步操作只需要保证入参正确即可
 ##### Process 32-6 | Client => Mock\<PrepaidService.ApiController>[Wiremock]
 处于进程边界，需要真实的Http调用；需要保证对外调用的入参和返回都正确
-##### Process 32-7 | Service => Mock\<Service>[Wiremock]
-服务层互相调用
-### Ext
- 
-![dc571201-5059-4c05-bc22-cf715eda133a](temp/dc571201-5059-4c05-bc22-cf715eda133a.svg)
