@@ -38,12 +38,12 @@ data class TaskBuilder(
     var nested: MutableList<TaskBuilder> = mutableListOf()
 
     // fork nested process
-    infix fun Component.accept(string: String) = toNext(this) accept string
-    infix fun Component.accept(fn: () -> String) = toNext(this) accept fn
-    infix fun Component.reply(string: String) = toNext(this) reply string
-    infix fun Component.reply(fn: () -> String) = toNext(this) reply fn
-    infix fun Component.withApi(api: ApiScenario) = toNext(this) withApi api
-    private fun toNext(next: Component) = TaskBuilder(target, next).also(nested::add)
+    // infix fun Component.accept(string: String) = toNext(this) accept string
+    // infix fun Component.accept(fn: () -> String) = toNext(this) accept fn
+    // infix fun Component.reply(string: String) = toNext(this) reply string
+    // infix fun Component.reply(fn: () -> String) = toNext(this) reply fn
+    // infix fun Component.withApi(api: ApiScenario) = toNext(this) withApi api
+    // private fun toNext(next: Component) = TaskBuilder(target, next).also(nested::add)
 
     fun build(flowId: String, idGenerator: AtomicInteger): Task {
         val processId = flowId + "-" + idGenerator.getAndIncrement()
@@ -53,14 +53,16 @@ data class TaskBuilder(
             start, target, accept, reply, targetApiScenario, nested.map { it.build(flowId, idGenerator) }
         )
     }
+
+    infix fun Component.call(target: Component) = TaskBuilder(this, target).also(nested::add)
 }
 
 // define process
-infix fun TaskBuilder.accept(string: String) = apply { accept = string }
-infix fun TaskBuilder.accept(fn: () -> String) = apply { accept = fn() }
-infix fun TaskBuilder.reply(string: String) = apply { reply = string }
-infix fun TaskBuilder.reply(fn: () -> String) = apply { reply = fn() }
+infix fun TaskBuilder.given(string: String) = apply { accept = string }
+infix fun TaskBuilder.given(fn: () -> String) = apply { accept = fn() }
+infix fun TaskBuilder.expect(string: String) = apply { reply = string }
+infix fun TaskBuilder.expect(fn: () -> String) = apply { reply = fn() }
 infix fun TaskBuilder.withApi(api: ApiScenario) = apply { targetApiScenario = api }
 
 // lambda util
-infix fun TaskBuilder.then(fn: TaskBuilder.() -> Unit) = fn()
+infix fun TaskBuilder.nested(fn: TaskBuilder.() -> Unit) = apply { fn() }

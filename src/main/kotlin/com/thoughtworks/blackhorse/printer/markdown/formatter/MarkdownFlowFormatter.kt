@@ -35,8 +35,8 @@ open class MarkdownFlowFormatter(
         )
     }
 
-    private fun name(id: String, str: String) = "Flow $id $str"
-    private fun anchor(id: String) = "flow-$id"
+    private fun name(id: String, str: String) = "Example $id $str"
+    private fun anchor(id: String) = "example-$id"
     private fun title(id: String, str: String) =
         "#### <span id='${anchor(id)}'>${name(id, str)}</span>"
 

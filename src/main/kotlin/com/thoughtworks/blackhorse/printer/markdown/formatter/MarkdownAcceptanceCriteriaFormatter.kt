@@ -10,7 +10,7 @@ class MarkdownAcceptanceCriteriaFormatter(
     override fun anchors(items: List<AcceptanceCriteria>) =
         items.mapToLinesWith {
             lineOf(
-                toAnchorLink(anchor(id), name(id)),
+                toAnchorLink(anchor(id), name(id, description)),
                 flowFormatter.anchors(flows).prependIndent("  ")
             )
         }
@@ -18,7 +18,7 @@ class MarkdownAcceptanceCriteriaFormatter(
     override fun acceptanceCriteria(items: List<AcceptanceCriteria>) =
         items.mapToLinesWith {
             lineOf(
-                title(id),
+                title(id, null),
                 description,
                 mockup(mockup),
                 link(link),
@@ -29,7 +29,7 @@ class MarkdownAcceptanceCriteriaFormatter(
     override fun summary(items: List<AcceptanceCriteria>) =
         items.mapToLinesWith {
             lineOf(
-                title(id),
+                title(id, description),
                 description,
                 note(note),
                 mockup(mockup, ignorePath = true),
@@ -37,9 +37,15 @@ class MarkdownAcceptanceCriteriaFormatter(
             )
         }
 
-    private fun name(id: String) = "AC $id"
+    private fun name(id: String, str: String) = "AC $id $str"
     private fun anchor(id: String) = "ac-$id"
-    private fun title(id: String) = "### <span id='${anchor(id)}'>${name(id)}</span>"
+    private fun title(id: String, str: String?): String {
+        val label = str?.let {
+            if (it.length > 55) it.substring(0, 55) + "..."
+            else it
+        } ?: ""
+        return "### <span id='${anchor(id)}'>${name(id, label)}</span>"
+    }
 
     private fun mockup(items: List<String>, ignorePath: Boolean = false) = when {
         items.isEmpty() -> null

@@ -38,7 +38,7 @@ class MarkdownApiSchemaFormatter : ApiSchemaFormatter {
         return lineOf(
             "- ${scenario.statusDescription}",
             scenario.request?.formatAsJson("Request"),
-            scenario.request?.formatAsJson("Response"),
+            scenario.response?.formatAsJson("Response"),
         )
     }
 }

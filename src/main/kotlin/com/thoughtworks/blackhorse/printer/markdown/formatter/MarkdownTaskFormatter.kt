@@ -11,32 +11,31 @@ import org.slf4j.LoggerFactory
 open class MarkdownTaskFormatter : TaskFormatter {
     private val log = LoggerFactory.getLogger(this.javaClass)
 
-    override fun task(task: Task): String {
-        val title = task.title()
-        val testDouble = task.dependency()
-        val input = task.accept ?: task.targetApiScenario?.apiDefinition?.let { "\\> $it" }
-        val output = task.reply ?: task.targetApiScenario?.statusDescription?.let { "< $it" }
-
-        return lineOf(
-            "- **$title**",
+    override fun task(task: Task): String =
+        lineOf(
+            task.title(),
             lineOf(
-                input,
-                testDouble.takeIf { !input.isNullOrBlank() || !output.isNullOrBlank() },
-                output,
+                task.accept,
+                task.reply,
+                task.targetApiScenario?.apiDefinition?.let { "\\> $it" },
+                task.targetApiScenario?.statusDescription?.let { "< $it" },
             ).prependIndent("  "),
             "----",
             task.nested.mapToLines(this::task)
         )
-    }
 
     private fun ProcessDef.title(): String {
         val prefix = "Process $name"
         val relations =
             if (component == dependency) component.name()
-            else "${component.name()}, depends on $testDouble<${dependency.name()}>"
+            else "${component.name()}, depends on $testDouble<${dependency.name()}>" + (testFramework?.let { ", using $it" })
         val complexity = complexity.label().takeIf { StoryContextHolder.isVisible(HiddenOption.COMPLEXITY) }
 
-        return listOfNotNull(prefix, relations, complexity).joinToString(" | ")
+        return lineOf(
+            "- **$prefix | $complexity**",
+            "> $relations",
+            " "
+        )
     }
 
     private fun Task.title(): String {

@@ -29,7 +29,7 @@ class JiraStoryPrinter(
         log.info("Start Uploading to Jira: ${StoryContextHolder.jiraBasUrl()}")
 
         updateAttachments(story.cardId, mockups + listOf(pdf))
-        updateCardInformation(story.cardId, story.title, story.estimation, formatJiraDescription(jira))
+        updateCardInformation(story.cardId, story.title, story.estimation.value, formatJiraDescription(jira))
 
         log.info("-------------------------------------------------------")
     }

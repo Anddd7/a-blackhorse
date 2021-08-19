@@ -19,7 +19,7 @@ data class API(
 
     private fun onStatus(httpStatus: HttpStatus, response: () -> String?) = onStatus(httpStatus, response())
     private fun onStatus(httpStatus: HttpStatus, response: String?) =
-        ApiScenario(this, httpStatus, response = response?.trimIndent())
+        ApiScenario(this, httpStatus, request()?.trimIndent(), response?.trimIndent())
 
     val identifier = "${method.name} $url"
 }

@@ -62,7 +62,7 @@ class StoryPerformanceBuilder(
         story.cardId,
         story.title,
         story.cardType,
-        story.estimation,
+        story.estimation.value,
         reporter ?: throw IllegalArgumentException("missing required data"),
         decompositionCost ?: throw IllegalArgumentException("missing required data"),
         developer ?: throw IllegalArgumentException("missing required data"),

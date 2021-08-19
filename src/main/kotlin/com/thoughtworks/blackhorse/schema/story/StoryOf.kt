@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory
 
 open class StoryOf(
     val title: String,
-    val estimation: Estimation,
+    val estimation: Int,
     private val cardId: String? = null,
     val cardType: CardType = CardType.STORY,
     val configure: StoryBuilder.() -> Unit,
@@ -37,7 +37,7 @@ open class StoryOf(
             title,
             getCardId(),
             cardType,
-            estimation.value,
+            Estimation.valueOf(estimation),
             tags.map(Tag::value)
         ).apply(configure).build()
 

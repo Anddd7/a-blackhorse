@@ -9,7 +9,6 @@ import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 import com.thoughtworks.blackhorse.schema.architecture.with
 import com.thoughtworks.projects.rental.onboarding.architecture.CommonComponentLayer
 import com.thoughtworks.projects.rental.onboarding.architecture.corebiz.PrepaidService
-import com.thoughtworks.projects.rental.onboarding.architecture.domain.AuthenticationService
 import com.thoughtworks.projects.rental.onboarding.architecture.middleware.MessageQueue
 import com.thoughtworks.projects.rental.onboarding.team.Li4
 
@@ -72,11 +71,9 @@ object PopularizationApplication : Container(
     )
 
     override fun getProcesses(): List<ProcessDefBuilder> = listOf(
-        Interceptor stub AuthenticationService.ApiController with "Wiremock" at {
+        Interceptor stub ApiController at {
             """
-                处于进程边界，需要真实的Http调用；
-                身份信息JWT来自于下游BFF，校验结果来自于上游鉴权认证服务；
-                该进程内只针对校验结果做处理；只需要Stub每次调用的认证结果即可
+                Interceptor依赖Spring环境，需要真实的Controller组件；确保对应的Controller受Interceptor的控制
             """.trimIndent()
         },
         ApiController mock Service at {

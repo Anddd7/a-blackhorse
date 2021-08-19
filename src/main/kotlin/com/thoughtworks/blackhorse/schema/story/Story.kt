@@ -4,6 +4,7 @@ import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.performance.attributes.CardType
 import com.thoughtworks.blackhorse.schema.story.attributes.APISchema
 import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
+import com.thoughtworks.blackhorse.schema.story.attributes.Estimation
 
 data class Story(
     val name: String,
@@ -16,7 +17,7 @@ data class Story(
     val apis: List<APISchema>,
     val containers: Set<Container>,
     val cardType: CardType,
-    val estimation: Int,
+    val estimation: Estimation,
     val tags: List<String>,
 )
 
@@ -26,7 +27,7 @@ class StoryBuilder(
     private val title: String,
     private val cardId: String,
     private val cardType: CardType,
-    private val estimation: Int,
+    private val estimation: Estimation,
     private val tags: List<String>,
 ) {
     private var inScope: String? = null

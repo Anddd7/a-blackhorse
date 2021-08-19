@@ -8,7 +8,12 @@ object ProjectContextHolder {
     private val instance = ThreadLocal<ProjectContext>()
 
     fun set(new: ProjectContext) = instance.set(new)
-    fun get() = instance.get() ?: throw IllegalAccessException("run ProjectContext.load() first")
+    fun get() =
+        try {
+            instance.get() ?: StoryContextHolder.get().projectContext
+        } catch (e: IllegalAccessException) {
+            throw IllegalAccessException("run ProjectContext.load() first")
+        }
 
     // expose quick methods
     private fun repoBaseUrl() = get().repoBaseUrl
