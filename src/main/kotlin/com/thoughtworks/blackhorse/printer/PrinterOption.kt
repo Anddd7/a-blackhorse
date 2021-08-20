@@ -11,6 +11,7 @@ import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownContainerF
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownFlowFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownStoryFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownTaskFormatter
+import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlArchitectureFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlContainerFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlFlowFormatter
 import com.thoughtworks.blackhorse.printer.planuml.formatter.PlantumlTaskFormatter
@@ -65,7 +66,7 @@ enum class PrinterOption() {
         }
         val af = when (this) {
             MARKDOWN_TYPORA -> MarkdownArchitectureFormatter(cf)
-            else -> MarkdownArchitectureFormatter(cf)
+            else -> PlantumlArchitectureFormatter(cf)
         }
 
         MarkdownArchitecturePrinter(af)
