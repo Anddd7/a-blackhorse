@@ -1,6 +1,7 @@
 package com.thoughtworks.blackhorse.printer.planuml.formatter
 
 import com.thoughtworks.blackhorse.config.ProjectContextHolder
+import com.thoughtworks.blackhorse.config.StoryContextHolder
 import com.thoughtworks.blackhorse.printer.PdfEngine
 import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
 import com.thoughtworks.blackhorse.printer.markdown.formatter.MarkdownArchitectureFormatter
@@ -28,7 +29,7 @@ class PlantumlArchitectureFormatter(
             pdfEngine,
             ProjectContextHolder.distPath(),
             { uml(groups) },
-            ProjectContextHolder::getLocalStoryTempFile
+            ::getLocalTempFile
         )
     }
 
@@ -66,3 +67,8 @@ class PlantumlArchitectureFormatter(
 
     private fun container(container: Container) = "component [${container.name()}]"
 }
+
+fun getLocalTempFile(filename: String) =
+    runCatching { StoryContextHolder.getLocalStoryTempFile(filename) }.getOrNull()
+        ?: runCatching { ProjectContextHolder.getLocalProjectTempFile(filename) }.getOrNull()
+        ?: throw IllegalAccessException("Cannot find ProjectContext or StoryContext")

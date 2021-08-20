@@ -38,10 +38,10 @@
     - [x] 进程内架构
     - [x] 版本管理
     - [x] 架构变化不触发工序变化（避免架构变更对前序故事的影响）
+- [x] Bug, 打印story时复用的container formatter产生的架构图会跑到temp/下
 
 ### Backlogs
 
-- [ ] Bug, 打印story时复用的container formatter产生的架构图会跑到temp/下
 - [ ] 效能报告优化
   - [ ] 效能记录（按工序为单位记录）
   - [ ] 自动化计算

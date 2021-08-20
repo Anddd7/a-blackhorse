@@ -23,7 +23,7 @@ open class PlantumlContainerFormatter(
             pdfEngine,
             ProjectContextHolder.distPath(),
             { uml(groups) },
-            ProjectContextHolder::getLocalStoryTempFile
+            ::getLocalTempFile
         )
     }
 

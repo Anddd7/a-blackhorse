@@ -2,6 +2,7 @@ package com.thoughtworks.blackhorse.config
 
 import com.thoughtworks.blackhorse.utils.FileExtension
 import kotlinx.coroutines.asContextElement
+import java.nio.file.Files
 import java.nio.file.Path
 
 object StoryContextHolder {
@@ -25,6 +26,10 @@ object StoryContextHolder {
     fun getLocalStoryTempFile(filename: String): Path = FileExtension.getOrCreateFile(filename, tempPath())
 
     fun getRemoteStoryUrl(): Path = repoBaseUrl().resolve(distPath()).resolve(storyName() + ".md")
+
+    fun clearUp() {
+        Files.list(tempPath()).forEach { Files.deleteIfExists(it) }
+    }
 
     // coroutine
     fun asContextElement() = instance.asContextElement()

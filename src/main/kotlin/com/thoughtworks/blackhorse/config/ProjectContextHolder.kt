@@ -21,7 +21,7 @@ object ProjectContextHolder {
     fun architecturePrinter() = get().architecturePrinter
     fun distPath(): Path = get().distPath
 
-    fun getLocalStoryTempFile(filename: String): Path =
+    fun getLocalProjectTempFile(filename: String): Path =
         FileExtension.getOrCreateFile(filename, distPath().resolve("temp"))
 
     fun createProjectFileIfAbsent(filename: String) =
