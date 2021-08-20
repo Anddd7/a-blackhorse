@@ -27,9 +27,9 @@ object CommonComponentLayer {
 }
 
 object RentalSystemArchitecture : ArchitectureOf(
-    "4.0",
+    "4.1",
     """
-        refine process with draft story
+        修改工序描述（主要是interceptor和controller如何集成和测试）
     """.trimIndent(),
     // frontend
     GeneralWebPortal,

@@ -28,11 +28,7 @@ class PlantumlFlowFormatter(
         generateUml(
             pdfEngine,
             StoryContextHolder.distPath(),
-            {
-                val uml = uml(tasks)
-                println(uml)
-                uml
-            },
+            { uml(tasks) },
             StoryContextHolder::getLocalStoryTempFile
         )
 

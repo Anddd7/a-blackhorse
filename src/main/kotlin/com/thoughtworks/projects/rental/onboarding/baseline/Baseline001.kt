@@ -82,27 +82,27 @@ object Baseline001 : StoryOf(
                     """
                         创建RefundApi, 加上@Secured("ROLE_PREPAID")只允许经纪人访问；
                     """.trimIndent()
-                } expect {
+                } withApi unauthorizedFailure expect {
                     """
-                        当作为未知用户调用RefundApi时，SecureFilter抛出异常并返回401（由Spring实现）；
+                        当作为未知用户调用RefundApi时，身份验证失败抛出异常并返回401；
                     """.trimIndent()
-                } withApi unauthorizedFailure
+                }
             }
 
             flow("个人用户访问退款API时，返回401和错误信息") {
-                Interceptor call ApiController expect {
+                Interceptor call ApiController withApi unauthorizedFailure expect {
                     """
-                        当作为个人用户调用RefundApi时（@WithMockUser(roles = ["INDIVIDUAL"])），SecureFilter抛出异常并返回401（由Spring实现）；
+                        当作为个人用户调用RefundApi时（@WithMockUser(roles = ["INDIVIDUAL"])），身份验证失败抛出异常并返回401；
                     """.trimIndent()
-                } withApi unauthorizedFailure
+                }
             }
 
             flow("未开通预充值的经纪人用户访问退款API时，返回401和错误信息") {
-                Interceptor call ApiController expect {
+                Interceptor call ApiController withApi unauthorizedFailure expect {
                     """
-                        当作为个人用户调用RefundApi时（@WithMockUser(roles = ["OFFICER"])），SecureFilter抛出异常并返回401（由Spring实现）；
+                        当作为个人用户调用RefundApi时（@WithMockUser(roles = ["OFFICER"])），身份验证失败抛出异常并返回401；
                     """.trimIndent()
-                } withApi unauthorizedFailure
+                }
             }
         }
 
@@ -125,15 +125,9 @@ object Baseline001 : StoryOf(
             }
 
             flow("预充值用户访问退款API时，返回200") {
-                Interceptor call ApiController expect {
+                Interceptor call ApiController withApi refundApi.onSuccess() expect {
                     """
-                        当作为预充值用户调用RefundApi时（@WithMockUser(roles = ["PREPAID"])），返回200
-                    """.trimIndent()
-                } withApi refundApi.onSuccess {
-                    """
-                        {
-                            "msg": "退款申请已提交"
-                        }
+                        当作为预充值用户调用RefundApi时（@WithMockUser(roles = ["PREPAID"])），返回200;
                     """.trimIndent()
                 }
             }
@@ -146,14 +140,14 @@ object Baseline001 : StoryOf(
                 } nested {
                     Service call Client given {
                         """
-                            调用PrepaidClient，调用上游API进行退款
+                            调用PrepaidClient-预支付服务接口
                         """.trimIndent()
                     } nested {
-                        Client call PrepaidService.ApiController expect {
+                        Client call PrepaidService.ApiController withApi refundApiForPrepaid.onSuccess() expect {
                             """
-                                调用HTTP API，并发送对应的Request到上游服务
+                                成功调用预支付服务API，返回200；
                             """.trimIndent()
-                        } withApi refundApiForPrepaid.onSuccess()
+                        }
                     }
                 }
             }
@@ -167,22 +161,18 @@ object Baseline001 : StoryOf(
             }
 
             flow("调用退款API，通过预充值服务进行退款时告知余额不足") {
-                ApiController call Service given {
-                    """
-                        获取请求参数和用户user_id，并调用RefundService执行退款操作
-                    """.trimIndent()
-                } nested {
+                ApiController call Service nested {
                     Service call Client nested {
-                        Client call PrepaidService.ApiController expect {
-                            """
-                                上游API返回400错误
-                            """.trimIndent()
-                        } withApi refundApiForPrepaid.onFailed(HttpStatus.BAD_REQUEST) {
+                        Client call PrepaidService.ApiController withApi refundApiForPrepaid.onFailed(HttpStatus.BAD_REQUEST) {
                             """
                                 {
                                     "code": "LACK_OF_BALANCE",
                                     "msg": "退款失败，余额不足"
                                 }
+                            """.trimIndent()
+                        } expect {
+                            """
+                                预支付服务退款API返回400错误；
                             """.trimIndent()
                         }
                     } expect {
@@ -235,13 +225,21 @@ object Baseline001 : StoryOf(
 
             flow("通过预充值服务进行退款时，预充值服务不可用，转发申请到消息队列") {
                 Service call Client nested {
-                    Client call PrepaidService.ApiController withApi refundApiForPrepaid.onFailed(HttpStatus.INTERNAL_SERVER_ERROR)
+                    Client call PrepaidService.ApiController withApi refundApiForPrepaid.onFailed(HttpStatus.INTERNAL_SERVER_ERROR) expect {
+                        """
+                            预支付服务接口调用失败，返回5xx错误
+                        """.trimIndent()
+                    }
                 } expect {
                     """
                         捕获FeignServerException，打印日志
                     """.trimIndent()
                 }
-                Service call Client nested {
+                Service call Client given {
+                    """
+                        组装DTO，调用MqClient发布异步任务
+                    """.trimIndent()
+                } nested {
                     Client call MessageQueue.SQS withApi addRefundEventApi.onSuccess()
                 } expect {
                     """

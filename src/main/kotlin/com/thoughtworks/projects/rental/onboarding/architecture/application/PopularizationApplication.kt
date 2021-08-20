@@ -6,6 +6,7 @@ import com.thoughtworks.blackhorse.schema.architecture.ProcessDefBuilder
 import com.thoughtworks.blackhorse.schema.architecture.at
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
+import com.thoughtworks.blackhorse.schema.architecture.cost
 import com.thoughtworks.blackhorse.schema.architecture.with
 import com.thoughtworks.projects.rental.onboarding.architecture.CommonComponentLayer
 import com.thoughtworks.projects.rental.onboarding.architecture.corebiz.PrepaidService
@@ -71,34 +72,52 @@ object PopularizationApplication : Container(
     )
 
     override fun getProcesses(): List<ProcessDefBuilder> = listOf(
-        Interceptor stub ApiController at {
+        Interceptor stub ApiController cost 10 at {
             """
-                Interceptor依赖Spring环境，需要真实的Controller组件；确保对应的Controller受Interceptor的控制
+                Interceptor和Controller依赖于Spring，需要启动整个容器参与测试；
+                ```
+                // Q1 组件测试，基于Spring Security Test
+                ```
             """.trimIndent()
         },
         ApiController mock Service at {
             """
-                需要保证对Service调用的入参和返回都正确
+                保证Controller配置了正确的API，接收请求调用Service并返回正确的Json数据；
+                ```
+                // Q1 组件测试，基于WebMvcTest
+                ```
             """.trimIndent()
         },
         Service mock Service at {
             """
-                需要保证对Service调用的入参和返回都正确
+                需要保证对Service调用的入参和返回都正确；
+                 ```
+                // Q1 单元测试
+                ```
             """.trimIndent()
         },
         Service mock Client at {
             """
-                需要保证对Client调用的入参和返回都正确
+                需要保证对Client调用的入参和返回都正确；
+                 ```
+                // Q1 单元测试
+                ```
             """.trimIndent()
         },
         Client spy MessageQueue.SQS with "Wiremock" at {
             """
-                处于进程边界，需要真实的Http调用；发送消息是异步操作只需要保证入参正确即可
+                处于进程边界，需要真实的Http调用；发送消息是异步操作只需要保证入参正确即可；
+                 ```
+                // Q1 单元测试
+                ```
             """.trimIndent()
         },
         Client mock PrepaidService.ApiController with "Wiremock" at {
             """
-                处于进程边界，需要真实的Http调用；需要保证对外调用的入参和返回都正确
+                处于进程边界，需要真实的Http调用；需要保证对外调用的入参和返回都正确；
+                 ```
+                // Q1 单元测试
+                ```
             """.trimIndent()
         },
     )

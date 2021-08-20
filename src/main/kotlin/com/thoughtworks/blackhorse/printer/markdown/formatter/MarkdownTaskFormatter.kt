@@ -30,7 +30,11 @@ open class MarkdownTaskFormatter : TaskFormatter {
         val prefix = "Process $name"
         val relations =
             if (component == dependency) component.name()
-            else "${component.name()}, depends on $testDouble<${dependency.name()}>" + (testFramework?.let { ", using $it" })
+            else listOfNotNull(
+                component.name(),
+                "depends on $testDouble<${dependency.name()}>",
+                "using $testFramework".takeUnless { testFramework.isNullOrEmpty() },
+            ).joinToString(", ")
         val complexity = complexity.label().takeIf { StoryContextHolder.isVisible(HiddenOption.COMPLEXITY) }
 
         return lineOf(

@@ -37,92 +37,91 @@
 如果是非预充值用户，无法访问退款功能
 #### <span id='example-1-1'>Example 1-1 匿名用户访问退款API时，返回401和错误信息</span>
 ##### Tasks
-- **Process 32-1 | 0 mins**
-> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>null
+- **Process 32-1 | 10 mins**
+> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>
  
   创建RefundApi, 加上@Secured("ROLE_PREPAID")只允许经纪人访问；
-  当作为未知用户调用RefundApi时，SecureFilter抛出异常并返回401（由Spring实现）；
+  当作为未知用户调用RefundApi时，身份验证失败抛出异常并返回401；
   \> POST /prepaid/{account_id}/refund
   < 401 UNAUTHORIZED
  
 ----
 ##### Diagram
-![65ec9335-8b9c-431b-bcc3-319d7c541a66](temp/baseline001/65ec9335-8b9c-431b-bcc3-319d7c541a66.svg)
+![aac60ab0-9694-4b8d-be2c-c23c2cded4ad](temp/baseline001/aac60ab0-9694-4b8d-be2c-c23c2cded4ad.svg)
 #### <span id='example-1-2'>Example 1-2 个人用户访问退款API时，返回401和错误信息</span>
 ##### Tasks
-- **Process 32-1 | 0 mins**
-> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>null
+- **Process 32-1 | 10 mins**
+> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>
  
-  当作为个人用户调用RefundApi时（@WithMockUser(roles = ["INDIVIDUAL"])），SecureFilter抛出异常并返回401（由Spring实现）；
+  当作为个人用户调用RefundApi时（@WithMockUser(roles = ["INDIVIDUAL"])），身份验证失败抛出异常并返回401；
   \> POST /prepaid/{account_id}/refund
   < 401 UNAUTHORIZED
  
 ----
 ##### Diagram
-![e00ee516-8ae8-4530-8e39-314d478bc04d](temp/baseline001/e00ee516-8ae8-4530-8e39-314d478bc04d.svg)
+![d1171e33-6273-4ab6-9538-d4556f9da92c](temp/baseline001/d1171e33-6273-4ab6-9538-d4556f9da92c.svg)
 #### <span id='example-1-3'>Example 1-3 未开通预充值的经纪人用户访问退款API时，返回401和错误信息</span>
 ##### Tasks
-- **Process 32-1 | 0 mins**
-> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>null
+- **Process 32-1 | 10 mins**
+> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>
  
-  当作为个人用户调用RefundApi时（@WithMockUser(roles = ["OFFICER"])），SecureFilter抛出异常并返回401（由Spring实现）；
+  当作为个人用户调用RefundApi时（@WithMockUser(roles = ["OFFICER"])），身份验证失败抛出异常并返回401；
   \> POST /prepaid/{account_id}/refund
   < 401 UNAUTHORIZED
  
 ----
 ##### Diagram
-![2bed8bed-6e6f-4eef-9b9c-a29f7e4ec2f3](temp/baseline001/2bed8bed-6e6f-4eef-9b9c-a29f7e4ec2f3.svg)
+![2e257c03-d38e-4884-8f06-cc672d322705](temp/baseline001/2e257c03-d38e-4884-8f06-cc672d322705.svg)
 ### <span id='ac-2'>AC 2 </span>
 如果是预充值用户，提交退款申请到预充值服务
 #### <span id='example-2-1'>Example 2-1 预充值用户访问退款API时，返回200</span>
 ##### Tasks
-- **Process 32-1 | 0 mins**
-> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>null
+- **Process 32-1 | 10 mins**
+> PopularizationApplication.Interceptor, depends on Stub<PopularizationApplication.ApiController>
  
-  当作为预充值用户调用RefundApi时（@WithMockUser(roles = ["PREPAID"])），返回200
+  当作为预充值用户调用RefundApi时（@WithMockUser(roles = ["PREPAID"])），返回200;
   \> POST /prepaid/{account_id}/refund
   < 200 OK
  
 ----
 ##### Diagram
-![d940c473-56fb-4091-94b0-9d205236457d](temp/baseline001/d940c473-56fb-4091-94b0-9d205236457d.svg)
+![52ec1988-82f8-4f47-bf8a-cfd640dfae43](temp/baseline001/52ec1988-82f8-4f47-bf8a-cfd640dfae43.svg)
 #### <span id='example-2-2'>Example 2-2 调用退款API，提交申请到预充值服务</span>
 ##### Tasks
 - **Process 32-2 | 0 mins**
-> PopularizationApplication.ApiController, depends on Mock<PopularizationApplication.Service>null
+> PopularizationApplication.ApiController, depends on Mock<PopularizationApplication.Service>
  
   获取请求参数和用户user_id，并调用RefundService执行退款操作
  
 ----
 - **Process 32-4 | 0 mins**
-> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>null
+> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>
  
-  调用PrepaidClient，调用上游API进行退款
+  调用PrepaidClient-预支付服务接口
  
 ----
 - **Process 32-6 | 0 mins**
 > PopularizationApplication.Client, depends on Mock<PrepaidService.ApiController>, using Wiremock
  
-  调用HTTP API，并发送对应的Request到上游服务
+  成功调用预支付服务API，返回200；
   \> POST /prepaid/{account_id}/refund
   < 200 OK
  
 ----
 ##### Diagram
-![348fbd78-76c5-41ce-a6a5-4bc9096867ac](temp/baseline001/348fbd78-76c5-41ce-a6a5-4bc9096867ac.svg)
+![f666fea9-9963-4576-a22b-11ab090728ef](temp/baseline001/f666fea9-9963-4576-a22b-11ab090728ef.svg)
 ### <span id='ac-3'>AC 3 </span>
 如果是预充值用户，提交退款申请到预充值服务，返回余额不足退款失败，告知用户
 #### <span id='example-3-1'>Example 3-1 调用退款API，通过预充值服务进行退款时告知余额不足</span>
 ##### Tasks
 - **Process 32-2 | 0 mins**
-> PopularizationApplication.ApiController, depends on Mock<PopularizationApplication.Service>null
+> PopularizationApplication.ApiController, depends on Mock<PopularizationApplication.Service>
  
-  获取请求参数和用户user_id，并调用RefundService执行退款操作
   捕获FeignClientException.BadRequest，获取错误码和信息并通过ResponseEntity返回
  
 ----
 - **Process 32-4 | 0 mins**
-> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>null
+> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>
  
   Service会透传Client抛出的Exception
  
@@ -130,19 +129,19 @@
 - **Process 32-6 | 0 mins**
 > PopularizationApplication.Client, depends on Mock<PrepaidService.ApiController>, using Wiremock
  
-  上游API返回400错误
+  预支付服务退款API返回400错误；
   \> POST /prepaid/{account_id}/refund
   < 400 BAD_REQUEST
  
 ----
 ##### Diagram
-![a9ab07e8-4baf-4603-87fd-c60b51312b69](temp/baseline001/a9ab07e8-4baf-4603-87fd-c60b51312b69.svg)
+![c0fcd000-9b36-480c-bae2-9d84cb119b2e](temp/baseline001/c0fcd000-9b36-480c-bae2-9d84cb119b2e.svg)
 ### <span id='ac-4'>AC 4 </span>
 如果是预充值用户，预充值服务不可用时，提交退款申请到消息队列进行缓存
 #### <span id='example-4-1'>Example 4-1 通过预充值服务进行退款时，预充值服务不可用，转发申请到消息队列</span>
 ##### Tasks
 - **Process 32-4 | 0 mins**
-> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>null
+> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>
  
   捕获FeignServerException，打印日志
  
@@ -150,13 +149,15 @@
 - **Process 32-6 | 0 mins**
 > PopularizationApplication.Client, depends on Mock<PrepaidService.ApiController>, using Wiremock
  
+  预支付服务接口调用失败，返回5xx错误
   \> POST /prepaid/{account_id}/refund
   < 500 INTERNAL_SERVER_ERROR
  
 ----
 - **Process 32-4 | 0 mins**
-> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>null
+> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>
  
+  组装DTO，调用MqClient发布异步任务
   Service无异常抛出
  
 ----
@@ -168,13 +169,13 @@
  
 ----
 ##### Diagram
-![8795b4a9-fec0-4108-834b-63a912716447](temp/baseline001/8795b4a9-fec0-4108-834b-63a912716447.svg)
+![cee51ab4-847a-468a-9c82-167f5dea09c3](temp/baseline001/cee51ab4-847a-468a-9c82-167f5dea09c3.svg)
 ### <span id='ac-5'>AC 5 </span>
 接收预充值服务回调：退款成功、失败，发送消息通知用户
 #### <span id='example-5-1'>Example 5-1 接收预充值服务的回调，更新退款信息并发送消息</span>
 ##### Tasks
 - **Process 32-2 | 0 mins**
-> PopularizationApplication.ApiController, depends on Mock<PopularizationApplication.Service>null
+> PopularizationApplication.ApiController, depends on Mock<PopularizationApplication.Service>
  
   获取退款结果信息包装成VO
   \> POST /prepaid/{account_id}/refund/{rid}/confirmation
@@ -182,7 +183,7 @@
  
 ----
 - **Process 32-4 | 0 mins**
-> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>null
+> PopularizationApplication.Service, depends on Mock<PopularizationApplication.Client>
  
   将退款信息VO序列化成通知消息，并通过Client进行发送
   - `退款成功，<refund_amount>已退回到您的<account>账户。`
@@ -197,7 +198,7 @@
  
 ----
 ##### Diagram
-![6593e520-19d4-4eb7-aee4-92e273ca11e7](temp/baseline001/6593e520-19d4-4eb7-aee4-92e273ca11e7.svg)
+![65847fc5-49e3-4417-a56c-551aa105f193](temp/baseline001/65847fc5-49e3-4417-a56c-551aa105f193.svg)
 ### API Schema
 #### 退款API
 > POST /prepaid/{account_id}/refund
@@ -208,12 +209,6 @@
       "refund_amount": 100.00,
       "currency": "CHN_YUAN",
       "account": "WECHAT"
-  }
-  ```
-  - Response
-  ```json
-  {
-      "msg": "退款申请已提交"
   }
   ```
 - 401 UNAUTHORIZED
@@ -252,17 +247,35 @@
 Tech Stack: **[Spring, Kotlin]**
 Owner: **[Li Si]**
  
-![064ba8a2-f07e-4279-9311-f97851376bae](temp/064ba8a2-f07e-4279-9311-f97851376bae.svg)
+![6e745c5f-19ec-4e4d-9b5a-b90ad4b9358b](temp/6e745c5f-19ec-4e4d-9b5a-b90ad4b9358b.svg)
 #### Processes
 ##### Process 32-1 | Interceptor => Stub\<ApiController>
-Interceptor依赖Spring环境，需要真实的Controller组件；确保对应的Controller受Interceptor的控制
+Interceptor和Controller依赖于Spring，需要启动整个容器参与测试；
+```
+// Q1 组件测试，基于Spring Security Test
+```
 ##### Process 32-2 | ApiController => Mock\<Service>
-需要保证对Service调用的入参和返回都正确
+保证Controller配置了正确的API，接收请求调用Service并返回正确的Json数据；
+```
+// Q1 组件测试，基于WebMvcTest
+```
 ##### Process 32-3 | Service => Mock\<Service>
-需要保证对Service调用的入参和返回都正确
+需要保证对Service调用的入参和返回都正确；
+ ```
+// Q1 单元测试
+```
 ##### Process 32-4 | Service => Mock\<Client>
-需要保证对Client调用的入参和返回都正确
+需要保证对Client调用的入参和返回都正确；
+ ```
+// Q1 单元测试
+```
 ##### Process 32-5 | Client => Spy\<MessageQueue.SQS>[Wiremock]
-处于进程边界，需要真实的Http调用；发送消息是异步操作只需要保证入参正确即可
+处于进程边界，需要真实的Http调用；发送消息是异步操作只需要保证入参正确即可；
+ ```
+// Q1 单元测试
+```
 ##### Process 32-6 | Client => Mock\<PrepaidService.ApiController>[Wiremock]
-处于进程边界，需要真实的Http调用；需要保证对外调用的入参和返回都正确
+处于进程边界，需要真实的Http调用；需要保证对外调用的入参和返回都正确；
+ ```
+// Q1 单元测试
+```
