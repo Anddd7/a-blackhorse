@@ -50,7 +50,12 @@ data class TaskBuilder(
 
         return Task(
             processId,
-            start, target, accept, reply, targetApiScenario, nested.map { it.build(flowId, idGenerator) }
+            start,
+            target,
+            accept?.trimIndent(),
+            reply?.trimIndent(),
+            targetApiScenario,
+            nested.map { it.build(flowId, idGenerator) }
         )
     }
 

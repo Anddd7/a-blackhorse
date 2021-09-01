@@ -7,6 +7,7 @@ import com.thoughtworks.blackhorse.schema.architecture.Ext
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TestDouble
 import com.thoughtworks.blackhorse.schema.story.Task
+import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
 import org.slf4j.LoggerFactory
 
 open class MarkdownTaskFormatter : TaskFormatter {
@@ -15,33 +16,54 @@ open class MarkdownTaskFormatter : TaskFormatter {
     override fun task(task: Task): String =
         lineOf(
             task.title(),
+            " ",
             lineOf(
                 task.accept,
                 task.reply,
-                task.targetApiScenario?.apiDefinition?.let { "\\> $it" },
-                task.targetApiScenario?.statusDescription?.let { "< $it" },
-            ).prependIndent("  "),
+                task.targetApiScenario?.description(),
+            ).prependIndent("\t"),
             " ",
             "----",
             task.nested.mapToLines(this::task)
         )
 
+    private fun ApiScenario.description() = lineOf(
+        "```",
+        "API Call:",
+        "> $apiDefinition",
+        "< $statusDescription",
+        "```"
+    )
+
+    // private fun ProcessDef.title(): String {
+    //     val prefix = "Process $name"
+    //     val relations =
+    //         if (component == dependency) component.name()
+    //         else listOfNotNull(
+    //             component.name(),
+    //             "depends on $testDouble<${dependency.name()}>",
+    //             "using $testFramework".takeUnless { testFramework.isNullOrEmpty() },
+    //         ).joinToString(", ")
+    //     val complexity = complexity.label().takeIf { StoryContextHolder.isVisible(HiddenOption.COMPLEXITY) }
+    //
+    //     return lineOf(
+    //         "- **$prefix | $complexity**",
+    //         "> $relations",
+    //         " "
+    //     )
+    // }
+
     private fun ProcessDef.title(): String {
-        val prefix = "Process $name"
-        val relations =
+        val processId = "Process $name"
+        val dependency =
             if (component == dependency) component.name()
             else listOfNotNull(
-                component.name(),
-                "depends on $testDouble<${dependency.name()}>",
+                "$testDouble<${dependency.name()}>",
                 "using $testFramework".takeUnless { testFramework.isNullOrEmpty() },
             ).joinToString(", ")
         val complexity = complexity.label().takeIf { StoryContextHolder.isVisible(HiddenOption.COMPLEXITY) }
 
-        return lineOf(
-            "- **$prefix | $complexity**",
-            "> $relations",
-            " "
-        )
+        return listOf(processId, dependency, complexity).joinToString(" | ", " - **", "**")
     }
 
     private fun Task.title(): String {
