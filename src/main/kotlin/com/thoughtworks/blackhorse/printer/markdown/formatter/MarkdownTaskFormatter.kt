@@ -2,6 +2,7 @@ package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.config.HiddenOption
 import com.thoughtworks.blackhorse.config.StoryContextHolder
+import com.thoughtworks.blackhorse.config.TitleLanguage
 import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
 import com.thoughtworks.blackhorse.schema.architecture.Ext
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
@@ -54,14 +55,14 @@ open class MarkdownTaskFormatter : TaskFormatter {
     // }
 
     private fun ProcessDef.title(): String {
-        val processId = "Process $name"
+        val processId = "${TitleLanguage.getProcessTitle()} $name"
         val dependency =
             if (component == dependency) component.name()
             else listOfNotNull(
                 "$testDouble<${dependency.name()}>",
                 "using $testFramework".takeUnless { testFramework.isNullOrEmpty() },
             ).joinToString(", ")
-        val complexity = complexity.label().takeIf { StoryContextHolder.isVisible(HiddenOption.COMPLEXITY) }
+        val complexity = complexity.label().takeIf { HiddenOption.COMPLEXITY.isVisible() }
 
         return listOf(processId, dependency, complexity).joinToString(" | ", " - **", "**")
     }
@@ -76,7 +77,7 @@ open class MarkdownTaskFormatter : TaskFormatter {
     }
 
     private fun Task.label() =
-        process?.run { "Process $name" } ?: "Inner Logic"
+        process?.run { "${TitleLanguage.getProcessTitle()} $name" } ?: "Inner Logic"
 
     private fun Task.dependency() =
         process?.run {

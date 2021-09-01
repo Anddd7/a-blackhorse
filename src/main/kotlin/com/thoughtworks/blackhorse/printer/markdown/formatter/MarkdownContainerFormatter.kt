@@ -1,5 +1,6 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
+import com.thoughtworks.blackhorse.config.TitleLanguage
 import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
 import com.thoughtworks.blackhorse.schema.architecture.Component
 import com.thoughtworks.blackhorse.schema.architecture.Container
@@ -48,7 +49,7 @@ open class MarkdownContainerFormatter : ContainerFormatter {
         if (processes.isEmpty()) return null
 
         return lineOf(
-            "#### Processes",
+            "#### ${TitleLanguage.getProcessesTitle()}",
             processes.mapToLines(this::processLine)
         )
     }
@@ -61,7 +62,7 @@ open class MarkdownContainerFormatter : ContainerFormatter {
         val testFramework = process.testFramework?.let { "[$it]" } ?: ""
 
         return lineOf(
-            "##### Process $id | $component => $testDouble\\<$dependency>$testFramework",
+            "##### ${TitleLanguage.getProcessTitle()} $id | $component => $testDouble\\<$dependency>$testFramework",
             process.description
         )
     }

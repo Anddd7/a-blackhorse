@@ -1,5 +1,7 @@
 package com.thoughtworks.blackhorse.config
 
 enum class HiddenOption {
-    COMPLEXITY
+    COMPLEXITY;
+
+    fun isVisible() = ProjectContextHolder.get().isVisible(this)
 }

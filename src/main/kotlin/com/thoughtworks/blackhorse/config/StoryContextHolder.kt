@@ -19,7 +19,6 @@ object StoryContextHolder {
     fun storyPrinter() = get().projectContext.storyPrinter
     fun distPath(): Path = get().projectContext.distPath
     fun jiraBasUrl() = get().projectContext.jiraBasUrl
-    fun isVisible(hiddenOption: HiddenOption) = get().projectContext.isVisible(hiddenOption)
 
     fun getLocalStoryFile(): Path = FileExtension.getOrCreateFile(storyName() + ".md", distPath())
     fun getLocalSummaryFile(): Path = FileExtension.getOrCreateFile(storyName() + "_SUMMARY.md", distPath())

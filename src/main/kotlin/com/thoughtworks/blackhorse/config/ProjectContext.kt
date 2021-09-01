@@ -12,6 +12,7 @@ data class ProjectContext(
     val projectName: String,
     val printerOption: PrinterOption,
     val repoBaseUrl: Path,
+    val language: TitleLanguage,
     private val _jiraBasUrl: OptionalProperty,
     private val _jiraToken: OptionalProperty,
     private val hiddenOptions: List<HiddenOption>,
@@ -41,6 +42,7 @@ private fun Properties.toContext(projectName: String) = ProjectContext(
     projectName,
     getPropertyOrThrow("printer").toEnum(PrinterOption::valueOf),
     getPropertyOrThrow("repo_baseurl").let { Path.of(it) },
+    getProperty("language")?.toEnum(TitleLanguage::valueOf) ?: TitleLanguage.EN,
     getOptionalProperty("jira_baseurl"),
     getOptionalProperty("jira_token"),
     getProperty("hidden")
