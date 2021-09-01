@@ -1,6 +1,6 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
-import com.thoughtworks.blackhorse.config.TitleLanguage
+import com.thoughtworks.blackhorse.config.Titles
 import com.thoughtworks.blackhorse.printer.interfaces.AcceptanceCriteriaFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.ApiSchemaFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.ContainerFormatter
@@ -30,7 +30,7 @@ class MarkdownStoryFormatter(
         if (containers.isEmpty()) return null
 
         return lineOf(
-            "### ${TitleLanguage.getArchitectureTitle()}",
+            "### ${Titles.Architecture}",
             containers.mapToLines { containerFormatter.container(it) }
         )
     }

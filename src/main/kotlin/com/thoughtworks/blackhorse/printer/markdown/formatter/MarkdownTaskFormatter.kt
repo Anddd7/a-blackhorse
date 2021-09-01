@@ -1,8 +1,7 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
 import com.thoughtworks.blackhorse.config.HiddenOption
-import com.thoughtworks.blackhorse.config.StoryContextHolder
-import com.thoughtworks.blackhorse.config.TitleLanguage
+import com.thoughtworks.blackhorse.config.Titles
 import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
 import com.thoughtworks.blackhorse.schema.architecture.Ext
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDef
@@ -55,7 +54,7 @@ open class MarkdownTaskFormatter : TaskFormatter {
     // }
 
     private fun ProcessDef.title(): String {
-        val processId = "${TitleLanguage.getProcessTitle()} $name"
+        val processId = "${Titles.Process} $name"
         val dependency =
             if (component == dependency) component.name()
             else listOfNotNull(
@@ -77,7 +76,7 @@ open class MarkdownTaskFormatter : TaskFormatter {
     }
 
     private fun Task.label() =
-        process?.run { "${TitleLanguage.getProcessTitle()} $name" } ?: "Inner Logic"
+        process?.run { "${Titles.Process} $name" } ?: "Inner Logic"
 
     private fun Task.dependency() =
         process?.run {

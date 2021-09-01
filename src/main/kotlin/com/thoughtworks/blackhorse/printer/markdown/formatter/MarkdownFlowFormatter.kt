@@ -1,6 +1,6 @@
 package com.thoughtworks.blackhorse.printer.markdown.formatter
 
-import com.thoughtworks.blackhorse.config.TitleLanguage
+import com.thoughtworks.blackhorse.config.Titles
 import com.thoughtworks.blackhorse.printer.interfaces.FlowFormatter
 import com.thoughtworks.blackhorse.printer.interfaces.TaskFormatter
 import com.thoughtworks.blackhorse.schema.story.Flow
@@ -29,14 +29,14 @@ open class MarkdownFlowFormatter(
     private fun content(processes: List<Task>) = when {
         processes.isEmpty() -> null
         else -> lineOf(
-            "##### ${TitleLanguage.getTasksTitle()}",
+            "##### ${Titles.Tasks}",
             taskDescription(processes),
-            "##### ${TitleLanguage.getDiagramTitle()}",
+            "##### ${Titles.Diagram}",
             taskDiagram(processes),
         )
     }
 
-    private fun name(id: String, str: String) = "${TitleLanguage.getExampleTitle()} $id $str"
+    private fun name(id: String, str: String) = "${Titles.Example} $id $str"
     private fun anchor(id: String) = "example-$id"
     private fun title(id: String, str: String) =
         "#### <span id='${anchor(id)}'>${name(id, str)}</span>"
