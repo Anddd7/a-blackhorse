@@ -5,10 +5,13 @@ build
 
 src/main/resources/projects/*
 !src/main/resources/projects/rental/
+!src/main/resources/projects/want2eat/
 
 src/main/kotlin/com/thoughtworks/projects/*
 !src/main/kotlin/com/thoughtworks/projects/rental/
+!src/main/kotlin/com/thoughtworks/projects/want2eat/
 
 dist/*
 !dist/rental/
+!dist/want2eat/
 

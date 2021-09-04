@@ -20,7 +20,10 @@ object FileExtension {
     fun createFileIfAbsent(filename: String, folder: Path): Path {
         val file = folder.resolve(filename)
         if (Files.exists(file)) throw FileAlreadyExistsException(file.toFile())
-        else Files.createFile(file)
+        else {
+            Files.createDirectories(folder)
+            Files.createFile(file)
+        }
         return file
     }
 
