@@ -3,9 +3,9 @@ package com.thoughtworks.projects.want2eat.onboarding.architecture
 import com.thoughtworks.blackhorse.schema.architecture.ArchitectureOf
 
 object Want2EatArchitecture : ArchitectureOf(
-    "0.0.1",
+    "0.0.2",
     """
-        绘制需要的架构信息
+        工序拆分
     """.trimIndent(),
     OrderService,
 )

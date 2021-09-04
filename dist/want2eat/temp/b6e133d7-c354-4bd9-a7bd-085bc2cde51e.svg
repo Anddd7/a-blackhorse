@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="282px" preserveAspectRatio="none" style="width:1888px;height:282px;" version="1.1" viewBox="0 0 1888 282" width="1888px" zoomAndPan="magnify"><defs><filter height="300%" id="f3r8hvauyojmr" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[1f2cfc53d9d308f53762fd0fcbaa4873]
+cluster Controller--><polygon fill="#FFFFFF" filter="url(#f3r8hvauyojmr)" points="957,6,1036,6,1043,28.4883,1532,28.4883,1532,136,957,136,957,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="957" x2="1043" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="73" x="961" y="21.5352">Controller</text><!--MD5=[9dd75fd92da113d30380b27734fd2f01]
+cluster Service--><polygon fill="#FFFFFF" filter="url(#f3r8hvauyojmr)" points="1556,6,1612,6,1619,28.4883,1871,28.4883,1871,136,1556,136,1556,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="1556" x2="1619" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="50" x="1560" y="21.5352">Service</text><!--MD5=[9ddaf8ee8bcae11a9a9232f969198262]
+cluster Infrastructure--><polygon fill="#FFFFFF" filter="url(#f3r8hvauyojmr)" points="16,6,121,6,128,28.4883,473,28.4883,473,275,16,275,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="128" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="99" x="20" y="21.5352">Infrastructure</text><!--MD5=[056db7644fd855972490fe1694f3faa1]
+cluster External--><polygon fill="#FFFFFF" filter="url(#f3r8hvauyojmr)" points="497,6,561,6,568,28.4883,933,28.4883,933,275,497,275,497,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="497" x2="568" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="58" x="501" y="21.5352">External</text><!--MD5=[f855680bc6c989572ebb25245d27968d]
+entity Controller--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="362" x="1154" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="1496" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1494" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1494" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70" x="1169" y="74.5352">Controller</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="1169" y="91.0234">[Spring Mvc]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="322" x="1169" y="107.5117">定义API、校验请求数据，调用Service完成业务逻辑</text><!--MD5=[966d6be8347cc53b0db65791728f1b75]
+entity SpringBootTest--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="145" x="973.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="1098.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1096.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1096.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105" x="988.5" y="74.5352">SpringBootTest</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="988.5" y="91.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56" x="988.5" y="107.5117">集成测试</text><!--MD5=[491409cf646467ea3990d558be1e13cc]
+entity ViewObject--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="124" x="1731" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="1835" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1833" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1833" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76" x="1746" y="74.5352">ViewObject</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="1746" y="91.0234">[POJO]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="1746" y="107.5117">数据模型对象</text><!--MD5=[17737e49c286898813382e12d6080e03]
+entity Service--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="124" x="1572" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="1676" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1674" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="1674" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="1587" y="74.5352">Service</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="37" x="1587" y="91.0234">[Java]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="1587" y="107.5117">业务逻辑处理</text><!--MD5=[60a74dc527861188fd2c7b7ec1e13a1c]
+entity Entity--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="124" x="60" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="164" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="162" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="162" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="38" x="75" y="74.5352">Entity</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="75" y="91.0234">[POJO]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="75" y="107.5117">数据库表模型</text><!--MD5=[4e260e4024c27e03c495c33059d2b5ff]
+entity Repository--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="125" x="219.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="324.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="322.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="322.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73" x="234.5" y="74.5352">Repository</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81" x="234.5" y="91.0234">[Spring JPA]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70" x="234.5" y="107.5117">数据库访问</text><!--MD5=[97de1061a0ab8445a0a4bfc3e13b8318]
+entity DTO--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="180" x="32" y="180"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="192" y="185"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="190" y="187"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="190" y="191"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30" x="47" y="213.5352">DTO</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="47" y="230.0234">[POJO]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="140" x="47" y="246.5117">下游服务数据模型对象</text><!--MD5=[0ba5ee7700168656dc1b457c6fe9fdac]
+entity Client--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="210" x="247" y="180"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="437" y="185"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="435" y="187"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="435" y="191"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="262" y="213.5352">Client</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="103" x="262" y="230.0234">[RestTemplate]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170" x="262" y="246.5117">通过HTTP消费下游服务API</text><!--MD5=[49cbbb1648246ecd0e2d56eda0c19f08]
+entity Gateway--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="171" x="513.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="664.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="662.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="662.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="57" x="528.5" y="74.5352">Gateway</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="127" x="528.5" y="91.0234">[AWS API Gateway]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="78" x="528.5" y="107.5117">管理外部API</text><!--MD5=[f9ba5bf973e7832d2ce5ed59077b93f7]
+entity DB--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="197" x="719.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="896.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="894.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="894.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="734.5" y="74.5352">DB</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="153" x="734.5" y="91.0234">[AWS RDS,PostgreSQL]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="734.5" y="107.5117">数据库</text><!--MD5=[ec9693746a5ae180405a351f013c402e]
+entity MQ--><rect fill="#FEFECE" filter="url(#f3r8hvauyojmr)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="207" x="513.5" y="180"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="700.5" y="185"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="698.5" y="187"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="698.5" y="191"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23" x="528.5" y="213.5352">MQ</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="163" x="528.5" y="230.0234">[AWS SQS,AWS Lambda]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56" x="528.5" y="246.5117">消息队列</text><!--MD5=[e95d8ba98ad54452f43ba82aa819b7df]
+link Entity to Repository--><!--MD5=[b8d47522186c587b20c29af1f08bbbfc]
+link Entity to DTO--><!--MD5=[544b3504af8c60cbab1c3e44b33e59ff]
+link DTO to Client--><!--MD5=[0eb693f74db9c816a68460fc43bfe803]
+link Gateway to DB--><!--MD5=[053635fe42427ac1f0360c96e2fa47d1]
+link Gateway to MQ--><!--MD5=[1411e04194e3c1a04313d06efe56993b]
+@startuml
+package "Controller" {
+  component Controller [
+      Controller
+      [Spring Mvc] 
+      定义API、校验请求数据，调用Service完成业务逻辑
+  ]
+  component SpringBootTest [
+      SpringBootTest
+      [] 
+      集成测试
+  ]
+}
+package "Service" {
+  component ViewObject [
+      ViewObject
+      [POJO] 
+      数据模型对象
+  ]
+  component Service [
+      Service
+      [Java] 
+      业务逻辑处理
+  ]
+}
+package "Infrastructure" {
+  component Entity [
+      Entity
+      [POJO] 
+      数据库表模型
+  ]
+  component Repository [
+      Repository
+      [Spring JPA] 
+      数据库访问
+  ]
+  component DTO [
+      DTO
+      [POJO] 
+      下游服务数据模型对象
+  ]
+  component Client [
+      Client
+      [RestTemplate] 
+      通过HTTP消费下游服务API
+  ]
+}
+package "External" {
+  component Gateway [
+      Gateway
+      [AWS API Gateway] 
+      管理外部API
+  ]
+  component DB [
+      DB
+      [AWS RDS,PostgreSQL] 
+      数据库
+  ]
+  component MQ [
+      MQ
+      [AWS SQS,AWS Lambda] 
+      消息队列
+  ]
+}
+@enduml
+
+PlantUML version 1.2021.5(Sun Apr 25 19:20:28 CST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: CN
+--></g></svg>
