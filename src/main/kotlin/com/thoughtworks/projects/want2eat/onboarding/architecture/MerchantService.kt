@@ -7,6 +7,7 @@ import com.thoughtworks.blackhorse.schema.architecture.at
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
+import com.thoughtworks.blackhorse.schema.architecture.cost
 
 private object Layers {
     val Controller = ComponentLayer("Controller", 1)
@@ -114,7 +115,7 @@ object MerchantService : Container(
     )
 
     override fun getProcesses(): List<ProcessDefBuilder> = listOf(
-        Controller mock Service at {
+        Controller mock Service cost 15 at {
             """
                 实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
             """.trimIndent()
