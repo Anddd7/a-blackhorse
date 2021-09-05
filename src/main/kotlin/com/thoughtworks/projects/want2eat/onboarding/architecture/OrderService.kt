@@ -119,66 +119,37 @@ object OrderService : Container(
     override fun getProcesses(): List<ProcessDefBuilder> = listOf(
         Controller mock Service at {
             """
-                - Controller依赖Spring的运行环境，需要启动整个容器参与测试，以保证Controller配置了正确的API，接收请求调用Service并返回正确的Json数据；
-                - ViewObject仅作为数据对象，验证其序列化的数据是否正确；
-                
-                测试时，会依赖：
-                - 进程【内】组件【Service】，采用【Mock】来替代该组件，因为【需要保证对Service调用的入参和返回都正确】
+                实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
             """.trimIndent()
         },
         Service mock Client at {
             """
-                - Service只包含业务逻辑，可脱离框架进行单元测试；
-                - ViewObject、DTO、Entity作为数据对象，验证数据转换时的结果是否正确；
-                
-                测试时，会依赖：
-                - 进程【内】组件【Client】，采用【Mock】来替代该组件，因为【需要保证对Client调用的入参和返回都正确】
+                实现Service调用Client获取DTO，组装成ViewObject并返回
             """.trimIndent()
         },
         Service mock Repository at {
             """
-                - Service只包含业务逻辑，可脱离框架进行单元测试；
-                - ViewObject、DTO、Entity作为数据对象，验证数据转换时的结果是否正确；
-                
-                测试时，会依赖：
-                - 进程【内】组件【Repository】，采用【Mock】来替代该组件，因为【需要保证对Repository调用的入参和返回都正确】
+                实现Service调用Repository获取Entity，组装成ViewObject并返回
             """.trimIndent()
         },
         Client mock MQ at {
             """
-                - Client需要进行HTTP调用，借助Spring框架可以快速完成测试；
-                - DTO仅作为数据对象，验证其序列化的数据是否正确；
-
-                测试时，会依赖：
-                - 进程【外】组件【MQ】，采用【Mock】来替代该组件，因为【需要保证对外的HTTP调用的请求参数和返回值符合预期】
+                实现Client调用MQ，通过DTO映射请求和返回的Json数据
             """.trimIndent()
         },
         Client mock Gateway at {
             """
-                - Client需要进行HTTP调用，借助Spring框架可以快速完成测试；
-                - DTO仅作为数据对象，验证其序列化的数据是否正确；
-
-                测试时，会依赖：
-                - 进程【外】组件【Gateway】，采用【Mock】来替代该组件，因为【需要保证对外的HTTP调用的请求参数和返回值符合预期】
+               实现Client调用Gateway，通过DTO映射请求和返回的Json数据
             """.trimIndent()
         },
         Repository fake DB at {
             """
-                - Repository依赖Spring JPA，需要启动整个容器参与测试，以保证SQL语句的正确执行；
-                - Entity仅作为数据对象，验证其序列化的数据是否正确；
-
-                测试时，会依赖：
-                - 进程【外】组件【PostgreSQL】，采用【Fake】来替代该组件，因为【数据库功能繁杂，mock的成本太高】
+               实现Repository调用DB，通过JPA正确执行数据库访问并返回对应的Entity数据
             """.trimIndent()
         },
         SpringBootTest call SpringBootTest at {
             """
-                - 测试各个组件连接正确，并能够在Spring环境下正常运行；
-                
-                测试时，会依赖：
-                - 进程【外】组件【MQ】，采用【Mock】来替代该组件，因为【需要保证对外的HTTP调用的请求参数和返回值符合预期】
-                - 进程【外】组件【Gateway】，采用【Mock】来替代该组件，因为【需要保证对外的HTTP调用的请求参数和返回值符合预期】
-                - 进程【外】组件【PostgreSQL】，采用【Fake】来替代该组件，因为【数据库功能繁杂，mock的成本太高】
+               实现所有组件进行集成测试
             """.trimIndent()
         }
     )
