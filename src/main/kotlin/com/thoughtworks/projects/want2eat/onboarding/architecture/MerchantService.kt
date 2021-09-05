@@ -5,7 +5,6 @@ import com.thoughtworks.blackhorse.schema.architecture.Container
 import com.thoughtworks.blackhorse.schema.architecture.ProcessDefBuilder
 import com.thoughtworks.blackhorse.schema.architecture.at
 import com.thoughtworks.blackhorse.schema.architecture.attributes.ComponentLayer
-import com.thoughtworks.blackhorse.schema.architecture.attributes.DomainLogic
 import com.thoughtworks.blackhorse.schema.architecture.attributes.Responsibility
 import com.thoughtworks.blackhorse.schema.architecture.attributes.TechStack
 
@@ -16,17 +15,15 @@ private object Layers {
     val External = ComponentLayer("External", 4)
 }
 
-object OrderService : Container(
+object MerchantService : Container(
     id = "1",
     layer = Responsibility.CoreBizService,
     techStack = listOf(
         TechStack("Spring Boot", ""),
         TechStack("PostgreSQL", "")
     ),
-    domains = listOf(
-        DomainLogic("价格计算引擎", "计算订单应支付的金额")
-    ),
-    responsibility = "餐品订购服务: 以订单为核心，为订餐用户提供下单、支付、退款、投诉等功能；商户可以接单、拒单，完成备餐后即可获得订单收益",
+    domains = emptyList(),
+    responsibility = "餐品订购服务: 为商家提供接入平台的服务，包括开通账号、缴纳押金、提现入账余额、收据和发票开具的功能；平台可对违反合作协议的商家进行押金扣减、入账扣减",
 ) {
     object Controller : Component(
         Layers.Controller,

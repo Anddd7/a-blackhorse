@@ -7,7 +7,7 @@ object Want2EatArchitecture : ArchitectureOf(
     """
         按规定格式书写工序设计
     """.trimIndent(),
-    OrderService,
+    MerchantService,
 )
 
 fun main() {

@@ -27,7 +27,9 @@ object StoryContextHolder {
     fun getRemoteStoryUrl(): Path = repoBaseUrl().resolve(distPath()).resolve(storyName() + ".md")
 
     fun clearUp() {
-        Files.list(tempPath()).forEach { Files.deleteIfExists(it) }
+        if (Files.exists(tempPath())) {
+            Files.list(tempPath()).forEach { Files.deleteIfExists(it) }
+        }
     }
 
     // coroutine
