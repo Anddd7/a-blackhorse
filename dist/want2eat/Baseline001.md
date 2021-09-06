@@ -1,30 +1,30 @@
 ### Table of Content
 - [In Scope](#in-scope)
 - [Out of Scope](#out-of-scope)
-- [AC 1 当本月第一次提现，且提现金额小于当前余额时，提现成功](#ac-1)
-  - [示例 1-1 当前余额100，提现100，当月无提现记录](#example-1-1)
+- [AC 1 当提现金额小于或等于当前余额时，提现成功](#ac-1)
+  - [示例 1-1 当前余额100，提现100](#example-1-1)
+  - [示例 1-2 当前余额100，提现99](#example-1-2)
 - [AC 2 当提现金额大于当前余额时，提现失败](#ac-2)
-  - [示例 2-1 当前余额99，提现金额100](#example-2-1)
-- [AC 3 当本月已有提现记录时，提现失败](#ac-3)
-  - [示例 3-1 当前余额100，提现100，但当月已有一笔提现记录](#example-3-1)
-- [AC 4 当提现完成时，标记提现数据](#ac-4)
-  - [示例 4-1 当前余额100，提现100，但当月已有一笔提现记录](#example-4-1)
+  - [示例 2-1 当前余额100，提现金额101](#example-2-1)
+  - [示例 2-2 当前余额100，提现金额100，并发执行100次时，仅能成功1次](#example-2-2)
+- [AC 3 当提现完成时，标记提现数据](#ac-3)
+  - [示例 3-1 更新提现记录状态为'已完成'](#example-3-1)
 - [API Schema](#api-schema)
 # Baseline001
 ### In Scope
 作为 【入驻商家】，我想要 【进行余额的提现】，以便于【将店铺运营的利润转化为实际的收入】
 
-提现条件：
+Notes：
 - 提现金额 < 当前余额
-- 每月仅能提现一次
+- 当前余额可能会因为投诉而被扣减，需要考虑并发问题
 ### Out of Scope
 假设：所依赖的外部接口均已开发完成，直接调用即可
 假设：提现完成后会由消息队列发起回调，提示提现完成
 ### <span id='ac-1'>AC 1 </span>
-当本月第一次提现，且提现金额小于当前余额时，提现成功
-#### <span id='example-1-1'>示例 1-1 当前余额100，提现100，当月无提现记录</span>
+当提现金额小于或等于当前余额时，提现成功
+#### <span id='example-1-1'>示例 1-1 当前余额100，提现100</span>
 ##### 任务列表
- - **工序 1-1 | Mock<MerchantService.Service> | 0 mins**
+ - **工序 1-1 | Mock<MerchantService.Service> | 15 mins**
  
 	获取请求参数`merchant_account_id, amount`，调用mock Service
 	```
@@ -34,28 +34,24 @@
 	```
  
 ----
- - **工序 1-3 | Mock<MerchantService.Repository> | 0 mins**
+ - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
  
-	通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息
-	通过`merchant_account_id, time.now()`查询当月提现记录，调用mock Repository返回提现记录
-	新建一条提现记录
-	mock Repository返回商家账户信息 - 余额100
-	mock Repository返回提现记录 - 0条
-	mock Repository创建提现记录
+	通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息 - 余额100
+	新增一条"处理中"的提现记录，mock Repository创建一条提现记录
+	扣减余额为0，mock Repository进行保存
  
 ----
- - **工序 1-6 | Fake<MerchantService.DB> | 0 mins**
+ - **工序 1-6 | Fake<MerchantService.DB> | 30 mins**
  
-	创建JPA方法，调用fake DB预插入一条商户账户数据 - 余额100
-	创建JPA方法，调用fake DB预插入一条提现记录数据 - 上月提现记录
- 
-----
- - **工序 1-2 | Mock<MerchantService.Client> | 0 mins**
- 
-	创建一条提现申请消息，调用mock Client进行发送
+	测试Repository能够使用Entity操作数据库
  
 ----
- - **工序 1-4 | Mock<MerchantService.MQ> | 0 mins**
+ - **工序 1-2 | Mock<MerchantService.Client> | 20 mins**
+ 
+	创建一条提现申请消息，调用mock Client进行发送消息
+ 
+----
+ - **工序 1-4 | Mock<MerchantService.MQ> | 25 mins**
  
 	mock MQ收到了的消息请求中的余额 = 100
 	```
@@ -66,15 +62,25 @@
  
 ----
 ##### 时序图
-![fd0fa0cf-494b-4512-a387-c49cf84ddfdc](temp/baseline001/fd0fa0cf-494b-4512-a387-c49cf84ddfdc.svg)
+![208431e0-c406-4b5b-8f8d-931f3bc086d9](temp/baseline001/208431e0-c406-4b5b-8f8d-931f3bc086d9.svg)
+#### <span id='example-1-2'>示例 1-2 当前余额100，提现99</span>
+##### 任务列表
+ - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
+ 
+	通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息 - 余额100
+	新增一条"处理中"的提现记录，mock Repository创建一条提现记录
+	扣减余额为1，mock Repository进行保存
+ 
+----
+##### 时序图
+![9821f3c4-5ee9-4750-9a1a-f9b69f85516f](temp/baseline001/9821f3c4-5ee9-4750-9a1a-f9b69f85516f.svg)
 ### <span id='ac-2'>AC 2 </span>
 当提现金额大于当前余额时，提现失败
-#### <span id='example-2-1'>示例 2-1 当前余额99，提现金额100</span>
+#### <span id='example-2-1'>示例 2-1 当前余额100，提现金额101</span>
 ##### 任务列表
- - **工序 1-1 | Mock<MerchantService.Service> | 0 mins**
+ - **工序 1-1 | Mock<MerchantService.Service> | 15 mins**
  
-	获取请求参数`merchant_account_id, amount`，调用mock Service
-	mock Service抛出异常
+	获取请求参数`merchant_account_id, amount`，调用mock Service抛出异常
 	```
 	API Call:
 	> POST /merchant-account/balance/withdraw
@@ -82,44 +88,37 @@
 	```
  
 ----
- - **工序 1-3 | Mock<MerchantService.Repository> | 0 mins**
+ - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
  
-	通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息
-	mock Repository返回商家账户信息 - 余额99
+	通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息 - 余额100
 	抛出`余额不足`的业务异常
  
 ----
 ##### 时序图
-![05b4a355-6a2b-43c8-899f-7571216f6d9d](temp/baseline001/05b4a355-6a2b-43c8-899f-7571216f6d9d.svg)
-### <span id='ac-3'>AC 3 </span>
-当本月已有提现记录时，提现失败
-#### <span id='example-3-1'>示例 3-1 当前余额100，提现100，但当月已有一笔提现记录</span>
+![2b72e80c-45f9-46ee-b048-0879287269f0](temp/baseline001/2b72e80c-45f9-46ee-b048-0879287269f0.svg)
+#### <span id='example-2-2'>示例 2-2 当前余额100，提现金额100，并发执行100次时，仅能成功1次</span>
 ##### 任务列表
- - **工序 1-1 | Mock<MerchantService.Service> | 0 mins**
+ - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
  
-	获取请求参数`merchant_account_id, amount`，调用mock Service
-	mock Service抛出异常
-	```
-	API Call:
-	> POST /merchant-account/balance/withdraw
-	< 400 BAD_REQUEST
-	```
+	增加事务注解，更新余额时如果成功更新的行数小于1，则扣减失败
+	抛出`余额不足`的业务异常
  
 ----
- - **工序 1-3 | Mock<MerchantService.Repository> | 0 mins**
+ - **工序 1-7 | MerchantService.SpringBootTest | 60 mins**
  
-	通过`merchant_account_id, time.now()`查询当月提现记录，调用mock Repository返回提现记录
-	mock Repository返回提现记录 - 1条
-	抛出`已提现`的业务异常
+	插入商户账户信息 - 余额100
+	并发执行100次
+	查询商户账户信息 - 余额0
+	查询提现记录 - 仅1条
  
 ----
 ##### 时序图
-![6243f0b0-a6da-452c-b669-b4f7cfdff6e4](temp/baseline001/6243f0b0-a6da-452c-b669-b4f7cfdff6e4.svg)
-### <span id='ac-4'>AC 4 </span>
+![eb58aaaf-99d0-48c6-8ddb-193cdd46b770](temp/baseline001/eb58aaaf-99d0-48c6-8ddb-193cdd46b770.svg)
+### <span id='ac-3'>AC 3 </span>
 当提现完成时，标记提现数据
-#### <span id='example-4-1'>示例 4-1 当前余额100，提现100，但当月已有一笔提现记录</span>
+#### <span id='example-3-1'>示例 3-1 更新提现记录状态为'已完成'</span>
 ##### 任务列表
- - **工序 1-1 | Mock<MerchantService.Service> | 0 mins**
+ - **工序 1-1 | Mock<MerchantService.Service> | 15 mins**
  
 	获取请求参数`withdraw_id, updated_at`, 调用mock Service
 	```
@@ -129,13 +128,13 @@
 	```
  
 ----
- - **工序 1-3 | Mock<MerchantService.Repository> | 0 mins**
+ - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
  
 	通过`withdraw_id`查询已有提现记录，更新完成状态和完成时间
  
 ----
 ##### 时序图
-![bac9290d-82e3-431d-8b71-b2a12156f8dd](temp/baseline001/bac9290d-82e3-431d-8b71-b2a12156f8dd.svg)
+![d32fa4ab-82b3-4fed-a6f5-ebf7bcacb9a8](temp/baseline001/d32fa4ab-82b3-4fed-a6f5-ebf7bcacb9a8.svg)
 ### API Schema
 #### 提现API
 > POST /merchant-account/balance/withdraw
@@ -180,7 +179,7 @@
 餐品订购服务: 为商家提供接入平台的服务，包括开通账号、缴纳押金、提现入账余额、收据和发票开具的功能；平台可对违反合作协议的商家进行押金扣减、入账扣减
 Tech Stack: **[Spring Boot, PostgreSQL]**
  
-![713364b5-810f-4a2f-b6c6-1877e493e06d](temp/baseline001/713364b5-810f-4a2f-b6c6-1877e493e06d.svg)
+![ae289206-b5aa-403a-8b5b-00d32f3ad356](temp/baseline001/ae289206-b5aa-403a-8b5b-00d32f3ad356.svg)
 #### 工序拆分
 ##### 工序 1-1 | Controller => Mock\<Service>
 实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
@@ -189,10 +188,10 @@ Tech Stack: **[Spring Boot, PostgreSQL]**
 ##### 工序 1-3 | Service => Mock\<Repository>
 实现Service调用Repository获取Entity，组装成ViewObject并返回
 ##### 工序 1-4 | Client => Mock\<MQ>
-实现Client调用MQ，通过DTO映射请求和返回的Json数据
+实现Client调用MQ，通过DTO映射请求和返回的Json数据，验证发送和接收的数据正确
 ##### 工序 1-5 | Client => Mock\<Gateway>
 实现Client调用Gateway，通过DTO映射请求和返回的Json数据
 ##### 工序 1-6 | Repository => Fake\<DB>
-实现Repository调用DB，通过JPA正确执行数据库访问并返回对应的Entity数据
+实现Repository调用DB，通过Entity映射数据库表，验证JPA的配置正确、数据库表创建正确、SQL语句书写正确
 ##### 工序 1-7 | SpringBootTest => Real\<SpringBootTest>
-实现所有组件进行集成测试
+实现多个组件在Spring环境下的集成测试，验证框架的功能：拦截器、AOP、日志、事务处理

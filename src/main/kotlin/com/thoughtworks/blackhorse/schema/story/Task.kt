@@ -65,9 +65,12 @@ data class TaskBuilder(
 // define process
 infix fun TaskBuilder.given(string: String) = apply { accept = string }
 infix fun TaskBuilder.given(fn: () -> String) = apply { accept = fn() }
-infix fun TaskBuilder.expect(string: String) = apply { reply = string }
-infix fun TaskBuilder.expect(fn: () -> String) = apply { reply = fn() }
 infix fun TaskBuilder.withApi(api: ApiScenario) = apply { targetApiScenario = api }
-
 // lambda util
 infix fun TaskBuilder.nested(fn: TaskBuilder.() -> Unit) = apply { fn() }
+
+@Deprecated("Use given to keep message order", replaceWith = ReplaceWith("given"))
+infix fun TaskBuilder.expect(string: String) = apply { reply = string }
+
+@Deprecated("Use given to keep message order", replaceWith = ReplaceWith("given"))
+infix fun TaskBuilder.expect(fn: () -> String) = apply { reply = fn() }
