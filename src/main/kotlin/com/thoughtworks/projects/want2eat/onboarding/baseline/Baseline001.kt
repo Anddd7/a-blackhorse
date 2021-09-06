@@ -43,7 +43,8 @@ object Baseline001 : StoryOf(
                     "merchant_account_id": 100001,
                     "amount": 100.00,
                     "currency": "CHN_YUAN",
-                    "channel": "WECHAT"
+                    "channel": "WECHAT",
+                    "expired_at": "<local date time>"
                 }
             """.trimIndent()
         }
@@ -57,7 +58,8 @@ object Baseline001 : StoryOf(
                         "merchant_account_id": 100001,
                         "amount": 100.00,
                         "currency": "CHN_YUAN",
-                        "channel": "WECHAT"
+                        "channel": "WECHAT",
+                        "expired_at": "<local date time>"
                     }
                 }
             """.trimIndent()
@@ -85,7 +87,7 @@ object Baseline001 : StoryOf(
                     } nested {
                         Repository call DB given {
                             """
-                                测试Repository能够使用Entity操作数据库
+                                测试Repository能够使用Entity操作数据库并执行对应的SQL语句
                             """.trimIndent()
                         }
                     }
@@ -168,7 +170,7 @@ object Baseline001 : StoryOf(
                     "merchant_account_id": 100001,
                     "updated_at": "<timestamp_iso>"
                 }
-            """.trimIndent()
+                """.trimIndent()
             }
 
         ac {

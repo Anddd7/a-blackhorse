@@ -47,8 +47,8 @@ class StoryBuilder(
 
     fun build(): Story {
         val craftedAcs = acceptanceCriteria.mapIndexed { index, item -> item.build((index + 1).toString()) }
-        val craftedApis = craftedAcs.flatMap(AcceptanceCriteria::apiScenarios)
-            .groupBy(ApiScenario::api)
+        val ets = craftedAcs.flatMap(AcceptanceCriteria::apiScenarios)
+        val craftedApis = ets.groupBy(ApiScenario::api)
             .map { (key, values) ->
                 APISchema(key, values.distinctBy(ApiScenario::statusCode).sortedBy(ApiScenario::statusCode))
             }

@@ -8,7 +8,7 @@ data class AcceptanceCriteria(
     var note: String?,
     val flows: List<Flow>,
 ) {
-    internal fun apiScenarios() = flows.flatMap(Flow::tasks).mapNotNull(Task::targetApiScenario)
+    internal fun apiScenarios() = flows.flatMap(Flow::allTasks).mapNotNull(Task::targetApiScenario)
     internal fun containers() = flows.flatMap(Flow::tasks).map(Task::container)
 }
 
