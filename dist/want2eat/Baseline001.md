@@ -1,6 +1,7 @@
 ### Table of Content
 - [In Scope](#in-scope)
 - [Out of Scope](#out-of-scope)
+- [API Schema](#api-schema)
 - [AC 1 当提现金额小于或等于当前余额时，提现成功](#ac-1)
   - [示例 1-1 当前id：10001，账户余额100；提现100；提现成功后账户id：10001，账户余额为0](#example-1-1)
   - [示例 1-2 当前id：10001，账户余额100；提现99；提现成功后账户id：10001，账户余额为0](#example-1-2)
@@ -9,7 +10,6 @@
   - [示例 2-2 当前id：10001，账户余额100；提现100 * 100次；仅成功提现一次，生成一次提现记录：处理中，金额100](#example-2-2)
 - [AC 3 当提现完成时，标记提现数据](#ac-3)
   - [示例 3-1 当前提现请求id：1000000，提现状态为处理中；更新后提现记录id：1000000，状态为'已完成'](#example-3-1)
-- [API Schema](#api-schema)
 # Baseline001
 ### In Scope
 作为 【入驻商家】，我想要 【进行余额的提现】，以便于【将店铺运营的利润转化为实际的收入】
@@ -20,6 +20,82 @@ Notes：
 ### Out of Scope
 假设：所依赖的外部接口均已开发完成，直接调用即可
 假设：提现完成后会由消息队列发起回调，提示提现完成
+
+### API Schema
+
+#### 商户提现API
+
+> POST /merchant-account/balance/withdraw
+
+- 200 OK
+
+  - Request
+
+  ```json
+  {
+      "merchant_account_id": 10001,
+      "amount": 100.00,
+      "currency": "CHN_YUAN",
+      "channel": "WECHATPAY"
+  }
+  ```
+
+- 400 BAD_REQUEST
+
+  - Request
+
+  ```json
+  {
+      "merchant_account_id": 10001,
+      "amount": 100.00,
+      "currency": "CHN_YUAN",
+      "channel": "WECHATPAY"
+  }
+  ```
+
+  - Response
+
+  ```json
+  {
+      "message": "balance insufficient"
+  }
+  ```
+
+#### 提现申请消息API
+
+> POST /messages
+
+- 200 OK
+
+  - Request
+
+  ```json
+  {
+      "topic": "merchant_account_balance_withdraw",
+      "callback": "/merchant-account/balance/withdraw/{withdrawId}/confirmation"
+      "payload": {
+          "merchant_account_id": 10001,
+          "amount": 100.00,
+          "currency": "CHN_YUAN",
+          "channel": "WECHATPAY",
+      }
+  }
+  ```
+
+#### 提现成功回调API
+
+> POST /merchant-account/balance/withdraw/{withdrawId}/confirmation
+
+- 200 OK
+
+  - Request
+
+  ```json
+  {
+      "updated_at": "<timestamp_iso>"
+  }
+  ```
+
 ### <span id='ac-1'>AC 1 </span>
 当提现金额小于或等于当前余额时，提现成功
 #### <span id='example-1-1'>示例 1-1 当前id：10001，账户余额100；提现100；提现成功后账户id：10001，账户余额为0</span>
@@ -125,7 +201,7 @@ Notes：
 	获取请求参数组装ViewObject，调用mock Service更新完成状态和完成时间
 	```
 	API Call:
-	> POST /merchant-account/balance/withdraw/{id}/confirmation
+	> POST /merchant-account/balance/withdraw/{withdrawId}/confirmation
 	< 200 OK
 	```
 
@@ -136,63 +212,10 @@ Notes：
 	更新完成状态和完成时间并保存
 
 ----
+ - **工序 1-6 | Mock<MerchantService.Repository> | 20 mins**
+
+	修改Entity，保证数据库能够保存UpdateAt字段
+
+----
 ##### 时序图
 ![d08413c4-08ce-4378-ad25-f79533ae370a](temp/baseline001/d08413c4-08ce-4378-ad25-f79533ae370a.svg)
-### API Schema
-#### 商户提现API
-> POST /merchant-account/balance/withdraw
-- 200 OK
-  - Request
-  ```json
-  {
-      "merchant_account_id": 10001,
-      "amount": 100.00,
-      "currency": "CHN_YUAN",
-      "channel": "WECHAT",
-      "expired_at": "<local date time>"
-  }
-  ```
-- 400 BAD_REQUEST
-  - Request
-  ```json
-  {
-      "merchant_account_id": 10001,
-      "amount": 100.00,
-      "currency": "CHN_YUAN",
-      "channel": "WECHAT",
-      "expired_at": "<local date time>"
-  }
-  ```
-  - Response
-  ```json
-  {
-      "message": "balance insufficient"
-  }
-  ```
-#### 提现申请消息API
-> POST /messages
-- 200 OK
-  - Request
-  ```json
-  {
-      "topic": "merchant_account_balance_withdraw",
-      "callback": "/merchant-account/balance/withdraw/{id}/confirmation"
-      "payload": {
-          "merchant_account_id": 10001,
-          "amount": 100.00,
-          "currency": "CHN_YUAN",
-          "channel": "WECHAT",
-          "expired_at": "<local date time>"
-      }
-  }
-  ```
-#### 提现成功回调API
-> POST /merchant-account/balance/withdraw/{id}/confirmation
-- 200 OK
-  - Request
-  ```json
-  {
-      "merchant_account_id": 10001,
-      "updated_at": "<timestamp_iso>"
-  }
-  ```

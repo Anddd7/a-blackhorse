@@ -1,8 +1,6 @@
 package com.thoughtworks.blackhorse.schema.story
 
 import com.thoughtworks.blackhorse.schema.architecture.Component
-import com.thoughtworks.blackhorse.schema.architecture.Ext
-import com.thoughtworks.blackhorse.schema.story.attributes.ApiScenario
 import java.util.concurrent.atomic.AtomicInteger
 
 data class Flow(
