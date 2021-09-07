@@ -41,7 +41,7 @@ object `Story-1002` : StoryOf(
             """.trimIndent()
         }
 
-        val deductScenario = deductApi.onSuccess() {
+        val deductScenario = deductApi.onSuccess {
             """
                 {
                     "balance": 100,
@@ -57,16 +57,17 @@ object `Story-1002` : StoryOf(
                 """.trimIndent()
             }
 
-            flow("余额为100，处罚扣减100，计算后余额为0") {
+            flow("当前商户id：10001，账户余额为100；订单id：aaaa-bbbb-cccc-dddd，处罚扣减100；更新后账户id：10001，账户余额为0，订单收入记录增加扣罚信息") {
                 MerchantService.Controller call MerchantService.Service withApi deductScenario given {
                     """
-                        获取请求参数，调用mock Service
+                        获取请求参数组装ViewObject，调用mock Service
                     """.trimIndent()
                 } nested {
                     MerchantService.Service call MerchantService.Repository given {
                         """
-                            通过"order_id"修改已有收入记录，记录处罚金额，mock Repository更新一条收入记录
-                            更新商户账户的余额 - 0
+                            通过"order_id"，调用mock Repository查询已有收入记录
+                            更新处罚金额和处罚原因，调用mock Repository查询保存收入记录
+                            扣减账户余额100，调用mock Repository进行更新
                         """.trimIndent()
                     } nested {
                         MerchantService.Repository call MerchantService.DB given {
@@ -78,11 +79,12 @@ object `Story-1002` : StoryOf(
                 }
             }
 
-            flow("余额为100，处罚扣减90，计算后余额为10") {
+            flow("当前商户id：10001，账户余额为100；订单id：aaaa-bbbb-cccc-dddd，处罚扣减90；更新后账户id：10001，账户余额为10，订单收入记录增加扣罚信息") {
                 MerchantService.Service call MerchantService.Repository given {
                     """
-                        通过"order_id"修改已有收入记录，记录处罚金额，mock Repository更新一条收入记录
-                        更新商户账户的余额 - 10
+                        通过"order_id"，调用mock Repository查询已有收入记录
+                        更新处罚金额和处罚原因，调用mock Repository查询保存收入记录
+                        扣减账户余额90，调用mock Repository进行更新
                     """.trimIndent()
                 }
             }
@@ -95,17 +97,19 @@ object `Story-1002` : StoryOf(
                 """.trimIndent()
             }
 
-            flow("余额为100，处罚扣减110，押金30000，计算后余额为0，押金为29990") {
+            flow("当前商户id：10001，账户余额为100，押金30000；订单id：aaaa-bbbb-cccc-dddd，处罚扣减110；更新后账户id：10001，账户余额为0，押金29990，订单收入记录增加扣罚信息") {
                 MerchantService.Controller call MerchantService.Service withApi deductScenario given {
-                    """
-                        获取请求参数，调用mock Service
+                    """                        
+                        获取请求参数组装ViewObject，调用mock Service
                     """.trimIndent()
                 } nested {
                     MerchantService.Service call MerchantService.Repository given {
                         """
-                            通过"order_id"修改已有收入记录，记录处罚金额，mock Repository更新一条收入记录
-                            更新商户账户的余额 - 0
-                            更新商户账户的押金 - 29990
+                            通过"order_id"，调用mock Repository查询已有收入记录
+                            更新处罚金额和处罚原因，调用mock Repository查询保存收入记录
+                            通过"merchant_account_id"，调用mock Repository查询账户信息
+                            扣减账户余额100，调用mock Repository进行更新
+                            扣减账户押金10，调用mock Repository进行更新
                         """.trimIndent()
                     } nested {
                         MerchantService.Repository call MerchantService.DB given {
@@ -117,22 +121,26 @@ object `Story-1002` : StoryOf(
                 }
             }
 
-            flow("余额为100，处罚扣减110，押金10，计算后余额为0，押金为0") {
+            flow("当前商户id：10001，账户余额为100，押金10；订单id：aaaa-bbbb-cccc-dddd，处罚扣减110；更新后账户id：10001，账户余额为0，押金0，订单收入记录增加扣罚信息") {
                 MerchantService.Service call MerchantService.Repository given {
                     """
-                        通过"order_id"修改已有收入记录，记录处罚金额，mock Repository更新一条收入记录
-                        更新商户账户的余额 - 0
-                        更新商户账户的押金 - 0
+                        通过"order_id"，调用mock Repository查询已有收入记录
+                        更新处罚金额和处罚原因，调用mock Repository查询保存收入记录
+                        通过"merchant_account_id"，调用mock Repository查询账户信息
+                        扣减账户余额100，调用mock Repository进行更新
+                        扣减账户押金10，调用mock Repository进行更新
                     """.trimIndent()
                 }
             }
 
-            flow("余额为100，处罚扣减110，押金10，计算后余额为0，押金为-10") {
+            flow("当前商户id：10001，账户余额为100，押金0；订单id：aaaa-bbbb-cccc-dddd，处罚扣减110；更新后账户id：10001，账户余额为0，押金-10，订单收入记录增加扣罚信息") {
                 MerchantService.Service call MerchantService.Repository given {
                     """
-                        通过"order_id"修改已有收入记录，记录处罚金额，mock Repository更新一条收入记录
-                        更新商户账户的余额 - 0
-                        更新商户账户的押金 - -10
+                        通过"order_id"，调用mock Repository查询已有收入记录
+                        更新处罚金额和处罚原因，调用mock Repository查询保存收入记录
+                        通过"merchant_account_id"，调用mock Repository查询账户信息
+                        扣减账户余额100，调用mock Repository进行更新
+                        扣减账户押金10，调用mock Repository进行更新
                     """.trimIndent()
                 }
             }

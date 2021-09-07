@@ -37,10 +37,10 @@ object Baseline001 : StoryOf(
             """.trimIndent()
         }
 
-        val withdrawApi = API("提现API", HttpMethod.POST, "/merchant-account/balance/withdraw") {
+        val withdrawApi = API("商户提现API", HttpMethod.POST, "/merchant-account/balance/withdraw") {
             """
                 {
-                    "merchant_account_id": 100001,
+                    "merchant_account_id": 10001,
                     "amount": 100.00,
                     "currency": "CHN_YUAN",
                     "channel": "WECHAT",
@@ -55,7 +55,7 @@ object Baseline001 : StoryOf(
                     "topic": "merchant_account_balance_withdraw",
                     "callback": "/merchant-account/balance/withdraw/{id}/confirmation"
                     "payload": {
-                        "merchant_account_id": 100001,
+                        "merchant_account_id": 10001,
                         "amount": 100.00,
                         "currency": "CHN_YUAN",
                         "channel": "WECHAT",
@@ -72,46 +72,46 @@ object Baseline001 : StoryOf(
                 """.trimIndent()
             }
 
-            flow("当前余额100，提现100") {
+            flow("当前id：10001，账户余额100；提现100；提现成功后账户id：10001，账户余额为0") {
                 Controller call Service withApi withdrawApi.onSuccess() given {
                     """
-                        获取请求参数`merchant_account_id, amount`，调用mock Service
+                        获取请求参数组装ViewObject，调用mock Service
                     """.trimIndent()
                 } nested {
                     Service call Repository given {
                         """
-                            通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息 - 余额100
-                            新增一条"处理中"的提现记录，mock Repository创建一条提现记录
-                            扣减余额为0，mock Repository进行保存
+                            通过`merchant_account_id`，调用mock Repository查询当前账户余额 - 当前余额100
+                            组装Entity，调用mock Repository创建一条"处理中"的提现记录
+                            扣减账户余额为0，调用mock Repository进行保存
                         """.trimIndent()
                     } nested {
                         Repository call DB given {
                             """
-                                测试Repository能够使用Entity操作数据库并执行对应的SQL语句
+                                测试Repository能够使用Entity操作fake 数据库并执行对应的SQL语句
                             """.trimIndent()
                         }
                     }
 
                     Service call Client given {
                         """
-                            创建一条提现申请消息，调用mock Client进行发送消息
+                            组装消息Dto，调用mock Client进行发送一条提现申请消息
                         """.trimIndent()
                     } nested {
                         Client call MQ withApi withdrawMsgApi.onSuccess() given {
                             """
-                                mock MQ收到了的消息请求中的余额 = 100
+                                验证mock MQ收到了正确的消息请求
                             """.trimIndent()
                         }
                     }
                 }
             }
 
-            flow("当前余额100，提现99") {
+            flow("当前id：10001，账户余额100；提现99；提现成功后账户id：10001，账户余额为1") {
                 Service call Repository given {
                     """
-                        通过`merchant_account_id`查询当前余额，调用mock Repository返回商家账户信息 - 余额100
-                        新增一条"处理中"的提现记录，mock Repository创建一条提现记录
-                        扣减余额为1，mock Repository进行保存
+                        通过`merchant_account_id`，调用mock Repository查询当前账户余额 - 当前余额100
+                        组装Entity，调用mock Repository创建一条"处理中"的提现记录
+                        扣减账户余额为1，调用mock Repository进行保存
                     """.trimIndent()
                 }
             }
@@ -124,7 +124,7 @@ object Baseline001 : StoryOf(
                 """.trimIndent()
             }
 
-            flow("当前余额100，提现金额101") {
+            flow("当前id：10001，账户余额100；提现101；提现失败返回错误信息") {
                 Controller call Service withApi withdrawApi.onFailed(HttpStatus.BAD_REQUEST) {
                     """
                         {
@@ -133,7 +133,7 @@ object Baseline001 : StoryOf(
                     """.trimIndent()
                 } given {
                     """
-                        获取请求参数`merchant_account_id, amount`，调用mock Service抛出异常
+                        获取请求参数组装ViewObject，调用mock Service
                     """.trimIndent()
                 } nested {
                     Service call Repository given {
@@ -145,29 +145,33 @@ object Baseline001 : StoryOf(
                 }
             }
 
-            flow("当前余额100，提现金额100，并发执行100次时，仅能成功1次") {
+            flow("当前id：10001，账户余额100；提现100 * 100次；仅生成一次提现记录：处理中，金额100") {
                 Service call Repository given {
                     """
-                        增加事务注解，更新余额时如果成功更新的行数小于1，则扣减失败
-                        抛出`余额不足`的业务异常
+                        增加事务注解，调用mock Repository进行余额扣减
+                        扣减失败（更新失败）时，抛出`余额不足`的业务异常
                     """.trimIndent()
+                } nested {
+                    Repository call DB given {
+                        """
+                            使用update set进行数据库扣减，测试Repository能够执行对应的SQL语句
+                        """.trimIndent()
+                    }
                 }
+
                 SpringBootTest call SpringBootTest given {
                     """
-                        插入商户账户信息 - 余额100
-                        并发执行100次
-                        查询商户账户信息 - 余额0
-                        查询提现记录 - 仅1条
+                        提现100，同时执行100次；查询剩余余额为0，提现记录仅1条
                     """.trimIndent()
                 }
             }
         }
 
         val withdrawCallbackApi =
-            API("提现回调API", HttpMethod.POST, "/merchant-account/balance/withdraw/{id}/confirmation") {
+            API("提现成功回调API", HttpMethod.POST, "/merchant-account/balance/withdraw/{id}/confirmation") {
                 """
                 {
-                    "merchant_account_id": 100001,
+                    "merchant_account_id": 10001,
                     "updated_at": "<timestamp_iso>"
                 }
                 """.trimIndent()
@@ -179,15 +183,16 @@ object Baseline001 : StoryOf(
                     当提现完成时，标记提现数据
                 """.trimIndent()
             }
-            flow("更新提现记录状态为'已完成'") {
+            flow("当前提现请求id：1000000，提现状态为处理中；更新后提现记录id：1000000，状态为'已完成'") {
                 Controller call Service withApi withdrawCallbackApi.onSuccess() given {
                     """
-                        获取请求参数`withdraw_id, updated_at`, 调用mock Service
+                        获取请求参数组装ViewObject，调用mock Service更新完成状态和完成时间
                     """.trimIndent()
                 } nested {
                     Service call Repository given {
                         """
-                            通过`withdraw_id`查询已有提现记录，更新完成状态和完成时间
+                            通过`withdraw_id`，调用mock Repository查询已有提现记录
+                            更新完成状态和完成时间并保存
                         """.trimIndent()
                     }
                 }

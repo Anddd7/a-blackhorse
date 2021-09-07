@@ -2,8 +2,8 @@
 - [In Scope](#in-scope)
 - [Out of Scope](#out-of-scope)
 - [AC 1 获得订单收入，余额增加](#ac-1)
-  - [示例 1-1 余额为0，订单收入100，计算后余额为100](#example-1-1)
-  - [示例 1-2 余额为100，订单收入100，计算后余额为200](#example-1-2)
+  - [示例 1-1 当前商户id：10001，账户余额0；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd](#example-1-1)
+  - [示例 1-2 当前商户id：10001，账户余额100；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd](#example-1-2)
 - [API Schema](#api-schema)
 # Story-1001
 ### In Scope
@@ -12,41 +12,41 @@
 假设：此接口由下游服务 "订单管理应用服务" 在订单完成后自动调用，返回200时即为确认，返回500时下游服务会自动重试
 ### <span id='ac-1'>AC 1 </span>
 获得订单收入，余额增加
-#### <span id='example-1-1'>示例 1-1 余额为0，订单收入100，计算后余额为100</span>
+#### <span id='example-1-1'>示例 1-1 当前商户id：10001，账户余额0；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
 ##### 任务列表
  - **工序 1-1 | Mock<MerchantService.Service> | 15 mins**
- 
-	获取请求参数，调用mock Service
+
+	获取请求参数组装ViewObject，调用mock Service
 	```
 	API Call:
 	> POST /merchant-account/balance/income
 	< 200 OK
 	```
- 
+
 ----
  - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
- 
-	新增一条收入记录，mock Repository创建一条收入记录
-	更新商户账户的余额 - 100
- 
+
+	组装Entity，调用mock Repository创建一条收入记录
+	更新商户账户的余额为100，调用mock Repository进行保存
+
 ----
  - **工序 1-6 | Fake<MerchantService.DB> | 30 mins**
- 
-	测试Repository能够使用Entity操作数据库并执行对应的SQL语句
- 
+
+	测试Repository能够使用Entity操作fake 数据库并执行对应的SQL语句
+
 ----
 ##### 时序图
-![03efe4b7-080d-4d9c-b73b-53845b4f0151](temp/story-1001/03efe4b7-080d-4d9c-b73b-53845b4f0151.svg)
-#### <span id='example-1-2'>示例 1-2 余额为100，订单收入100，计算后余额为200</span>
+![ddca8aed-3f8d-44d2-aa7d-9a6113bf9cab](temp/story-1001/ddca8aed-3f8d-44d2-aa7d-9a6113bf9cab.svg)
+#### <span id='example-1-2'>示例 1-2 当前商户id：10001，账户余额100；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
 ##### 任务列表
  - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
- 
-	新增一条收入记录，mock Repository创建一条收入记录
-	更新商户账户的余额 - 200
- 
+
+	组装Entity，调用mock Repository创建一条收入记录
+	更新商户账户的余额为200，调用mock Repository进行保存
+
 ----
 ##### 时序图
-![d6ab515d-ab45-4511-8e4d-504b8a7a0f91](temp/story-1001/d6ab515d-ab45-4511-8e4d-504b8a7a0f91.svg)
+![febd2947-61e6-411b-9ba4-dc20bff4422b](temp/story-1001/febd2947-61e6-411b-9ba4-dc20bff4422b.svg)
 ### API Schema
 #### 订单收入API
 > POST /merchant-account/balance/income
@@ -59,24 +59,4 @@
       "amount": 100
   }
   ```
-### 进程内架构设计
-### MerchantService
-餐品订购服务: 为商家提供接入平台的服务，包括开通账号、缴纳押金、提现入账余额、收据和发票开具的功能；平台可对违反合作协议的商家进行押金扣减、入账扣减
-Tech Stack: **[Spring Boot, PostgreSQL]**
- 
-![49e51750-ea5a-41bc-a9b1-618b99a7547c](temp/story-1001/49e51750-ea5a-41bc-a9b1-618b99a7547c.svg)
-#### 工序拆分
-##### 工序 1-1 | Controller => Mock\<Service>
-实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
-##### 工序 1-2 | Service => Mock\<Client>
-实现Service调用Client获取DTO，组装成ViewObject并返回
-##### 工序 1-3 | Service => Mock\<Repository>
-实现Service调用Repository获取Entity，组装成ViewObject并返回
-##### 工序 1-4 | Client => Mock\<MQ>
-实现Client调用MQ，通过DTO映射请求和返回的Json数据，验证发送和接收的数据正确
-##### 工序 1-5 | Client => Mock\<Gateway>
-实现Client调用Gateway，通过DTO映射请求和返回的Json数据
-##### 工序 1-6 | Repository => Fake\<DB>
-实现Repository调用DB，通过Entity映射数据库表，验证JPA的配置正确、数据库表创建正确、SQL语句书写正确
-##### 工序 1-7 | SpringBootTest => Real\<SpringBootTest>
-实现多个组件在Spring环境下的集成测试，验证框架的功能：拦截器、AOP、日志、事务处理
+

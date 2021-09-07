@@ -42,32 +42,32 @@ object `Story-1001` : StoryOf(
                 """.trimIndent()
             }
 
-            flow("余额为0，订单收入100，计算后余额为100") {
+            flow("当前商户id：10001，账户余额0；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd") {
                 MerchantService.Controller call MerchantService.Service withApi incomeApi.onSuccess() given {
                     """
-                        获取请求参数，调用mock Service
+                        获取请求参数组装ViewObject，调用mock Service
                     """.trimIndent()
                 } nested {
                     MerchantService.Service call MerchantService.Repository given {
                         """
-                            新增一条收入记录，mock Repository创建一条收入记录
-                            更新商户账户的余额 - 100
+                            组装Entity，调用mock Repository创建一条收入记录
+                            更新商户账户的余额为100，调用mock Repository进行保存
                         """.trimIndent()
                     } nested {
                         MerchantService.Repository call MerchantService.DB given {
                             """
-                                测试Repository能够使用Entity操作数据库并执行对应的SQL语句
+                                测试Repository能够使用Entity操作fake 数据库并执行对应的SQL语句
                             """.trimIndent()
                         }
                     }
                 }
             }
 
-            flow("余额为100，订单收入100，计算后余额为200") {
+            flow("当前商户id：10001，账户余额100；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd") {
                 MerchantService.Service call MerchantService.Repository given {
                     """
-                        新增一条收入记录，mock Repository创建一条收入记录
-                        更新商户账户的余额 - 200
+                        组装Entity，调用mock Repository创建一条收入记录
+                        更新商户账户的余额为200，调用mock Repository进行保存
                     """.trimIndent()
                 }
             }
