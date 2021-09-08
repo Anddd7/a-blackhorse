@@ -6,7 +6,10 @@ import com.thoughtworks.blackhorse.schema.story.attributes.HttpMethod
 import com.thoughtworks.blackhorse.schema.story.given
 import com.thoughtworks.blackhorse.schema.story.nested
 import com.thoughtworks.blackhorse.schema.story.withApi
-import com.thoughtworks.projects.want2eat.onboarding.architecture.MerchantService
+import com.thoughtworks.projects.want2eat.onboarding.architecture.MerchantService.Controller
+import com.thoughtworks.projects.want2eat.onboarding.architecture.MerchantService.DB
+import com.thoughtworks.projects.want2eat.onboarding.architecture.MerchantService.RepositoryClient
+import com.thoughtworks.projects.want2eat.onboarding.architecture.MerchantService.Service
 
 object `Story-1001` : StoryOf(
     title = "Story-1001",
@@ -16,6 +19,10 @@ object `Story-1001` : StoryOf(
         inScope {
             """
                 作为 【入驻商家】，我想要 【完成订单后获得相应的余额收入】，以便于【查询余额和提现】
+                
+                涉及的数据结构：（可参考API Schema）
+                - 商家账户包含（id，余额）
+                - 收入记录包含（商家id，订单id，收入金额）
             """.trimIndent()
         }
 
@@ -43,20 +50,26 @@ object `Story-1001` : StoryOf(
             }
 
             flow("当前商户id：10001，账户余额0；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd") {
-                MerchantService.Controller call MerchantService.Service withApi incomeApi.onSuccess() given {
+                Controller call Service withApi incomeApi.onSuccess() given {
                     """
-                        获取请求参数组装ViewObject，调用mock Service
+                        按示例组装ViewObject，mock Service正常执行
+                        按示例发送Http请求，进行订单收入入账
+                        调用成功，无返回值
                     """.trimIndent()
                 } nested {
-                    MerchantService.Service call MerchantService.Repository given {
+                    Service call RepositoryClient given {
                         """
-                            组装Entity，调用mock Repository创建一条收入记录
-                            更新商户账户的余额为100，调用mock Repository进行保存
+                            按示例组装ViewObject
+                                - mock Repository返回当前账户Entity（账户余额0）
+                                - mock Repository保存当前账户Entity（账户余额100）
+                                - mock Repository保存收入记录Entity
+                            调用Service方法，进行订单收入入账
+                            调用成功，无返回值
                         """.trimIndent()
                     } nested {
-                        MerchantService.Repository call MerchantService.DB given {
+                        RepositoryClient call DB given {
                             """
-                                测试Repository能够使用Entity操作fake 数据库并执行对应的SQL语句
+                                按示例组装收入记录信息Entity，能够通过fake DB进行保存和查询
                             """.trimIndent()
                         }
                     }
@@ -64,10 +77,14 @@ object `Story-1001` : StoryOf(
             }
 
             flow("当前商户id：10001，账户余额100；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd") {
-                MerchantService.Service call MerchantService.Repository given {
+                Service call RepositoryClient given {
                     """
-                        组装Entity，调用mock Repository创建一条收入记录
-                        更新商户账户的余额为200，调用mock Repository进行保存
+                        按示例组装ViewObject
+                            - mock Repository返回当前账户Entity（账户余额100）
+                            - mock Repository保存当前账户Entity（账户余额200）
+                            - mock Repository保存收入记录Entity
+                        调用Service方法，进行订单收入入账
+                        调用成功，无返回值
                     """.trimIndent()
                 }
             }

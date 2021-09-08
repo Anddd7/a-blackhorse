@@ -2,51 +2,65 @@
 - [In Scope](#in-scope)
 - [Out of Scope](#out-of-scope)
 - [AC 1 获得订单收入，余额增加](#ac-1)
-  - [示例 1-1 当前商户id：10001，账户余额0；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd](#example-1-1)
-  - [示例 1-2 当前商户id：10001，账户余额100；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd](#example-1-2)
+  - [示例 1-1 当前商户id：10001，账户余额0；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd](#example-1-1)
+  - [示例 1-2 当前商户id：10001，账户余额100；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd](#example-1-2)
 - [API Schema](#api-schema)
 # Story-1001
 ### In Scope
 作为 【入驻商家】，我想要 【完成订单后获得相应的余额收入】，以便于【查询余额和提现】
+
+涉及的数据结构：（可参考API Schema）
+- 商家账户包含（id，余额）
+- 收入记录包含（商家id，订单id，收入金额）
 ### Out of Scope
 假设：此接口由下游服务 "订单管理应用服务" 在订单完成后自动调用，返回200时即为确认，返回500时下游服务会自动重试
 ### <span id='ac-1'>AC 1 </span>
 获得订单收入，余额增加
-#### <span id='example-1-1'>示例 1-1 当前商户id：10001，账户余额0；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
+#### <span id='example-1-1'>示例 1-1 当前商户id：10001，账户余额0；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
 ##### 任务列表
  - **工序 1-1 | Mock<MerchantService.Service> | 15 mins**
-
-	获取请求参数组装ViewObject，调用mock Service
+ 
+	按示例组装ViewObject，mock Service正常执行
+	按示例发送Http请求，进行订单收入入账
+	调用成功，无返回值
 	```
 	API Call:
 	> POST /merchant-account/balance/income
 	< 200 OK
 	```
-
+ 
 ----
- - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
-
-	组装Entity，调用mock Repository创建一条收入记录
-	更新商户账户的余额为100，调用mock Repository进行保存
-
+ - **工序 1-2 | Mock<MerchantService.RepositoryClient> | 30 mins**
+ 
+	按示例组装ViewObject
+	    - mock Repository返回当前账户Entity（账户余额0）
+	    - mock Repository保存当前账户Entity（账户余额100）
+	    - mock Repository保存收入记录Entity
+	调用Service方法，进行订单收入入账
+	调用成功，无返回值
+ 
 ----
- - **工序 1-6 | Fake<MerchantService.DB> | 30 mins**
-
-	测试Repository能够使用Entity操作fake 数据库并执行对应的SQL语句
-
+ - **工序 1-4 | Fake<MerchantService.DB> | 30 mins**
+ 
+	按示例组装收入记录信息Entity，能够通过fake DB进行保存和查询
+ 
 ----
 ##### 时序图
-![ddca8aed-3f8d-44d2-aa7d-9a6113bf9cab](temp/story-1001/ddca8aed-3f8d-44d2-aa7d-9a6113bf9cab.svg)
-#### <span id='example-1-2'>示例 1-2 当前商户id：10001，账户余额100；订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
+![c3f33293-f163-4c53-b632-33b2ac8ef28b](temp/story-1001/c3f33293-f163-4c53-b632-33b2ac8ef28b.svg)
+#### <span id='example-1-2'>示例 1-2 当前商户id：10001，账户余额100；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
 ##### 任务列表
- - **工序 1-3 | Mock<MerchantService.Repository> | 20 mins**
-
-	组装Entity，调用mock Repository创建一条收入记录
-	更新商户账户的余额为200，调用mock Repository进行保存
-
+ - **工序 1-2 | Mock<MerchantService.RepositoryClient> | 30 mins**
+ 
+	按示例组装ViewObject
+	    - mock Repository返回当前账户Entity（账户余额100）
+	    - mock Repository保存当前账户Entity（账户余额200）
+	    - mock Repository保存收入记录Entity
+	调用Service方法，进行订单收入入账
+	调用成功，无返回值
+ 
 ----
 ##### 时序图
-![febd2947-61e6-411b-9ba4-dc20bff4422b](temp/story-1001/febd2947-61e6-411b-9ba4-dc20bff4422b.svg)
+![b7fa47f4-f495-42bb-b184-791f6ec36b11](temp/story-1001/b7fa47f4-f495-42bb-b184-791f6ec36b11.svg)
 ### API Schema
 #### 订单收入API
 > POST /merchant-account/balance/income
@@ -59,4 +73,20 @@
       "amount": 100
   }
   ```
-
+### 进程内架构设计
+### MerchantService
+餐品订购服务: 为商家提供接入平台的服务，包括开通账号、缴纳押金、提现入账余额、收据和发票开具的功能；平台可对违反合作协议的商家进行押金扣减、入账扣减
+Tech Stack: **[Spring Boot, PostgreSQL]**
+ 
+![ad25d8e2-8e2b-4309-9c6f-9c36bd64a3fc](temp/story-1001/ad25d8e2-8e2b-4309-9c6f-9c36bd64a3fc.svg)
+#### 工序拆分
+##### 工序 1-1 | Controller => Mock\<Service>
+实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
+##### 工序 1-2 | Service => Mock\<RepositoryClient>
+实现Service调用Client获取DTO，组装成ViewObject并返回
+##### 工序 1-3 | RepositoryClient => Mock\<MQGateway>
+实现Client调用MQ，通过DTO映射请求和返回的Json数据，验证发送和接收的数据正确
+##### 工序 1-4 | RepositoryClient => Fake\<DB>
+实现Repository调用DB，通过Entity映射数据库表，验证JPA的配置正确、数据库表创建正确、SQL语句书写正确
+##### 工序 1-5 | SpringBootTest => Real\<SpringBootTest>
+实现多个组件在Spring环境下的集成测试，验证框架的功能：拦截器、AOP、日志、事务处理
