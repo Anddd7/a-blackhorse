@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="282px" preserveAspectRatio="none" style="width:886px;height:282px;" version="1.1" viewBox="0 0 886 282" width="886px" zoomAndPan="magnify"><defs><filter height="300%" id="f15jbs9zshsgv9" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[1f2cfc53d9d308f53762fd0fcbaa4873]
+cluster Controller--><polygon fill="#FFFFFF" filter="url(#f15jbs9zshsgv9)" points="373,6,452,6,459,28.4883,515,28.4883,515,136,373,136,373,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="373" x2="459" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="73" x="377" y="21.5352">Controller</text><!--MD5=[9dd75fd92da113d30380b27734fd2f01]
+cluster Service--><polygon fill="#FFFFFF" filter="url(#f15jbs9zshsgv9)" points="539,6,595,6,602,28.4883,659,28.4883,659,136,539,136,539,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="539" x2="602" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="50" x="543" y="21.5352">Service</text><!--MD5=[9ddaf8ee8bcae11a9a9232f969198262]
+cluster Infrastructure--><polygon fill="#FFFFFF" filter="url(#f15jbs9zshsgv9)" points="683,6,788,6,795,28.4883,869,28.4883,869,136,683,136,683,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="683" x2="795" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="99" x="687" y="21.5352">Infrastructure</text><!--MD5=[056db7644fd855972490fe1694f3faa1]
+cluster External--><polygon fill="#FFFFFF" filter="url(#f15jbs9zshsgv9)" points="16,6,80,6,87,28.4883,349,28.4883,349,275,16,275,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="87" y1="28.4883" y2="28.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="58" x="20" y="21.5352">External</text><!--MD5=[f855680bc6c989572ebb25245d27968d]
+entity Controller--><rect fill="#FEFECE" filter="url(#f15jbs9zshsgv9)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="110" x="389" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="479" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="477" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="477" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70" x="404" y="74.5352">Controller</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="404" y="91.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="408" y="107.5117"/><!--MD5=[17737e49c286898813382e12d6080e03]
+entity Service--><rect fill="#FEFECE" filter="url(#f15jbs9zshsgv9)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="88" x="555" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="623" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="621" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="621" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="570" y="74.5352">Service</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="570" y="91.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="574" y="107.5117"/><!--MD5=[a6f7a7341e389591ac5d8985af93d0f4]
+entity RepositoryClient--><rect fill="#FEFECE" filter="url(#f15jbs9zshsgv9)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="153" x="699.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="832.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="830.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="830.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113" x="714.5" y="74.5352">RepositoryClient</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="714.5" y="91.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="718.5" y="107.5117"/><!--MD5=[9224a5a860eea29e9fabdd054a79e365]
+entity MQGateway--><rect fill="#FEFECE" filter="url(#f15jbs9zshsgv9)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="120" x="32" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="132" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="130" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="130" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="80" x="47" y="74.5352">MQGateway</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="47" y="91.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="51" y="107.5117"/><!--MD5=[966d6be8347cc53b0db65791728f1b75]
+entity SpringBootTest--><rect fill="#FEFECE" filter="url(#f15jbs9zshsgv9)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="145" x="187.5" y="41"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="312.5" y="46"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="310.5" y="48"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="310.5" y="52"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105" x="202.5" y="74.5352">SpringBootTest</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="202.5" y="91.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="206.5" y="107.5117"/><!--MD5=[f9ba5bf973e7832d2ce5ed59077b93f7]
+entity DB--><rect fill="#FEFECE" filter="url(#f15jbs9zshsgv9)" height="79.4648" style="stroke:#A80036;stroke-width:1.5;" width="58" x="63" y="180"/><rect fill="#FEFECE" height="10" style="stroke:#A80036;stroke-width:1.5;" width="15" x="101" y="185"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="99" y="187"/><rect fill="#FEFECE" height="2" style="stroke:#A80036;stroke-width:1.5;" width="4" x="99" y="191"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="78" y="213.5352">DB</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="78" y="230.0234">[]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="0" x="82" y="246.5117"/><!--MD5=[883ba16f856ea61de34a3a4435cd84da]
+link MQGateway to SpringBootTest--><!--MD5=[8eeb1a11c35050a114beeae32fe1b351]
+link MQGateway to DB--><!--MD5=[8a60ce656716bf72c5878b1f500a1d6b]
+@startuml
+package "Controller" {
+  component Controller [
+      Controller
+      [] 
+    
+  ]
+}
+package "Service" {
+  component Service [
+      Service
+      [] 
+    
+  ]
+}
+package "Infrastructure" {
+  component RepositoryClient [
+      RepositoryClient
+      [] 
+    
+  ]
+}
+package "External" {
+  component MQGateway [
+      MQGateway
+      [] 
+    
+  ]
+  component SpringBootTest [
+      SpringBootTest
+      [] 
+    
+  ]
+  component DB [
+      DB
+      [] 
+    
+  ]
+}
+@enduml
+
+PlantUML version 1.2021.5(Sun Apr 25 19:20:28 CST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: CN
+--></g></svg>

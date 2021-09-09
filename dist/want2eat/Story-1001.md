@@ -19,7 +19,7 @@
 #### <span id='example-1-1'>示例 1-1 当前商户id：10001，账户余额0；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为100，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
 ##### 任务列表
  - **工序 1-1 | Mock<MerchantService.Service> | 15 mins**
- 
+
 	按示例组装ViewObject，mock Service正常执行
 	按示例发送Http请求，进行订单收入入账
 	调用成功，无返回值
@@ -28,36 +28,36 @@
 	> POST /merchant-account/balance/income
 	< 200 OK
 	```
- 
+
 ----
  - **工序 1-2 | Mock<MerchantService.RepositoryClient> | 30 mins**
- 
+
 	按示例组装ViewObject
 	    - mock Repository返回当前账户Entity（账户余额0）
 	    - mock Repository保存当前账户Entity（账户余额100）
 	    - mock Repository保存收入记录Entity
 	调用Service方法，进行订单收入入账
 	调用成功，无返回值
- 
+
 ----
  - **工序 1-4 | Fake<MerchantService.DB> | 30 mins**
- 
+
 	按示例组装收入记录信息Entity，能够通过fake DB进行保存和查询
- 
+
 ----
 ##### 时序图
 ![c3f33293-f163-4c53-b632-33b2ac8ef28b](temp/story-1001/c3f33293-f163-4c53-b632-33b2ac8ef28b.svg)
 #### <span id='example-1-2'>示例 1-2 当前商户id：10001，账户余额100；收到订单id：aaaa-bbbb-cccc-dddd，获得收入100；更新后账户id：10001，账户余额为200，新增收入记录，关联订单id：aaaa-bbbb-cccc-dddd</span>
 ##### 任务列表
  - **工序 1-2 | Mock<MerchantService.RepositoryClient> | 30 mins**
- 
+
 	按示例组装ViewObject
 	    - mock Repository返回当前账户Entity（账户余额100）
 	    - mock Repository保存当前账户Entity（账户余额200）
 	    - mock Repository保存收入记录Entity
 	调用Service方法，进行订单收入入账
 	调用成功，无返回值
- 
+
 ----
 ##### 时序图
 ![b7fa47f4-f495-42bb-b184-791f6ec36b11](temp/story-1001/b7fa47f4-f495-42bb-b184-791f6ec36b11.svg)
@@ -73,20 +73,4 @@
       "amount": 100
   }
   ```
-### 进程内架构设计
-### MerchantService
-餐品订购服务: 为商家提供接入平台的服务，包括开通账号、缴纳押金、提现入账余额、收据和发票开具的功能；平台可对违反合作协议的商家进行押金扣减、入账扣减
-Tech Stack: **[Spring Boot, PostgreSQL]**
- 
-![ad25d8e2-8e2b-4309-9c6f-9c36bd64a3fc](temp/story-1001/ad25d8e2-8e2b-4309-9c6f-9c36bd64a3fc.svg)
-#### 工序拆分
-##### 工序 1-1 | Controller => Mock\<Service>
-实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
-##### 工序 1-2 | Service => Mock\<RepositoryClient>
-实现Service调用Client获取DTO，组装成ViewObject并返回
-##### 工序 1-3 | RepositoryClient => Mock\<MQGateway>
-实现Client调用MQ，通过DTO映射请求和返回的Json数据，验证发送和接收的数据正确
-##### 工序 1-4 | RepositoryClient => Fake\<DB>
-实现Repository调用DB，通过Entity映射数据库表，验证JPA的配置正确、数据库表创建正确、SQL语句书写正确
-##### 工序 1-5 | SpringBootTest => Real\<SpringBootTest>
-实现多个组件在Spring环境下的集成测试，验证框架的功能：拦截器、AOP、日志、事务处理
+### 

@@ -31,32 +31,32 @@ object MerchantService : Container(
     object RepositoryClient : Component(Layers.Infrastructure)
     object MQGateway : Component(Layers.External)
     object DB : Component(Layers.External)
-    object SpringBootTest : Component(Layers.Controller)
+    object SpringBootTest : Component(Layers.External)
 
     override fun getProcesses(): List<ProcessDefBuilder> = listOf(
         Controller mock Service cost 15 at {
             """
-                实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
+              实现Controller获取Http请求参数，调用Service并获取ViewObject，再返回序列化的Json数据
             """.trimIndent()
         },
         Service mock RepositoryClient cost 30 at {
             """
-                实现Service调用Client获取DTO，组装成ViewObject并返回
+                实现Service调用Repository获取Entity / Client获取DTO，组装成ViewObject并返回
             """.trimIndent()
         },
         RepositoryClient mock MQGateway cost 25 at {
             """
-                实现Client调用MQ，通过DTO映射请求和返回的Json数据，验证发送和接收的数据正确
+                实现Client使用Http调用MQ或Gateway，通过DTO映射请求和返回的Json数据
             """.trimIndent()
         },
         RepositoryClient fake DB cost 30 at {
             """
-               实现Repository调用DB，通过Entity映射数据库表，验证JPA的配置正确、数据库表创建正确、SQL语句书写正确
+                实现Repository使用JPA调用DB，通过Entity映射数据库表数据
             """.trimIndent()
         },
         SpringBootTest call SpringBootTest cost 60 at {
             """
-               实现多个组件在Spring环境下的集成测试，验证框架的功能：拦截器、AOP、日志、事务处理
+                实现多个组件在Spring环境下的功能测试，验证框架的功能：拦截器、AOP、日志、事务处理等
             """.trimIndent()
         }
     )
