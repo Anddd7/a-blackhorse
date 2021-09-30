@@ -27,11 +27,11 @@ object CommonComponentLayer {
 }
 
 object RentalSystemArchitecture : ArchitectureOf(
-    "4.1.1",
-    """
-        修改工序描述（主要是interceptor和controller如何集成和测试）;
-        (重新生成缺失的架构图)
-    """.trimIndent(),
+    version = "4.1.1",
+    changelogs = """
+            修改工序描述（主要是interceptor和controller如何集成和测试）;
+            (重新生成缺失的架构图)
+        """.trimIndent(),
     // frontend
     GeneralWebPortal,
     IndividualApp4Android,

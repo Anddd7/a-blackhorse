@@ -1,5 +1,11 @@
 package com.thoughtworks.projects.rental.onboarding.baseline
 
+import com.thoughtworks.blackhorse.schema.performance.attributes.BlockType
+import com.thoughtworks.blackhorse.schema.performance.blocked
+import com.thoughtworks.blackhorse.schema.performance.by
+import com.thoughtworks.blackhorse.schema.performance.cause
+import com.thoughtworks.blackhorse.schema.performance.cost
+import com.thoughtworks.blackhorse.schema.performance.resolved
 import com.thoughtworks.blackhorse.schema.story.StoryOf
 import com.thoughtworks.blackhorse.schema.story.attributes.API
 import com.thoughtworks.blackhorse.schema.story.attributes.HttpMethod
@@ -291,6 +297,11 @@ object Baseline001 : StoryOf(
     },
     tracking = {
         decomposition(Li4, 240)
+        ac {
+            flow {
+                process("1-1") cost 30 blocked 20 cause "studying" by BlockType.STUDY resolved "share to team member via session"
+            }
+        }
     }
 )
 

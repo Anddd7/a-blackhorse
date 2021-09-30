@@ -13,22 +13,34 @@ import com.thoughtworks.projects.rental.onboarding.architecture.corebiz.PrepaidS
 import com.thoughtworks.projects.rental.onboarding.architecture.middleware.MessageQueue
 import com.thoughtworks.projects.rental.onboarding.team.Li4
 
+/**
+ * @see PopularizationApplication
+ */
 object PopularizationApplication : Container(
+    // 进程编号 —— 用于区分各进程的工序
     id = "32",
+    // 进程间分层 —— 按职责划分，可自定义
     layer = Responsibility.ApplicationService,
+    // 技术栈描述
     techStack = listOf(
         TechStack("Spring", "使用Spring生态搭建后端服务"),
         TechStack("Kotlin", "vs Java，语法简洁、并发支持更好"),
     ),
+    // 进程职责
     responsibility = "推广服务应用服务: 向前端服务/应用提供推广服务和与充值服务相关的功能接口",
+    // 负责人（背锅侠）
     owner = listOf(Li4)
 ) {
+    // 进程内组件
     object Interceptor : Component(
-        CommonComponentLayer.Authentication,
-        listOf(
+        // 进程内分层
+        layer = CommonComponentLayer.Authentication,
+        // 技术栈描述
+        techStack = listOf(
             TechStack("Spring Servlet"),
         ),
-        "拦截请求并验证发起方身份"
+        // 组件职责
+        responsibility = "拦截请求并验证发起方身份"
     )
 
     object ApiController : Component(
