@@ -27,7 +27,7 @@ dependencies {
     implementation("org.apache.httpcomponents:httpmime:4.5.13")
     implementation("com.google.guava:guava:31.1-jre")
 
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.9.1")
 
     implementation("ch.qos.logback:logback-classic:1.2.11")
 
