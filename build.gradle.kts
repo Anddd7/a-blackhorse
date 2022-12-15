@@ -29,7 +29,7 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.10")
 
-    implementation("ch.qos.logback:logback-classic:1.2.11")
+    implementation("ch.qos.logback:logback-classic:1.4.5")
 
     // testImplementation(kotlin("test"))
 }
