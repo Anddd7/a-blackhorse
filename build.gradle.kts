@@ -24,7 +24,7 @@ dependencies {
 
     implementation(files("libs/plantuml.1.2021.5.jar"))
 
-    implementation("org.apache.httpcomponents:httpmime:4.5.13")
+    implementation("org.apache.httpcomponents:httpmime:4.5.14")
     implementation("com.google.guava:guava:31.1-jre")
 
     implementation("com.google.code.gson:gson:2.10")
