@@ -20,7 +20,7 @@ dependencies {
     implementation(kotlin("reflect"))
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.4")
 
     implementation(files("libs/plantuml.1.2021.5.jar"))
 
